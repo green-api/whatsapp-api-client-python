@@ -16,7 +16,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    env:
+      ID_INSTANCE: ${{ secrets.ID_INSTANCE }}
+      API_TOKEN_INSTANCE: ${{ secrets.API_TOKEN_INSTANCE }}
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python 3.10
