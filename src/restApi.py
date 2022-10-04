@@ -1,8 +1,12 @@
+from array import array
 import requests
-from .response import Response
+from src.account import Account
+from src.device import Device
+from src.groups import Groups
+from src.response import Response
 
-class GreenApi:
-    'Main class'
+class RestApi:
+    'REST API class'
 
     host: str
     idInstance: str
@@ -13,7 +17,11 @@ class GreenApi:
         self.idInstance = idInstance
         self.apiTokenInstance = apiTokenInstance
 
-    def request(self, method: str, url: str, data: any = None):
+        self.account = Account(self)
+        self.device = Device(self)
+        self.groups = Groups(self)
+
+    def request(self, method: str, url: str, data: any = None, files: array = None):
         url = url.replace('{{host}}', self.host)
         url = url.replace('{{idInstance}}', self.idInstance)
         url = url.replace('{{apiTokenInstance}}', self.apiTokenInstance)
@@ -27,7 +35,7 @@ class GreenApi:
                 print(f'Other error occurred: {err}')
         elif method == 'POST':
             try:
-                result = requests.post(url, json = data)
+                result = requests.post(url, json = data, files = files)
             except requests.HTTPError as http_err:
                 print(f'HTTP error occurred: {http_err}')
             except Exception as err:
