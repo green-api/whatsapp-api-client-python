@@ -12,6 +12,10 @@ g = GreenApi('https://api.green-api.com',
                         API_TOKEN_INSTANCE)
 
 class TestClass: 
-        def test_one(self):            
-                r = getSettings(g)
-                assert isinstance(r, Response)
+        def test_getSettings(self):            
+                result = getSettings(g)
+                assert isinstance(result, Response) and result.code == 200
+
+        def test_getStateInstance(self):            
+                result = getStateInstance(g)
+                assert isinstance(result, Response) and result.code == 200
