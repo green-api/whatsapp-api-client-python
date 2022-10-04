@@ -12,11 +12,11 @@ restApi = RestApi('https://api.green-api.com',
                         API_TOKEN_INSTANCE)
 
 class TestClass: 
-        def test_getSettings():            
+        def test_getSettings(self):            
                 result = restApi.account.getSettings()
                 assert isinstance(result, Response) and result.code == 200
 
-        def test_getStateInstance():            
+        def test_getStateInstance(self):            
                 result = restApi.account.getStateInstance()
                 assert isinstance(result, Response) and result.code == 200
 
@@ -24,5 +24,5 @@ class TestClass:
         #        result = restApi.device.getDeviceInfo()
         #        assert isinstance(result, Response) and result.code == 200
 
-        #if __name__ == "__main__":
-        #        test_getDeviceInfo()
+        if __name__ == "__main__":
+                test_getStateInstance()
