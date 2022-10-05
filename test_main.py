@@ -19,12 +19,3 @@ class TestClass:
         def test_getStateInstance(self):            
                 result = restApi.account.getStateInstance()
                 assert isinstance(result, Response) and result.code == 200
-
-        def test_sendButtons(self):            
-                result = restApi.sending.sendButtons('120363025955348359@g.us',
-                        'Message', 'Footer', 
-                        [
-                                {"buttonId": "1", "buttonText": "test"}, 
-                                {"buttonId": "2", "buttonText": "test2"}
-                        ])
-                assert isinstance(result, Response) and result.code == 200
