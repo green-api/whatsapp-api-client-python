@@ -24,5 +24,14 @@ class TestClass:
         #        result = restApi.device.getDeviceInfo()
         #        assert isinstance(result, Response) and result.code == 200
 
+        def test_sendButtons():            
+                result = restApi.sending.sendButtons('120363025955348359@g.us',
+                        'Message', 'Footer', 
+                        [
+                                {"buttonId": "1", "buttonText": "test"}, 
+                                {"buttonId": "2", "buttonText": "test2"}
+                        ])
+                assert isinstance(result, Response) and result.code == 200
+
         if __name__ == "__main__":
-                test_getStateInstance()
+                test_sendButtons()
