@@ -1,6 +1,4 @@
-from array import array
 from src.response import Response
-import os.path
 
 class ServiceMethods:
     def __init__(self, restApi) -> None:
