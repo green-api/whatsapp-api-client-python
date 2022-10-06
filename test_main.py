@@ -1,7 +1,7 @@
 from os import environ
 from re import T
-from src.account import *
-from src.restApi import RestApi
+from whatsapp_api_client_python.account import *
+from whatsapp_api_client_python.restApi import RestApi
 
 
 ID_INSTANCE = environ['ID_INSTANCE']
