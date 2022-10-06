@@ -1,6 +1,8 @@
 from os import environ
 from re import T
+
 from whatsapp_api_client_python import API
+from whatsapp_api_client_python.response import Response
 
 
 ID_INSTANCE = environ['ID_INSTANCE']
