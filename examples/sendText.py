@@ -1,6 +1,6 @@
 from os import environ
 
-import src as greenAPI
+import src.restApi as greenAPI
 
 ID_INSTANCE = environ['ID_INSTANCE']
 API_TOKEN_INSTANCE = environ['API_TOKEN_INSTANCE']
