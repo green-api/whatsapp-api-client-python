@@ -64,7 +64,7 @@ class Account:
             
             return self.restApi.request('POST', 
                 '{{host}}/waInstance{{idInstance}}'
-                '/SetProfilePicture/{{apiTokenInstance}}')
+                '/SetProfilePicture/{{apiTokenInstance}}', None, files)
 
     def setSettings(self, requestBody) -> Response:
             'The method is aimed for setting account settings. '\
