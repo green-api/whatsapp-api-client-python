@@ -1,21 +1,20 @@
 from os import environ
 from re import T
-from src.account import *
-from src.restApi import RestApi
+from whatsapp_api_client_python import API
 
 
 ID_INSTANCE = environ['ID_INSTANCE']
 API_TOKEN_INSTANCE = environ['API_TOKEN_INSTANCE']
 
-restApi = RestApi('https://api.green-api.com', 
+API = API.RestApi('https://api.green-api.com', 
                         ID_INSTANCE, 
                         API_TOKEN_INSTANCE)
 
 class TestClass: 
         def test_getSettings(self):            
-                result = restApi.account.getSettings()
+                result = API.account.getSettings()
                 assert isinstance(result, Response) and result.code == 200
 
         def test_getStateInstance(self):            
-                result = restApi.account.getStateInstance()
+                result = API.account.getStateInstance()
                 assert isinstance(result, Response) and result.code == 200
