@@ -1,6 +1,6 @@
 from os import environ
 
-import whatsapp_api_client_python as greenAPI
+import src as greenAPI
 
 ID_INSTANCE = environ['ID_INSTANCE']
 API_TOKEN_INSTANCE = environ['API_TOKEN_INSTANCE']
