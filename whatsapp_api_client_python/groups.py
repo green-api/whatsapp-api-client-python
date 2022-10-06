@@ -1,5 +1,5 @@
 from array import ArrayType, array
-from src.response import Response
+from response import Response
 import os.path
 
 class Groups:

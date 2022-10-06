@@ -1,15 +1,15 @@
 from array import array
 import requests
-from src.account import Account
-from src.device import Device
-from src.groups import Groups
-from src.journals import Journals
-from src.marking import Marking
-from src.queues import Queues
-from src.receiving import Receiving
-from src.response import Response
-from src.sending import Sending
-from src.serviceMethods import ServiceMethods
+from account import Account
+from device import Device
+from groups import Groups
+from journals import Journals
+from marking import Marking
+from queues import Queues
+from receiving import Receiving
+from response import Response
+from sending import Sending
+from serviceMethods import ServiceMethods
 
 class RestApi:
     'REST API class'

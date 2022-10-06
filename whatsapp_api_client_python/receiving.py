@@ -1,4 +1,4 @@
-from src.response import Response
+from response import Response
 
 class Receiving:
     def __init__(self, restApi) -> None:
