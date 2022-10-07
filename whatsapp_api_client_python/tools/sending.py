@@ -1,8 +1,7 @@
 from array import array
 import os.path
-
-from whatsapp_api_client_python import API
 from whatsapp_api_client_python.API import Response
+
 
 class Sending:
     def __init__(self, restApi) -> None:
