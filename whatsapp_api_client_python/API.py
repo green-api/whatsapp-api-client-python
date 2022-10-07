@@ -43,6 +43,8 @@ class RestApi:
             try:
                 result = requests.get(url)
                 result.raise_for_status()
+                status_code = result.status_code
+                text = result.text
             except requests.HTTPError as http_err:
                 status_code = 0
                 text = f'HTTP error occurred: {http_err}'
@@ -65,6 +67,8 @@ class RestApi:
             try:
                 result = requests.delete(url, json = data, files = files)
                 result.raise_for_status()
+                status_code = result.status_code
+                text = result.text
             except requests.HTTPError as http_err:
                 status_code = 0
                 text = f'HTTP error occurred: {http_err}'
