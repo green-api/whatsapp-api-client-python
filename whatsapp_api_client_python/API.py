@@ -1,15 +1,15 @@
 from array import array
 import requests
-from response import Response
-from tools.account import Account
-from tools.device import Device
-from tools.groups import Groups
-from tools.journals import Journals
-from tools.marking import Marking
-from tools.queues import Queues
-from tools.receiving import Receiving
-from tools.sending import Sending
-from tools.serviceMethods import ServiceMethods
+from whatsapp_api_client_python.response import Response
+from whatsapp_api_client_python.tools.account import Account
+from whatsapp_api_client_python.tools.device import Device
+from whatsapp_api_client_python.tools.groups import Groups
+from whatsapp_api_client_python.tools.journals import Journals
+from whatsapp_api_client_python.tools.marking import Marking
+from whatsapp_api_client_python.tools.queues import Queues
+from whatsapp_api_client_python.tools.receiving import Receiving
+from whatsapp_api_client_python.tools.sending import Sending
+from whatsapp_api_client_python.tools.serviceMethods import ServiceMethods
 
 class RestApi:
     'REST API class'
