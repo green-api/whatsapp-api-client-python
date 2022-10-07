@@ -1,7 +1,6 @@
 from array import array
 import json
 import requests
-from whatsapp_api_client_python.response import Response
 from whatsapp_api_client_python.tools.account import Account
 from whatsapp_api_client_python.tools.device import Device
 from whatsapp_api_client_python.tools.groups import Groups
