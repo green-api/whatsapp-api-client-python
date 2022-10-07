@@ -15,7 +15,7 @@ Python библиотека для интеграции с мессенджер�
 pip install whatsapp-api-client-python
 ```
 
-## ИМпорт 
+## Импорт 
 
 ```
 from whatsapp_api_client_python import API

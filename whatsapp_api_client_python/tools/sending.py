@@ -1,13 +1,15 @@
 from array import array
 import os.path
 
+from API import Response
+
 class Sending:
     def __init__(self, restApi) -> None:
         self.restApi = restApi
         
     def sendButtons(self, chatId: str, message: str, footer: str,
                     buttons: array, quotedMessageId: str = None, 
-                    archiveChat: bool = None):
+                    archiveChat: bool = None) -> Response:
             'The method is aimed for sending a button message to a personal '\
             'or a group chat. The message will be added to the send queue. '\
             'Checking whatsapp authorization on the phone (i.e. availability '\
@@ -24,9 +26,9 @@ class Sending:
             }
 
             if quotedMessageId != None:
-                requestBody.quotedMessageId = quotedMessageId
+                requestBody['quotedMessageId'] = quotedMessageId
             if archiveChat != None:
-                requestBody.archiveChat = archiveChat
+                requestBody['archiveChat'] = archiveChat
 
             return self.restApi.request('POST', 
                 '{{host}}/waInstance{{idInstance}}'
@@ -34,7 +36,7 @@ class Sending:
                 requestBody)
 
     def sendContact(self, chatId: str, contact: object,
-                    quotedMessageId: str = None):
+                    quotedMessageId: str = None) -> Response:
             'The method is aimed for sending a contact message. '\
             'Contact visit card is created and sent to a chat. '\
             'The message will be added to the send queue. '\
@@ -49,7 +51,7 @@ class Sending:
             }
 
             if quotedMessageId != None:
-                requestBody.quotedMessageId = quotedMessageId
+                requestBody['quotedMessageId'] = quotedMessageId
 
             return self.restApi.request('POST', 
                 '{{host}}/waInstance{{idInstance}}'
@@ -59,7 +61,7 @@ class Sending:
     def sendFileByUpload(self, chatId: str, path: str,
                     fileName: str = None,
                     caption: str = None,
-                    quotedMessageId: str = None):
+                    quotedMessageId: str = None) -> Response:
             'The method is aimed for sending a file uploaded by form '\
             '(form-data). The message will be added to the send queue. '\
             'The rate at which messages are sent from the queue is managed '\
@@ -85,10 +87,10 @@ class Sending:
             }
 
             if caption != None:
-                requestBody.caption = caption
+                requestBody['caption'] = caption
 
             if quotedMessageId != None:
-                requestBody.quotedMessageId = quotedMessageId
+                requestBody['quotedMessageId'] = quotedMessageId
 
             return self.restApi.request('POST', 
                 '{{host}}/waInstance{{idInstance}}'
@@ -99,7 +101,7 @@ class Sending:
                     fileName: str = None,
                     caption: str = None,
                     quotedMessageId: str = None,
-                    archiveChat: bool = None):
+                    archiveChat: bool = None) -> Response:
             'The method is aimed for sending a file uploaded by Url '\
             'The message will be added to the send queue. '\
             'The rate at which messages are sent from the queue is managed '\
@@ -118,13 +120,13 @@ class Sending:
             }
 
             if caption != None:
-                requestBody.caption = caption
+                requestBody['caption'] = caption
 
             if quotedMessageId != None:
-                requestBody.quotedMessageId = quotedMessageId
+                requestBody['quotedMessageId'] = quotedMessageId
 
             if archiveChat != None:
-                requestBody.archiveChat = archiveChat
+                requestBody['archiveChat'] = archiveChat
 
             return self.restApi.request('POST', 
                 '{{host}}/waInstance{{idInstance}}'
@@ -132,7 +134,7 @@ class Sending:
                 requestBody)
 
     def sendLink(self, chatId: str, urlLink: str,
-                    quotedMessageId: str = None):
+                    quotedMessageId: str = None) -> Response:
             'The method is aimed for sending a message with a link, by which '\
             'an image preview, title and description will be added. '\
             'Linked device not required when sending. Messages will be kept '\
@@ -148,7 +150,7 @@ class Sending:
             }
 
             if quotedMessageId != None:
-                requestBody.quotedMessageId = quotedMessageId
+                requestBody['quotedMessageId'] = quotedMessageId
 
             return self.restApi.request('POST', 
                 '{{host}}/waInstance{{idInstance}}'
@@ -160,7 +162,7 @@ class Sending:
                     footer: str = None,
                     buttonText: str = None,
                     quotedMessageId: str = None,
-                    archiveChat: str = None):
+                    archiveChat: str = None) -> Response:
             'The method is aimed for sending a message with a select button '\
             'from a list of values to a personal or a group chat. '\
             'The message will be added to the send queue. Checking whatsapp '\
@@ -177,15 +179,15 @@ class Sending:
             }
 
             if title != None:
-                requestBody.title = title
+                requestBody['title'] = title
             if footer != None:
-                requestBody.footer = footer
+                requestBody['footer'] = footer
             if buttonText != None:
-                requestBody.buttonText = buttonText
+                requestBody['buttonText'] = buttonText
             if quotedMessageId != None:
-                requestBody.quotedMessageId = quotedMessageId 
+                requestBody['quotedMessageId'] = quotedMessageId 
             if archiveChat != None:
-                requestBody.archiveChat = archiveChat
+                requestBody['archiveChat'] = archiveChat
 
             return self.restApi.request('POST', 
                 '{{host}}/waInstance{{idInstance}}'
@@ -195,7 +197,7 @@ class Sending:
     def sendLocation(self, chatId: str, latitude: float, longitude: float,
                     nameLocation: str = None,
                     address: str = None,
-                    quotedMessageId: str = None):
+                    quotedMessageId: str = None) -> Response:
             'The method is aimed for sending location message. The message '\
             'will be added to the send queue. Linked device not required '\
             'when sending. Messages will be kept for 24 hours in the queue '\
@@ -209,11 +211,11 @@ class Sending:
             }
 
             if nameLocation != None:
-                requestBody.nameLocation = nameLocation
+                requestBody['nameLocation'] = nameLocation
             if address != None:
-                requestBody.address = address
+                requestBody['address'] = address
             if quotedMessageId != None:
-                requestBody.quotedMessageId = quotedMessageId 
+                requestBody['quotedMessageId'] = quotedMessageId 
 
             return self.restApi.request('POST', 
                 '{{host}}/waInstance{{idInstance}}'
@@ -222,7 +224,7 @@ class Sending:
 
     def sendMessage(self, chatId: str, message: str,
                     quotedMessageId: str = None,
-                    archiveChat: str = None):
+                    archiveChat: str = None) -> Response:
             'The method is aimed for sending a text message to a personal or '\
             'a group chat. The message will be added to the send queue. '\
             'Linked device not required when sending. Messages will be kept '\
@@ -236,9 +238,9 @@ class Sending:
             }
 
             if quotedMessageId != None:
-                requestBody.quotedMessageId = quotedMessageId
+                requestBody['quotedMessageId'] = quotedMessageId
             if archiveChat != None:
-                requestBody.archiveChat = archiveChat 
+                requestBody['archiveChat'] = archiveChat 
 
             return self.restApi.request('POST', 
                 '{{host}}/waInstance{{idInstance}}'
@@ -249,7 +251,7 @@ class Sending:
                     templateButtons: array,
                     footer: str = None,
                     quotedMessageId: str = None,
-                    archiveChat: str = None):
+                    archiveChat: str = None) -> Response:
             'The method is aimed for sending a message with template list '\
             'interacrive buttons to a personal or a group chat. The message '\
             'will be added to the send queue. Checking whatsapp authorization '\
@@ -266,11 +268,11 @@ class Sending:
             }
 
             if footer != None:
-                requestBody.footer = footer
+                requestBody['footer'] = footer
             if quotedMessageId != None:
-                requestBody.quotedMessageId = quotedMessageId
+                requestBody['quotedMessageId'] = quotedMessageId
             if archiveChat != None:
-                requestBody.archiveChat = archiveChat 
+                requestBody['archiveChat'] = archiveChat 
 
             return self.restApi.request('POST', 
                 '{{host}}/waInstance{{idInstance}}'
