@@ -1,4 +1,4 @@
-from response import Response
+from whatsapp_api_client_python.response import Response
 
 class Marking:
     def __init__(self, restApi) -> None:

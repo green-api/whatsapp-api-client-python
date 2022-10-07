@@ -1,4 +1,4 @@
-from src.response import Response
+from whatsapp_api_client_python.response import Response
 
 class ServiceMethods:
     def __init__(self, restApi) -> None:

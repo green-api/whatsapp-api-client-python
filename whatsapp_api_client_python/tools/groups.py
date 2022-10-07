@@ -1,5 +1,5 @@
 from array import ArrayType, array
-from response import Response
+from whatsapp_api_client_python.response import Response
 import os.path
 
 class Groups:

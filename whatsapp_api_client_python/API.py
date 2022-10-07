@@ -1,15 +1,15 @@
 from array import array
 import requests
-from account import Account
-from device import Device
-from groups import Groups
-from journals import Journals
-from marking import Marking
-from queues import Queues
-from receiving import Receiving
 from response import Response
-from sending import Sending
-from serviceMethods import ServiceMethods
+from tools.account import Account
+from tools.device import Device
+from tools.groups import Groups
+from tools.journals import Journals
+from tools.marking import Marking
+from tools.queues import Queues
+from tools.receiving import Receiving
+from tools.sending import Sending
+from tools.serviceMethods import ServiceMethods
 
 class RestApi:
     'REST API class'
@@ -42,23 +42,31 @@ class RestApi:
                 result = requests.get(url)
                 result.raise_for_status()
             except requests.HTTPError as http_err:
-                print(f'HTTP error occurred: {http_err}')
+                status_code = 0
+                text = f'HTTP error occurred: {http_err}'
             except Exception as err:
-                print(f'Other error occurred: {err}')
+                status_code = 0
+                text = f'Other error occurred: {err}'
         elif method == 'POST':
             try:
                 result = requests.post(url, json = data, files = files)
                 result.raise_for_status()
+                status_code = result.status_code
+                text = result.text
             except requests.HTTPError as http_err:
-                print(f'HTTP error occurred: {http_err}')
+                status_code = 0
+                text = f'HTTP error occurred: {http_err}'
             except Exception as err:
-                print(f'Other error occurred: {err}')
+                status_code = 0
+                text = f'Other error occurred: {err}'
         elif method == 'DELETE':
             try:
                 result = requests.delete(url, json = data, files = files)
                 result.raise_for_status()
             except requests.HTTPError as http_err:
-                print(f'HTTP error occurred: {http_err}')
+                status_code = 0
+                text = f'HTTP error occurred: {http_err}'
             except Exception as err:
-                print(f'Other error occurred: {err}')
-        return Response(result.status_code, result.text)
+                status_code = 0
+                text = f'Other error occurred: {err}'
+        return Response(status_code, text)
