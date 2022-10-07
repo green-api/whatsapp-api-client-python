@@ -37,6 +37,8 @@ class RestApi:
         url = url.replace('{{host}}', self.host)
         url = url.replace('{{idInstance}}', self.idInstance)
         url = url.replace('{{apiTokenInstance}}', self.apiTokenInstance)
+        status_code = 0
+        text = ''
         if method == 'GET':
             try:
                 result = requests.get(url)
