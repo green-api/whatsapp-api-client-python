@@ -20,7 +20,9 @@ class RestApi:
     idInstance: str
     apiTokenInstance: str
 
-    def __init__(self, host: str, idInstance: str, apiTokenInstance: str) -> None:
+    def __init__(self, host: str, 
+                    idInstance: str, 
+                    apiTokenInstance: str) -> None:
         self.host = host
         self.idInstance = idInstance
         self.apiTokenInstance = apiTokenInstance
@@ -35,7 +37,8 @@ class RestApi:
         self.sending = Sending(self)
         self.serviceMethods = ServiceMethods(self)
 
-    def request(self, method: str, url: str, payload: any = None, files: array = None):
+    def request(self, method: str, url: str, 
+                payload: any = None, files: array = None):
         url = url.replace('{{host}}', self.host)
         url = url.replace('{{idInstance}}', self.idInstance)
         url = url.replace('{{apiTokenInstance}}', self.apiTokenInstance)
@@ -48,7 +51,8 @@ class RestApi:
                     'Content-Type': 'application/json'
             }
             result = requests.request(method, url, headers = headers, 
-                                        data = json.dumps(payload), files = files)
+                                        data = json.dumps(payload), 
+                                        files = files)
             result.raise_for_status()
             status_code = result.status_code
             text = result.text
