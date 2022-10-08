@@ -54,7 +54,7 @@ class RestApi:
             text = result.text
         except requests.HTTPError as http_err:
             status_code = 0
-            text = f'HTTP error occurred: {http_err}'
+            text = f'HTTP {method} error occurred: {http_err}'
         except Exception as err:
             status_code = 0
             text = f'Other error occurred: {err}'
