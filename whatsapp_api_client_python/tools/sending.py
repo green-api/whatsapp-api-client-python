@@ -1,6 +1,6 @@
 from array import array
 import os.path
-from whatsapp_api_client_python.response import Response
+from response import Response
 
 
 class Sending:
