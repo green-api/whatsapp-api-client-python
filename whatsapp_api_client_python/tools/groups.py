@@ -1,10 +1,11 @@
 from array import ArrayType, array
 import os.path
 from whatsapp_api_client_python.response import Response
+from whatsapp_api_client_python.API import RestApi
 
 
 class Groups:
-    def __init__(self, restApi) -> None:
+    def __init__(self, restApi: RestApi) -> None:
         self.restApi = restApi
         
     def addGroupParticipant(self, 
