@@ -1,8 +1,9 @@
 from whatsapp_api_client_python.response import Response
+from whatsapp_api_client_python.API import RestApi
 
 
 class Marking:
-    def __init__(self, restApi) -> None:
+    def __init__(self, restApi: RestApi) -> None:
         self.restApi = restApi
         
     def readChat(self, chatId: str, idMessage: str) -> Response:
