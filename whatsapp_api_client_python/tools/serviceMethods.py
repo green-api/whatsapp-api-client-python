@@ -1,8 +1,11 @@
+from whatsapp_api_client_python.response import Response
+
+
 class ServiceMethods:
     def __init__(self, restApi) -> None:
         self.restApi = restApi
         
-    def checkWhatsapp(self, phoneNumber: int):
+    def checkWhatsapp(self, phoneNumber: int) -> Response:
             'The method checks WhatsApp account availability on a phone number.'
 
             requestBody = {
@@ -14,7 +17,7 @@ class ServiceMethods:
                 '/CheckWhatsapp/{{apiTokenInstance}}',
                 requestBody)
 
-    def getAvatar(self, chatId: str):
+    def getAvatar(self, chatId: str) -> Response:
             'The method returns a user or a group chat avatar.'
 
             requestBody = {
@@ -26,7 +29,7 @@ class ServiceMethods:
                 '/GetAvatar/{{apiTokenInstance}}',
                 requestBody)
 
-    def getContactInfo(self, chatId: str):
+    def getContactInfo(self, chatId: str) -> Response:
             'The method is aimed for getting information on a contact.'
 
             requestBody = {
@@ -38,7 +41,7 @@ class ServiceMethods:
                 '/GetContactInfo/{{apiTokenInstance}}',
                 requestBody)
 
-    def getContacts(self, chatId: str):
+    def getContacts(self, chatId: str) -> Response:
             'The method is aimed for getting a list of the current account '\
             'contacts. Sends contacts of all recipients whom the account '\
             'connected with. Parameter "contact name" "name" takes on '\
@@ -54,7 +57,7 @@ class ServiceMethods:
                 '{{host}}/waInstance{{idInstance}}'
                 '/GetContacts/{{apiTokenInstance}}')
 
-    def archiveChat(self, chatId: str):
+    def archiveChat(self, chatId: str) -> Response:
             'The method archives a chat. You can archive chats that have at '\
             'least one incoming message.'
 
@@ -67,7 +70,7 @@ class ServiceMethods:
                 '/ArchiveChat/{{apiTokenInstance}}',
                 requestBody)
 
-    def deleteMessage(self, chatId: str, idMessage: str):
+    def deleteMessage(self, chatId: str, idMessage: str) -> Response:
             'The method deletes a message from a chat.'
 
             requestBody = {
@@ -80,7 +83,7 @@ class ServiceMethods:
                 '/DeleteMessage/{{apiTokenInstance}}',
                 requestBody)
 
-    def unarchiveChat(self, chatId: str):
+    def unarchiveChat(self, chatId: str) -> Response:
             'The method deletes a message from a chat.'
 
             requestBody = {

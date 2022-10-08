@@ -1,5 +1,7 @@
 from array import ArrayType, array
 import os.path
+from whatsapp_api_client_python.response import Response
+
 
 class Groups:
     def __init__(self, restApi) -> None:
@@ -7,7 +9,7 @@ class Groups:
         
     def addGroupParticipant(self, 
             groupId: str, 
-            participantChatId: str):
+            participantChatId: str) -> Response:
             'The method adds a participant to a group chat.'
 
             requestBody = {
@@ -20,7 +22,7 @@ class Groups:
                 '/AddGroupParticipant/{{apiTokenInstance}}',
                 requestBody)
 
-    def createGroup(self, groupName: str, chatIds: array):
+    def createGroup(self, groupName: str, chatIds: array) -> Response:
             'The method is aimed for creating a group chat.'
             
             requestBody = {
@@ -33,7 +35,7 @@ class Groups:
                 '/CreateGroup/{{apiTokenInstance}}',
                 requestBody)
 
-    def getGroupData(self, groupId: str):
+    def getGroupData(self, groupId: str) -> Response:
             'The method gets group chat data.'
 
             requestBody = {
@@ -45,7 +47,7 @@ class Groups:
                 '/GetGroupData/{{apiTokenInstance}}',
                 requestBody)
 
-    def leaveGroup(self, groupId: str):
+    def leaveGroup(self, groupId: str) -> Response:
             'The method makes the current account user leave the group chat.'
 
             requestBody = {
@@ -57,7 +59,7 @@ class Groups:
                 '/LeaveGroup/{{apiTokenInstance}}',
                 requestBody)
 
-    def removeAdmin(self, groupId: str, participantChatId: str):
+    def removeAdmin(self, groupId: str, participantChatId: str) -> Response:
             'The method removes a participant from group chat '\
             'administartion rights.'
 
@@ -73,7 +75,7 @@ class Groups:
 
     def removeGroupParticipant(self, 
         groupId: str, 
-        participantChatId: str):
+        participantChatId: str) -> Response:
             'The method removes a participant from a group chat.'
 
             requestBody = {
@@ -88,7 +90,7 @@ class Groups:
 
     def setGroupAdmin(self, 
         groupId: str, 
-        participantChatId: str):
+        participantChatId: str) -> Response:
             'The method sets a group chat participant as an administrator.'
 
             requestBody = {
@@ -103,7 +105,7 @@ class Groups:
 
     def setGroupPicture(self, 
         groupId: str, 
-        path: str):
+        path: str) -> Response:
             'The method sets a group picture.'
 
             requestBody = {
@@ -124,7 +126,7 @@ class Groups:
 
     def updateGroupName(self, 
         groupId: str, 
-        groupName: str):
+        groupName: str) -> Response:
             'The method changes a group chat name.'
 
             requestBody = {

@@ -1,8 +1,11 @@
+from whatsapp_api_client_python.response import Response
+
+
 class Receiving:
     def __init__(self, restApi) -> None:
         self.restApi = restApi
         
-    def downloadFile(self, idMessage: str):
+    def downloadFile(self, idMessage: str) -> Response:
         'The method is aimed for downloading incoming and outgoing files. '\
         'Links to incoming files are transmitted in Incoming messages, '\
         'and you can also get them using LastIncomingMessages method. '\
@@ -20,7 +23,7 @@ class Receiving:
             '/DownloadFile/{{apiTokenInstance}}',
             requestBody)
 
-    def deleteNotification(self):
+    def deleteNotification(self) -> Response:
         'The method is aimed for deleting an incoming notification from '\
         'the notification queue. To specify what notification to delete, '\
         'use receiptId parameter. After receiving and processing an incoming '\
