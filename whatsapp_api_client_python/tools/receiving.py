@@ -58,11 +58,6 @@ class Receiving:
         'Incoming notifications are stored in the queue for 24 hours.'\
         'Notifications are sent from the queue in FIFO order'
 
-        requestBody = {
-            'receiptId': receiptId,
-        }
-
         return self.restApi.request('DELETE', 
             '{{host}}/waInstance{{idInstance}}'
-            '/DeleteNotification/{{apiTokenInstance}}',
-            requestBody)
+            '/DeleteNotification/{{apiTokenInstance}}/' + str(receiptId))
