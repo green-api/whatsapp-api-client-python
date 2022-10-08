@@ -1,6 +1,6 @@
 from array import array
-import json
 import requests
+import response
 
 from whatsapp_api_client_python.tools.account import Account
 from whatsapp_api_client_python.tools.device import Device
@@ -76,16 +76,4 @@ class RestApi:
             except Exception as err:
                 status_code = 0
                 text = f'Other error occurred: {err}'
-        return Response(status_code, text)
-
-class Response:
-    code: int
-    data: json
-    error: str
-
-    def __init__(self, code: int, text: str) -> None:
-        self.code = code
-        if code == 200:
-            self.data = json.loads(text)
-        else:
-            self.error = text
+        return response(status_code, text)
