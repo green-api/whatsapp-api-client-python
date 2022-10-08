@@ -13,10 +13,14 @@ RestApi = API.RestApi('https://api.green-api.com',
 class TestClass: 
         def test_getSettings(self):            
                 result = RestApi.account.getSettings()
+                if result.code != 200:
+                        print(result.error)
                 assert isinstance(result, API.Response) and result.code == 200
 
         def test_getStateInstance(self):            
                 result = RestApi.account.getStateInstance()
+                if result.code != 200:
+                        print(result.error)
                 assert isinstance(result, API.Response) and result.code == 200
 
 def main():
