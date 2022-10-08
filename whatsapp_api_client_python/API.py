@@ -1,5 +1,6 @@
 from array import array
 import requests
+import json
 from whatsapp_api_client_python.response import Response
 
 from whatsapp_api_client_python.tools.account import Account
@@ -40,40 +41,20 @@ class RestApi:
         url = url.replace('{{apiTokenInstance}}', self.apiTokenInstance)
         status_code = 0
         text = ''
-        if method == 'GET':
-            try:
-                result = requests.get(url)
-                result.raise_for_status()
-                status_code = result.status_code
-                text = result.text
-            except requests.HTTPError as http_err:
-                status_code = 0
-                text = f'HTTP error occurred: {http_err}'
-            except Exception as err:
-                status_code = 0
-                text = f'Other error occurred: {err}'
-        elif method == 'POST':
-            try:
-                result = requests.post(url, json = data, files = files)
-                result.raise_for_status()
-                status_code = result.status_code
-                text = result.text
-            except requests.HTTPError as http_err:
-                status_code = 0
-                text = f'HTTP error occurred: {http_err}'
-            except Exception as err:
-                status_code = 0
-                text = f'Other error occurred: {err}'
-        elif method == 'DELETE':
-            try:
-                result = requests.delete(url, json = data, files = files)
-                result.raise_for_status()
-                status_code = result.status_code
-                text = result.text
-            except requests.HTTPError as http_err:
-                status_code = 0
-                text = f'HTTP error occurred: {http_err}'
-            except Exception as err:
-                status_code = 0
-                text = f'Other error occurred: {err}'
+        try:
+            if method == 'POST':
+                headers = {
+                    'Content-Type': 'application/json'
+            }
+            result = requests.request(method, url, headers = headers, 
+                                        data = json.dumps(payload), files = files)
+            result.raise_for_status()
+            status_code = result.status_code
+            text = result.text
+        except requests.HTTPError as http_err:
+            status_code = 0
+            text = f'HTTP error occurred: {http_err}'
+        except Exception as err:
+            status_code = 0
+            text = f'Other error occurred: {err}'
         return Response(status_code, text)
