@@ -35,14 +35,15 @@ class RestApi:
         self.sending = Sending(self)
         self.serviceMethods = ServiceMethods(self)
 
-    def request(self, method: str, url: str, data: any = None, files: array = None):
+    def request(self, method: str, url: str, payload: any = None, files: array = None):
         url = url.replace('{{host}}', self.host)
         url = url.replace('{{idInstance}}', self.idInstance)
         url = url.replace('{{apiTokenInstance}}', self.apiTokenInstance)
         status_code = 0
         text = ''
         try:
-            if method == 'POST':
+            headers = {}
+            if payload != None:
                 headers = {
                     'Content-Type': 'application/json'
             }
