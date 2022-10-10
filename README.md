@@ -1,4 +1,4 @@
-# whatsapp-api-client-python
+﻿# whatsapp-api-client-python
 
 [![Python application](https://github.com/green-api/whatsapp-api-client-python/actions/workflows/python-app.yml/badge.svg)](https://github.com/green-api/whatsapp-api-client-python/actions/workflows/python-app.yml)
 [![Upload Python Package](https://github.com/green-api/whatsapp-api-client-python/actions/workflows/python-publish.yml/badge.svg)](https://github.com/green-api/whatsapp-api-client-python/actions/workflows/python-publish.yml)
@@ -26,7 +26,7 @@ from whatsapp_api_client_python import API
 
 ## Примеры
 
-### Инициализация
+### Как инициализировать объект
 
 ```
 restApi = API.RestApi('https://api.green-api.com', 
@@ -106,7 +106,7 @@ resultReceive = restApi.receiving.receiveNotification()
 `account.reboot` | Метод предназначен для перезапуска аккаунта | [Reboot.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/Reboot.md)
 `account.setProfilePicture` | Метод предназначен для установки аватара аккаунта | [SetProfilePicture.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/SetProfilePicture.md)
 `account.setSettings` | Метод предназначен для установки настроек аккаунта | [SetSettings.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/SetSettings.md)
-`account.setSystemProxy` | Метод предназначен для установки системного прокси. Используйте метод, когда требуется сбросить пользовательские настройки прокси на системные | [SetSystemProxy.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/SetSystemProxy.md)
+`account.setSystemProxy` | Метод предназначен для установки системного прокси. Нужно используйте метод, когда требуется сбросить пользовательские настройки прокси на системные | [SetSystemProxy.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/SetSystemProxy.md)
 `groups.addGroupParticipant` | Метод добавляет участника в групповой чат | [AddGroupParticipant.md](https://github.com/green-api/docs/blob/master/ru/docs/api/groups/AddGroupParticipant.md)
 `groups.createGroup` | Метод добавляет участника в групповой чат | [CreateGroup.md](https://github.com/green-api/docs/blob/master/ru/docs/api/groups/CreateGroup.md)
 `groups.getGroupData` | Метод получает данные группового чата | [GetGroupData.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/GetGroupData.md)
@@ -138,7 +138,7 @@ resultReceive = restApi.receiving.receiveNotification()
 `serviceMethods.getAvatar` | Метод возвращает аватар корреспондента или группового чата | [GetAvatar.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/GetAvatar.md)
 `serviceMethods.getContactInfo` | Метод предназначен для получения информации о контакте | [GetContactInfo.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/GetContactInfo.md)
 `serviceMethods.getContacts` | Метод предназначен для получения списка контактов текущего аккаунта | [GetContacts.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/GetContacts.md)
-`serviceMethods.setDisappearingChat` | Метод предназначен для изменения настроек исчезающих сообщений в чатах. Используются стандартные настройки приложения: 0 (выключено), 86400 (24 часа), 604800 (7 дней), 7776000 (90 дней) | [SetDisappearingChat.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/SetDisappearingChat.md)
+`serviceMethods.setDisappearingChat` | Метод предназначен для изменения настроек исчезающих сообщений в чатах. Нужно использовать стандартные настройки приложения: 0 (выключено), 86400 (24 часа), 604800 (7 дней), 7776000 (90 дней) | [SetDisappearingChat.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/SetDisappearingChat.md)
 `serviceMethods.archiveChat` | Метод архивирует чат. Архивировать можно чаты, в которых есть хотя бы одно входящее сообщение | [ArchiveChat.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/ArchiveChat.md)
 `serviceMethods.deleteMessage` | Метод удаляет сообщение из чата | [DeleteMessage.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/deleteMessage.md)
 `serviceMethods.unarchiveChat` | Метод разархивирует чат | [UnarchiveChat.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/UnarchiveChat.md)

@@ -12,6 +12,7 @@ from whatsapp_api_client_python.tools.queues import Queues
 from whatsapp_api_client_python.tools.receiving import Receiving
 from whatsapp_api_client_python.tools.sending import Sending
 from whatsapp_api_client_python.tools.serviceMethods import ServiceMethods
+from whatsapp_api_client_python.tools.webhooks import Webhooks
 
 class RestApi:
     'REST API class'
@@ -36,6 +37,7 @@ class RestApi:
         self.receiving = Receiving(self)
         self.sending = Sending(self)
         self.serviceMethods = ServiceMethods(self)
+        self.webhooks = Webhooks(self)
 
     def request(self, method: str, url: str, 
                 payload: any = None, files: array = None):
