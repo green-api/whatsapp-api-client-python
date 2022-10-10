@@ -1,21 +1,25 @@
 from os import environ
-from whatsapp_api_client_python import API as API
+from whatsapp_api_client_python import greenAPI as greenAPI
 from datetime import datetime
 
 
 ID_INSTANCE = environ['ID_INSTANCE']
 API_TOKEN_INSTANCE = environ['API_TOKEN_INSTANCE']
 
-restApi = API.RestApi('https://api.green-api.com', 
+restApi = greenAPI.RestApi('https://api.green-api.com', 
                         ID_INSTANCE, 
                         API_TOKEN_INSTANCE)
 
 def main():
+    print('Incoming notifications are being received. '\
+        'To interrupt, press Ctrl+C')
     try:
         while True:
             resultReceive = restApi.receiving.receiveNotification()
             if resultReceive.code == 200:
                 if resultReceive.data == None:
+                    # There are no incoming notifications, 
+                    # we send the request again
                     continue
                 body = resultReceive.data['body']
                 idMessage = body['idMessage']
