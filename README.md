@@ -26,9 +26,21 @@ from whatsapp_api_client_python import API
 
 ## Примеры
 
-### Отправка сообщения на номер WhatsApp
+### Инициализация
 
-[sendText.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendText.py)
+```
+restApi = API.RestApi('https://api.green-api.com', 
+                        ID_INSTANCE, 
+                        API_TOKEN_INSTANCE)
+```
+
+### Отправка текстового сообщения на номер WhatsApp
+
+```
+result = restApi.sending.sendMessage('79001234567@g.us', 'Message text')
+```
+
+Ссылка на пример: [sendText.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendText.py)
 
 Обратите внимание, что ключи можно получать из переменных среды:
 ```
@@ -37,6 +49,54 @@ from os import environ
 ID_INSTANCE = environ['ID_INSTANCE']
 API_TOKEN_INSTANCE = environ['API_TOKEN_INSTANCE']
 ```
+
+### Отправка картинки по URL
+
+```
+result = restApi.sending.sendFileByUrl('120363025955348359@g.us', 
+        'https://www.google.ru/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png', 
+        'googlelogo_color_272x92dp.png', 'Google logo')
+```
+
+Ссылка на пример: [sendPictureByLink.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPictureByLink.py)
+
+### Отправка картинки загрузкой с диска
+
+```
+result = restApi.sending.sendFileByUpload('120363025955348359@g.us', 
+        'C:\Games\PicFromDisk.png', 
+        'PicFromDisk.png', 'Picture from disk')
+```
+
+Ссылка на пример: [sendPictureByUpload.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPictureByUpload.py)
+
+### Создание группы и отправка сообщения в эту группу
+
+```
+chatIds = [
+    "79001234567@c.us"
+]
+resultCreate = restApi.groups.createGroup('GroupName', 
+    chatIds)
+
+if resultCreate.code == 200:
+    resultSend = restApi.sending.sendMessage(resultCreate.data['chatId'], 
+        'Message text')
+```
+
+Ссылка на пример: [createGroupAndSendMessage.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/createGroupAndSendMessage.py)
+
+### Получить входящие уведомления
+
+```
+resultReceive = restApi.receiving.receiveNotification()
+```
+
+Ссылка на пример: [receiveNotification.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/receiveNotification.py)
+
+## Документация по методам сервиса
+
+[https://github.com/green-api/docs](https://github.com/green-api/docs)
 
 ## Сторонние продукты
 

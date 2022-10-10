@@ -10,7 +10,8 @@ restApi = API.RestApi('https://api.green-api.com',
                         API_TOKEN_INSTANCE)
 
 def main():
-    restApi.sending.sendMessage('120363025955348359@g.us', 'Message text')
+    result = restApi.sending.sendMessage('79001234567@g.us', 'Message text')
+    print(result)
 
 if __name__ == "__main__":
     main()
