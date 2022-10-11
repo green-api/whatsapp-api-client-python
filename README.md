@@ -92,7 +92,16 @@ if resultCreate.code == 200:
 resultReceive = restApi.receiving.receiveNotification()
 ```
 
-Ссылка на пример: [receiveNotification.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/receiveNotification.py)
+## Список примеров
+
+Описание |  Модуль
+----- | ----- 
+Пример отправки текста | [sendText.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendText.py)
+Пример отправки картинки по URL | [sendPictureByLink.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPictureByLink.py)
+Пример отправки картинки загрузкой с диска | [sendPictureByUpload.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPictureByUpload.py)
+Пример создание группы и отправка сообщения в группу | [createGroupAndSendMessage.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/createGroupAndSendMessage.py)
+Пример получения входящих уведомлений | [receiveNotification.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/receiveNotification.py)
+
 
 ## Полный список методов библиотеки
 
@@ -145,7 +154,7 @@ resultReceive = restApi.receiving.receiveNotification()
 
 ## Документация по методам сервиса
 
-[https://github.com/green-api/docs](https://github.com/green-api/docs)
+[https://green-api.com/docs/api/](https://green-api.com/docs/api/)
 
 ## Сторонние продукты
 
