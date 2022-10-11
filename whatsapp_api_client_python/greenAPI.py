@@ -48,14 +48,17 @@ class RestApi:
         text = ''
         try:
             headers = {}
-            payloadJson = None
+            payloadData = None
             if payload != None:
-                headers = {
-                    'Content-Type': 'application/json'
-                }
-                payloadJson = json.dumps(payload)
+                if files == None:
+                    headers = {
+                        'Content-Type': 'application/json'
+                    }
+                    payloadData = json.dumps(payload)
+                else:
+                    payloadData = payload    
             result = requests.request(method, url, headers = headers, 
-                                        data = payloadJson, 
+                                        data = payloadData, 
                                         files = files)
             result.raise_for_status()
             status_code = result.status_code

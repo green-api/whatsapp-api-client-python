@@ -10,5 +10,7 @@ class Response:
         self.code = code
         if code == 200:
             self.data = json.loads(text)
+            self.error = None
         else:
             self.error = text
+            self.data = None

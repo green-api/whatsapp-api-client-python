@@ -75,7 +75,7 @@ class Sending:
 
             pathParts = os.path.split(path)
             if fileName == None:
-                fileName = pathParts[1]
+                fileName = pathParts[pathParts.count - 1]
 
             files = [
                 ('file', open(path,'rb'))
@@ -95,7 +95,7 @@ class Sending:
             return self.restApi.request('POST', 
                 '{{host}}/waInstance{{idInstance}}'
                 '/SendFileByUpload/{{apiTokenInstance}}',
-                requestBody, files)
+                requestBody, files = files)
 
     def sendFileByUrl(self, chatId: str, urlFile: str,
                     fileName: str = None,
