@@ -84,6 +84,9 @@ if resultCreate.code == 200:
         'Message text')
 ```
 
+ВАЖНО: Если попытаться создать группу с несуществующим номером WhatsApp 
+может заблокировать номер отправителя. Номер в примере не существует.
+
 Ссылка на пример: [createGroupAndSendMessage.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/createGroupAndSendMessage.py)
 
 ### Получить входящие уведомления
@@ -117,7 +120,7 @@ resultReceive = restApi.receiving.receiveNotification()
 `account.setSettings` | Метод предназначен для установки настроек аккаунта | [SetSettings.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/SetSettings.md)
 `account.setSystemProxy` | Метод предназначен для установки системного прокси. Нужно используйте метод, когда требуется сбросить пользовательские настройки прокси на системные | [SetSystemProxy.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/SetSystemProxy.md)
 `groups.addGroupParticipant` | Метод добавляет участника в групповой чат | [AddGroupParticipant.md](https://github.com/green-api/docs/blob/master/ru/docs/api/groups/AddGroupParticipant.md)
-`groups.createGroup` | Метод добавляет участника в групповой чат | [CreateGroup.md](https://github.com/green-api/docs/blob/master/ru/docs/api/groups/CreateGroup.md)
+`groups.createGroup` | Метод добавляет участника в групповой чат. ВАЖНО: Если попытаться создать группу с несуществующим номером WhatsApp может заблокировать номер отправителя. | [CreateGroup.md](https://github.com/green-api/docs/blob/master/ru/docs/api/groups/CreateGroup.md)
 `groups.getGroupData` | Метод получает данные группового чата | [GetGroupData.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/GetGroupData.md)
 `groups.leaveGroup` | Метод производит выход пользователя текущего аккаунта из группового чата | [LeaveGroup.md](https://github.com/green-api/docs/blob/master/ru/docs/api/groups/LeaveGroup.md)
 `groups.removeAdmin` | Метод лишает участника прав администрирования группового чата | [RemoveAdmin.md](https://github.com/green-api/docs/blob/master/ru/docs/api/groups/RemoveAdmin.md)
