@@ -6,7 +6,7 @@ from whatsapp_api_client_python import greenAPI as greenAPI
 ID_INSTANCE = environ['ID_INSTANCE']
 API_TOKEN_INSTANCE = environ['API_TOKEN_INSTANCE']
 
-greenAPI = greenAPI.greenAPI('https://api.green-api.com', 
+restApi = greenAPI.RestApi('https://api.green-api.com', 
                         ID_INSTANCE, 
                         API_TOKEN_INSTANCE)
 
@@ -14,13 +14,19 @@ def main():
     chatIds = [
         "79001234567@c.us"
     ]
-    resultCreate = greenAPI.groups.createGroup('GroupName', 
+    resultCreate = restApi.groups.createGroup('GroupName', 
         chatIds)
 
     if resultCreate.code == 200:
-        resultSend = greenAPI.sending.sendMessage(resultCreate.data['chatId'], 
+        print(resultCreate.data)
+        resultSend = restApi.sending.sendMessage(resultCreate.data['chatId'], 
             'Message text')
-        print(resultSend)
+        if resultSend.code == 200:
+            print(resultSend.data)
+        else:
+            print(resultSend.error)    
+    else:
+        print(resultCreate.error)
 
 if __name__ == "__main__":
     main()

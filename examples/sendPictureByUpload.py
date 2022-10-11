@@ -10,10 +10,10 @@ restApi = greenAPI.RestApi('https://api.green-api.com',
                         API_TOKEN_INSTANCE)
 
 def main():
-    result = restApi.sending.sendFileByUpload('120363025955348359@g.us', 
+    result = restApi.sending.sendFileByUpload('79001234567@c.us', 
         'C:\Games\PicFromDisk.png', 
         'PicFromDisk.png', 'Picture from disk')
-    print(result)
+    print(result.data)
 
 if __name__ == "__main__":
     main()

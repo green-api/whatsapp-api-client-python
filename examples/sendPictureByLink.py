@@ -10,10 +10,10 @@ restApi = greenAPI.RestApi('https://api.green-api.com',
                         API_TOKEN_INSTANCE)
 
 def main():
-    result = restApi.sending.sendFileByUrl('120363025955348359@g.us', 
+    result = restApi.sending.sendFileByUrl('79001234567@c.us', 
         'https://www.google.ru/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png', 
         'googlelogo_color_272x92dp.png', 'Google logo')
-    print(result)
+    print(result.data)
 
 if __name__ == "__main__":
     main()
