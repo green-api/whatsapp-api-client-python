@@ -21,9 +21,10 @@ class RestApi:
     idInstance: str
     apiTokenInstance: str
 
-    def __init__(self, host: str, 
+    def __init__(self, 
                     idInstance: str, 
-                    apiTokenInstance: str) -> None:
+                    apiTokenInstance: str,
+                    host: str = 'https://api.green-api.com') -> None:
         self.host = host
         self.idInstance = idInstance
         self.apiTokenInstance = apiTokenInstance

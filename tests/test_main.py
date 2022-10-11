@@ -6,9 +6,7 @@ from whatsapp_api_client_python import greenAPI as greenAPI
 ID_INSTANCE = environ['ID_INSTANCE']
 API_TOKEN_INSTANCE = environ['API_TOKEN_INSTANCE']
 
-RestApi = greenAPI.RestApi('https://api.green-api.com', 
-                        ID_INSTANCE, 
-                        API_TOKEN_INSTANCE)
+RestApi = greenAPI.RestApi(ID_INSTANCE, API_TOKEN_INSTANCE)
 
 class TestClass: 
         def test_getSettings(self):            
