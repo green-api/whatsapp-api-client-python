@@ -94,3 +94,20 @@ class ServiceMethods:
                 '{{host}}/waInstance{{idInstance}}'
                 '/UnarchiveChat/{{apiTokenInstance}}',
                 requestBody)
+
+    def setDisappearingChat(self, chatId: str, 
+                            ephemeralExpiration: int) -> Response:
+            'The method is aimed for changing settings of disappearing '\
+            'messages in chats. The standard settings of the application '\
+            'are used: 0 (off), 86400 (24 hours), '\
+            '604800 (7 days), 7776000 (90 days).'
+
+            requestBody = {
+                'chatId': chatId,
+                'ephemeralExpiration': ephemeralExpiration
+            }
+
+            return self.restApi.request('POST', 
+                '{{host}}/waInstance{{idInstance}}'
+                '/SetDisappearingChat/{{apiTokenInstance}}',
+                requestBody)

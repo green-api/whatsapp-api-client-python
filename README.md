@@ -154,6 +154,7 @@ resultReceive = restApi.receiving.receiveNotification()
 `serviceMethods.archiveChat` | Метод архивирует чат. Архивировать можно чаты, в которых есть хотя бы одно входящее сообщение | [ArchiveChat.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/ArchiveChat.md)
 `serviceMethods.deleteMessage` | Метод удаляет сообщение из чата | [DeleteMessage.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/deleteMessage.md)
 `serviceMethods.unarchiveChat` | Метод разархивирует чат | [UnarchiveChat.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/UnarchiveChat.md)
+`serviceMethods.setDisappearingChat` | Метод предназначен для изменения настроек исчезающих сообщений в чатах | [SetDisappearingChat.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/SetDisappearingChat.md)
 
 ## Документация по методам сервиса
 
