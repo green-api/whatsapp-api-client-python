@@ -155,6 +155,8 @@ resultReceive = restApi.receiving.receiveNotification()
 `serviceMethods.deleteMessage` | Метод удаляет сообщение из чата | [DeleteMessage.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/deleteMessage.md)
 `serviceMethods.unarchiveChat` | Метод разархивирует чат | [UnarchiveChat.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/UnarchiveChat.md)
 `serviceMethods.setDisappearingChat` | Метод предназначен для изменения настроек исчезающих сообщений в чатах | [SetDisappearingChat.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/SetDisappearingChat.md)
+`webhooks.startReceivingNotifications` | Метод предназначен для запуска получения вебхуков | <библиотечный метод>
+`webhooks.stopReceivingNotifications` | Метод предназначен для остановки получения вебхуков | <библиотечный метод>
 
 ## Документация по методам сервиса
 
