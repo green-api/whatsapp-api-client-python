@@ -8,7 +8,7 @@ API_TOKEN_INSTANCE = environ['API_TOKEN_INSTANCE']
 restApi = greenAPI.RestApi(ID_INSTANCE, API_TOKEN_INSTANCE)
 
 def main():
-    result = restApi.sending.sendFileByUpload('79001234567@c.us', 
+    result = restApi.sending.sendFileByUpload('77073450985@c.us', 
         'C:\Games\PicFromDisk.png', 
         'PicFromDisk.png', 'Picture from disk')
     print(result.data)

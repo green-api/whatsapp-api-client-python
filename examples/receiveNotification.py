@@ -2,7 +2,6 @@ from os import environ
 from datetime import datetime
 import json
 from whatsapp_api_client_python import greenAPI as greenAPI
-from whatsapp_api_client_python.tools.webhooks import TypeWebhook as TypeWebhook
 
 
 ID_INSTANCE = environ['ID_INSTANCE']
@@ -14,23 +13,21 @@ def main():
    restApi.webhooks.startReceivingNotifications(onEvent)
 
 def onEvent(typeWebhook, body):
-   if typeWebhook == TypeWebhook.INCOMING_MESSAGE_RECEIVED.value:
+   if typeWebhook == 'incomingMessageReceived':
       onIncomingMessageReceived(body)      
-   elif typeWebhook == TypeWebhook.DEVICE_INFO.value:   
+   elif typeWebhook == 'deviceInfo':   
       onDeviceInfo(body)              
-   elif typeWebhook == TypeWebhook.INCOMING_CALL.value:
+   elif typeWebhook == 'incomingCall':
       onIncomingCall(body)
-   elif typeWebhook == TypeWebhook.INCOMING_MESSAGE_RECEIVED.value:
-      onIncomingMessageReceived(body)
-   elif typeWebhook == TypeWebhook.OUTGOING_API_MESSAGE_RECEIVED.value:
+   elif typeWebhook == 'outgoingAPIMessageReceived':
       onOutgoingAPIMessageReceived(body)
-   elif typeWebhook == TypeWebhook.OUTGOING_MESSAGE_RECEIVED.value:
+   elif typeWebhook == 'outgoingMessageReceived':
       onOutgoingMessageReceived(body)
-   elif typeWebhook == TypeWebhook.OUTGOING_MESSAGE_STATUS.value:
+   elif typeWebhook == 'outgoingMessageStatus':
       onOutgoingMessageStatus(body)
-   elif typeWebhook == TypeWebhook.STATE_INSTANCE_CHANGED.value:
+   elif typeWebhook == 'stateInstanceChanged':
       onStateInstanceChanged(body)
-   elif typeWebhook == TypeWebhook.STATUS_INSTANCE_CHANGED.value:
+   elif typeWebhook == 'statusInstanceChanged':
       onStatusInstanceChanged(body)
 
 def onIncomingMessageReceived(body):

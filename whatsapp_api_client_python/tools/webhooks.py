@@ -1,28 +1,3 @@
-from whatsapp_api_client_python.response import Response
-from enum import Enum
-
-
-class TypeWebhook(Enum):
-    INCOMING_MESSAGE_RECEIVED = 'incomingMessageReceived'
-    OUTGOING_MESSAGE_RECEIVED = 'outgoingMessageReceived'
-    OUTGOING_API_MESSAGE_RECEIVED = 'outgoingAPIMessageReceived'
-    OUTGOING_MESSAGE_STATUS  = 'outgoingMessageStatus'
-    STATE_INSTANCE_CHANGED  = 'stateInstanceChanged'
-    STATUS_INSTANCE_CHANGED  = 'statusInstanceChanged'
-    DEVICE_INFO  = 'deviceInfo'
-    INCOMING_CALL  = 'incomingCall'
-
-class TypeMessage(Enum):
-    TEXT_MESSAGE = 'textMessage'
-    IMAGE_MESSAGE = 'imageMessage'
-    VIDEO_MESSAGE = 'videoMessage'
-    DOCUMENT_MESSAGE  = 'documentMessage'
-    AUDIO_MESSAGE  = 'audioMessage'
-    LOCATION_MESSAGE  = 'locationMessage'
-    CONTACT_MESSAGE  = 'contactMessage'
-    EXTENDED_TEXT_MESSAGE  = 'extendedTextMessage'
-    QUOTED_MESSAGE = 'quotedMessage'
-
 class Webhooks:
     def __init__(self, restApi) -> None:
         self.restApi = restApi

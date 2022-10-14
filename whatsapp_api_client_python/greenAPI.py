@@ -1,4 +1,5 @@
 from array import array
+import mimetypes
 import requests
 import json
 from whatsapp_api_client_python.response import Response
@@ -13,6 +14,7 @@ from whatsapp_api_client_python.tools.receiving import Receiving
 from whatsapp_api_client_python.tools.sending import Sending
 from whatsapp_api_client_python.tools.serviceMethods import ServiceMethods
 from whatsapp_api_client_python.tools.webhooks import Webhooks
+
 
 class RestApi:
     'REST API class'
@@ -57,7 +59,7 @@ class RestApi:
                     }
                     payloadData = json.dumps(payload)
                 else:
-                    payloadData = payload    
+                    payloadData = payload   
             result = requests.request(method, url, headers = headers, 
                                         data = payloadData, 
                                         files = files)

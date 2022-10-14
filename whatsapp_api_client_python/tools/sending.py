@@ -1,5 +1,6 @@
 from array import array
 import os.path
+import mimetypes
 from whatsapp_api_client_python.response import Response
 
 
@@ -77,8 +78,10 @@ class Sending:
             if fileName == None:
                 fileName = pathParts[pathParts.count - 1]
 
+            mimeType = mimetypes.guess_type(path)[0]
+
             files = [
-                ('file', open(path,'rb'))
+                ('file', (fileName, open(path,'rb'), mimeType))
             ]
 
             requestBody = {
