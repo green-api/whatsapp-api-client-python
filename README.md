@@ -3,13 +3,13 @@
 [![Python application](https://github.com/green-api/whatsapp-api-client-python/actions/workflows/python-app.yml/badge.svg)](https://github.com/green-api/whatsapp-api-client-python/actions/workflows/python-app.yml)
 [![Upload Python Package](https://github.com/green-api/whatsapp-api-client-python/actions/workflows/python-publish.yml/badge.svg)](https://github.com/green-api/whatsapp-api-client-python/actions/workflows/python-publish.yml)
 
-Python библиотека для интеграции с мессенджером WhatsAPP через API сервиса [green-api.com](https://green-api.com). Чтобы воспользоваться библиотекой нужно получить регистрационный токен и id аккаунта в [личном кабинете](https://console.green-api.com). Есть бесплатный тариф аккаунта разработчика.
+Python library for intagration with WhatsAPP messanger via API of [green-api.com](https://green-api.com) service. To use the library you have to get a registration token and an account id in the [personal area](https://console.green-api.com). There is a free developer account tariff plan.
 
 ## API
 
-Документация к REST API находится по [ссылке](https://green-api.com/docs/api/). Библиотека является оберткой к REST API, поэтому документация по ссылке выше применима и к самой библиотеке.
+You can find REST API documentation by [url](https://green-api.com/docs/api/). The library is a wrapper for REST API, so the documentation at the above url applies to the library as well.
 
-## Установка
+## Installation
 
 ```
 pip install whatsapp-api-client-python
@@ -20,13 +20,13 @@ pip install whatsapp-api-client-python
 ```
 from whatsapp_api_client_python import API
 ```
-## Авторизация 
+## Authorization
 
-Чтобы отправить сообщение или выполнить другой метод Green-API, аккаунт WhatsApp в приложении телефона должен быть в авторизованном состоянии. Для авторизации аккаунта перейдите в [личный кабинет](https://console.green-api.com) и сканируйте QR-код с использованием приложения WhatsApp.
+To send a message or to exacute some other Green-API method, you have to have the WhatsApp account in the phone application to be authorized. To authorize your account please go to the [personal area](https://console.green-api.com) and scan a QR-code using the WhatsApp application.
 
-## Примеры
+## Examples
 
-### Как инициализировать объект
+### How to initialize an object
 
 ```
 restApi = API.RestApi('https://api.green-api.com', 
@@ -34,15 +34,15 @@ restApi = API.RestApi('https://api.green-api.com',
                         API_TOKEN_INSTANCE)
 ```
 
-### Отправка текстового сообщения на номер WhatsApp
+### Sending a text message to a WhatsApp number
 
 ```
 result = restApi.sending.sendMessage('79001234567@g.us', 'Message text')
 ```
 
-Ссылка на пример: [sendText.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendText.py)
+Example url: [sendText.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendText.py)
 
-Обратите внимание, что ключи можно получать из переменных среды:
+Please note that keys can be obtained from environment variables:
 ```
 from os import environ
 
@@ -50,7 +50,7 @@ ID_INSTANCE = environ['ID_INSTANCE']
 API_TOKEN_INSTANCE = environ['API_TOKEN_INSTANCE']
 ```
 
-### Отправка картинки по URL
+### Sending an image via URL
 
 ```
 result = restApi.sending.sendFileByUrl('120363025955348359@g.us', 
@@ -58,9 +58,9 @@ result = restApi.sending.sendFileByUrl('120363025955348359@g.us',
         'googlelogo_color_272x92dp.png', 'Google logo')
 ```
 
-Ссылка на пример: [sendPictureByLink.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPictureByLink.py)
+Example url: [sendPictureByLink.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPictureByLink.py)
 
-### Отправка картинки загрузкой с диска
+### Sending an image by uploading from the disk
 
 ```
 result = restApi.sending.sendFileByUpload('120363025955348359@g.us', 
@@ -68,9 +68,9 @@ result = restApi.sending.sendFileByUpload('120363025955348359@g.us',
         'PicFromDisk.png', 'Picture from disk')
 ```
 
-Ссылка на пример: [sendPictureByUpload.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPictureByUpload.py)
+Example url: [sendPictureByUpload.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPictureByUpload.py)
 
-### Создание группы и отправка сообщения в эту группу
+### Group creation and sending a message to the group
 
 ```
 chatIds = [
@@ -84,88 +84,88 @@ if resultCreate.code == 200:
         'Message text')
 ```
 
-ВАЖНО: Если попытаться создать группу с несуществующим номером WhatsApp 
-может заблокировать номер отправителя. Номер в примере не существует.
+IMPORTANT: If one tries to create a group with a non-existent number, WhatsApp 
+may block the sender's number. The number in the example is non-existent.
 
-Ссылка на пример: [createGroupAndSendMessage.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/createGroupAndSendMessage.py)
+Example url: [createGroupAndSendMessage.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/createGroupAndSendMessage.py)
 
-### Получить входящие уведомления
+### Receiving incoming webhooks
 
 ```
 resultReceive = restApi.receiving.receiveNotification()
 ```
 
-## Список примеров
+## Examples list
 
-Описание |  Модуль
+Description |  Module
 ----- | ----- 
-Пример отправки текста | [sendText.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendText.py)
-Пример отправки картинки по URL | [sendPictureByLink.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPictureByLink.py)
-Пример отправки картинки загрузкой с диска | [sendPictureByUpload.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPictureByUpload.py)
-Пример создание группы и отправка сообщения в группу | [createGroupAndSendMessage.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/createGroupAndSendMessage.py)
-Пример получения входящих уведомлений | [receiveNotification.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/receiveNotification.py)
+Example of sending text | [sendText.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendText.py)
+Example of sending a picture by URL | [sendPictureByLink.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPictureByLink.py)
+Example of sending a picture by uploading from the disk | [sendPictureByUpload.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPictureByUpload.py)
+Example of a group creation and sending a message to the group | [createGroupAndSendMessage.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/createGroupAndSendMessage.py)
+Example of incoming webhooks receiving | [receiveNotification.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/receiveNotification.py)
 
 
-## Полный список методов библиотеки
+## The full list of the library methods
 
-Метод | Описание |  Документация
+Method | Description |  Documentation
 ----- | ----- | ----- 
-`account.getSettings` | Метод предназначен для получения текущих настроек аккаунта | [GetSettings.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/GetSettings.md)
-`account.getStateInstance` | Метод предназначен для получения состояния аккаунта | [GetStateInstance.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/GetStateInstance.md)
-`account.getStatusInstance` | Метод предназначен для получения состояния сокета соединения инстанса аккаунта с WhatsApp | [GetStatusInstance.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/GetStatusInstance.md)
-`account.logout` | Метод предназначен для разлогинивания аккаунта | [Logout.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/Logout.md)
-`account.qr` | Метод предназначен для получения QR-кода | [QR.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/QR.md)
-`account.reboot` | Метод предназначен для перезапуска аккаунта | [Reboot.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/Reboot.md)
-`account.setProfilePicture` | Метод предназначен для установки аватара аккаунта | [SetProfilePicture.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/SetProfilePicture.md)
-`account.setSettings` | Метод предназначен для установки настроек аккаунта | [SetSettings.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/SetSettings.md)
-`account.setSystemProxy` | Метод предназначен для установки системного прокси. Нужно используйте метод, когда требуется сбросить пользовательские настройки прокси на системные | [SetSystemProxy.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/SetSystemProxy.md)
+`account.getSettings` | The method is aimed for getting the current settings of the account | [GetSettings.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/GetSettings.md)
+`account.getStateInstance` | The method is aimed for getting the account state | [GetStateInstance.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/GetStateInstance.md)
+`account.getStatusInstance` | The method is aimed for getting the status of the account instance socket connection with WhatsApp | [GetStatusInstance.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/GetStatusInstance.md)
+`account.logout` | The method is aimed for logging out an account | [Logout.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/Logout.md)
+`account.qr` | The method is aimed for getting QR code | [QR.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/QR.md)
+`account.reboot` | The method is aimed for rebooting an account | [Reboot.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/Reboot.md)
+`account.setProfilePicture` | The method is aimed for setting an account picture | [SetProfilePicture.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/SetProfilePicture.md)
+`account.setSettings` | The method is aimed for setting an account settings | [SetSettings.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/SetSettings.md)
+`account.setSystemProxy` | The method is aimed for setting a system proxy. Use the method when you need to reset custom proxy settings to system ones | [SetSystemProxy.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/SetSystemProxy.md)
 `groups.addGroupParticipant` | Метод добавляет участника в групповой чат | [AddGroupParticipant.md](https://github.com/green-api/docs/blob/master/ru/docs/api/groups/AddGroupParticipant.md)
-`groups.createGroup` | Метод добавляет участника в групповой чат. ВАЖНО: Если попытаться создать группу с несуществующим номером WhatsApp может заблокировать номер отправителя. | [CreateGroup.md](https://github.com/green-api/docs/blob/master/ru/docs/api/groups/CreateGroup.md)
-`groups.getGroupData` | Метод получает данные группового чата | [GetGroupData.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/GetGroupData.md)
-`groups.leaveGroup` | Метод производит выход пользователя текущего аккаунта из группового чата | [LeaveGroup.md](https://github.com/green-api/docs/blob/master/ru/docs/api/groups/LeaveGroup.md)
-`groups.removeAdmin` | Метод лишает участника прав администрирования группового чата | [RemoveAdmin.md](https://github.com/green-api/docs/blob/master/ru/docs/api/groups/RemoveAdmin.md)
-`groups.removeGroupParticipant` | Метод удаляет участника из группового чата | [RemoveGroupParticipant.md](https://github.com/green-api/docs/blob/master/ru/docs/api/groups/RemoveGroupParticipant.md)
-`groups.setGroupAdmin` | Метод назначает участника группового чата администратором | [SetGroupAdmin.md](https://github.com/green-api/docs/blob/master/ru/docs/api/groups/SetGroupAdmin.md)
-`groups.setGroupPicture` | Метод устанавливает аватар группы | [SetGroupPicture.md](https://github.com/green-api/docs/blob/master/ru/docs/api/groups/SetGroupPicture.md)
-`groups.updateGroupName` | Метод изменяет наименование группового чата | [UpdateGroupName.md](https://github.com/green-api/docs/blob/master/ru/docs/api/groups/UpdateGroupName.md)
-`journals.getChatHistory` | Метод возвращает историю сообщений чата | [GetChatHistory.md](https://github.com/green-api/docs/blob/master/ru/docs/api/journals/GetChatHistory.md)
-`journals.lastIncomingMessages` | Метод возвращает крайние входящие сообщения аккаунта. По умолчанию возвращаются последние сообщения за 24 часа | [GetChatHistory.md](https://github.com/green-api/docs/blob/master/ru/docs/api/journals/LastIncomingMessages.md)
-`journals.lastOutgoingMessages` | Метод возвращает крайние отправленные сообщения аккаунта. По умолчанию возвращаются последние сообщения за 24 часа | [LastOutgoingMessages.md](https://github.com/green-api/docs/blob/master/ru/docs/api/journals/LastOutgoingMessages.md)
-`marking.readChat` | Метод предназначен для отметки сообщений в чате прочитанными. Могут быть отмечены прочитанными все сообщения в чате или только одно заданное сообщение | [ReadChat.md](https://github.com/green-api/docs/blob/master/ru/docs/api/marks/ReadChat.md)
-`device.getDeviceInfo` | Метод предназначен для получения информации об устройстве (телефоне), на котором запущено приложение WhatsApp Business | [GetDeviceInfo.md](https://github.com/green-api/docs/blob/master/ru/docs/api/phone/GetDeviceInfo.md)
-`queues.clearMessagesQueue` | Метод предназначен для очистки очереди сообщений на отправку | [ClearMessagesQueue.md](https://github.com/green-api/docs/blob/master/ru/docs/api/queues/ClearMessagesQueue.md)
-`queues.showMessagesQueue` | Метод предназначен для получения списка сообщений, находящихся в очереди на отправку | [ShowMessagesQueue.md](https://github.com/green-api/docs/blob/master/ru/docs/api/queues/ShowMessagesQueue.md)
-`receiving.deleteNotification` | Метод предназначен для удаления входящего уведомления из очереди уведомлений | [DeleteNotification.md](https://github.com/green-api/docs/blob/master/ru/docs/api/receiving/technology-http-api/DeleteNotification.md)
-`receiving.receiveNotification` | Метод предназначен для получения одного входящего уведомления из очереди уведомлений | [ReceiveNotification.md](https://github.com/green-api/docs/blob/master/ru/docs/api/receiving/technology-http-api/ReceiveNotification.md)
-`sending.sendButtons` | Метод предназначен для отправки сообщения с кнопками в личный или групповой чат | [SendButtons.md](https://github.com/green-api/docs/blob/master/ru/docs/api/sending/SendButtons.md)
-`sending.sendContact` | Метод предназначен для отправки сообщения с контактом | [SendContact.md](https://github.com/green-api/docs/blob/master/ru/docs/api/sending/SendContact.md)
-`sending.sendFileByUpload` | Метод предназначен для отправки файла, загружаемого через форму | [SendFileByUpload.md](https://github.com/green-api/docs/blob/master/ru/docs/api/sending/SendFileByUpload.md)
-`sending.sendFileByUrl` | Метод предназначен для отправки файла, загружаемого по ссылке | [SendFileByUrl.md](https://github.com/green-api/docs/blob/master/ru/docs/api/sending/SendFileByUrl.md)
-`sending.sendLink` | Метод предназначен для отправки сообщения со ссылкой, по которой будут добавлены превью изображения, заголовок и описание | [SendLink.md](https://github.com/green-api/docs/blob/master/ru/docs/api/sending/SendLink.md)
-`sending.sendListMessage` | Метод предназначен для отправки сообщения с кнопкой выбора из списка значений в личный или групповой чат | [SendListMessage.md](https://github.com/green-api/docs/blob/master/ru/docs/api/sending/SendListMessage.md)
-`sending.sendLocation` | Метод предназначен для отправки сообщения геолокации | [SendLocation.md](https://github.com/green-api/docs/blob/master/ru/docs/api/sending/SendLocation.md)
-`sending.sendMessage` | Метод предназначен для отправки текстового сообщения в личный или групповой чат | [SendMessage.md](https://github.com/green-api/docs/blob/master/ru/docs/api/sending/SendMessage.md)
-`sending.sendTemplateButtons` | Метод предназначен для отправки сообщения с интерактивными кнопками из перечня шаблонов в личный или групповой чат | [SendTemplateButtons.md](https://github.com/green-api/docs/blob/master/ru/docs/api/sending/SendTemplateButtons.md)
-`serviceMethods.checkWhatsapp` | Метод проверяет наличие аккаунта WhatsApp на номере телефона | [CheckWhatsapp.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/CheckWhatsapp.md)
-`serviceMethods.getAvatar` | Метод возвращает аватар корреспондента или группового чата | [GetAvatar.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/GetAvatar.md)
-`serviceMethods.getContactInfo` | Метод предназначен для получения информации о контакте | [GetContactInfo.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/GetContactInfo.md)
-`serviceMethods.getContacts` | Метод предназначен для получения списка контактов текущего аккаунта | [GetContacts.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/GetContacts.md)
-`serviceMethods.setDisappearingChat` | Метод предназначен для изменения настроек исчезающих сообщений в чатах. Нужно использовать стандартные настройки приложения: 0 (выключено), 86400 (24 часа), 604800 (7 дней), 7776000 (90 дней) | [SetDisappearingChat.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/SetDisappearingChat.md)
-`serviceMethods.archiveChat` | Метод архивирует чат. Архивировать можно чаты, в которых есть хотя бы одно входящее сообщение | [ArchiveChat.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/ArchiveChat.md)
-`serviceMethods.deleteMessage` | Метод удаляет сообщение из чата | [DeleteMessage.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/deleteMessage.md)
-`serviceMethods.unarchiveChat` | Метод разархивирует чат | [UnarchiveChat.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/UnarchiveChat.md)
-`serviceMethods.setDisappearingChat` | Метод предназначен для изменения настроек исчезающих сообщений в чатах | [SetDisappearingChat.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/SetDisappearingChat.md)
-`webhooks.startReceivingNotifications` | Метод предназначен для запуска получения вебхуков | <библиотечный метод>
-`webhooks.stopReceivingNotifications` | Метод предназначен для остановки получения вебхуков | <библиотечный метод>
+`groups.createGroup` | The method adds a participant to a group chat. IMPORTANT: If one tries to create a group with a non-existent number, WhatsApp may block the sender's number. | [CreateGroup.md](https://github.com/green-api/docs/blob/master/ru/docs/api/groups/CreateGroup.md)
+`groups.getGroupData` | The method gets group chat data | [GetGroupData.md](https://github.com/green-api/docs/blob/master/ru/docs/api/account/GetGroupData.md)
+`groups.leaveGroup` | The method makes the current account user leave the group chat | [LeaveGroup.md](https://github.com/green-api/docs/blob/master/ru/docs/api/groups/LeaveGroup.md)
+`groups.removeAdmin` | he method removes a participant from group chat administartion rights | [RemoveAdmin.md](https://github.com/green-api/docs/blob/master/ru/docs/api/groups/RemoveAdmin.md)
+`groups.removeGroupParticipant` | The method removes a participant from a group chat | [RemoveGroupParticipant.md](https://github.com/green-api/docs/blob/master/ru/docs/api/groups/RemoveGroupParticipant.md)
+`groups.setGroupAdmin` | The method sets a group chat participant as an administrator | [SetGroupAdmin.md](https://github.com/green-api/docs/blob/master/ru/docs/api/groups/SetGroupAdmin.md)
+`groups.setGroupPicture` | The method sets a group picture | [SetGroupPicture.md](https://github.com/green-api/docs/blob/master/ru/docs/api/groups/SetGroupPicture.md)
+`groups.updateGroupName` | The method changes a group chat name | [UpdateGroupName.md](https://github.com/green-api/docs/blob/master/ru/docs/api/groups/UpdateGroupName.md)
+`journals.getChatHistory` | The method returns the chat message history | [GetChatHistory.md](https://github.com/green-api/docs/blob/master/ru/docs/api/journals/GetChatHistory.md)
+`journals.lastIncomingMessages` | The method returns the last incoming messages of the account. In the default mode the incoming messages for 24 hours are returned | [GetChatHistory.md](https://github.com/green-api/docs/blob/master/ru/docs/api/journals/LastIncomingMessages.md)
+`journals.lastOutgoingMessages` | The method returns the last outgoing messages of the account. In the default mode the last messages for 24 hours are returned | [LastOutgoingMessages.md](https://github.com/green-api/docs/blob/master/ru/docs/api/journals/LastOutgoingMessages.md)
+`marking.readChat` | The method is aimed for marking messages in a chat as read. Either all messages or a specified message in a chat can be marked as read | [ReadChat.md](https://github.com/green-api/docs/blob/master/ru/docs/api/marks/ReadChat.md)
+`device.getDeviceInfo` | The method is aimed for getting information about the device (phone) running WhatsApp Business application | [GetDeviceInfo.md](https://github.com/green-api/docs/blob/master/ru/docs/api/phone/GetDeviceInfo.md)
+`queues.clearMessagesQueue` | The method is aimed for clearing the queue of messages to be sent | [ClearMessagesQueue.md](https://github.com/green-api/docs/blob/master/ru/docs/api/queues/ClearMessagesQueue.md)
+`queues.showMessagesQueue` | The method is aimed for getting a list of messages in the queue to be sent | [ShowMessagesQueue.md](https://github.com/green-api/docs/blob/master/ru/docs/api/queues/ShowMessagesQueue.md)
+`receiving.deleteNotification` | The method is aimed for deleting an incoming notification from the notification queue | [DeleteNotification.md](https://github.com/green-api/docs/blob/master/ru/docs/api/receiving/technology-http-api/DeleteNotification.md)
+`receiving.receiveNotification` | The method is aimed for receiving one incoming notification from the notifications queue | [ReceiveNotification.md](https://github.com/green-api/docs/blob/master/ru/docs/api/receiving/technology-http-api/ReceiveNotification.md)
+`sending.sendButtons` | The method is aimed for sending a button message to a personal or a group chat | [SendButtons.md](https://github.com/green-api/docs/blob/master/ru/docs/api/sending/SendButtons.md)
+`sending.sendContact` | The method is aimed for sending a contact message | [SendContact.md](https://github.com/green-api/docs/blob/master/ru/docs/api/sending/SendContact.md)
+`sending.sendFileByUpload` | The method is aimed for sending a file uploaded by form | [SendFileByUpload.md](https://github.com/green-api/docs/blob/master/ru/docs/api/sending/SendFileByUpload.md)
+`sending.sendFileByUrl` | The method is aimed for sending a file uploaded by Url | [SendFileByUrl.md](https://github.com/green-api/docs/blob/master/ru/docs/api/sending/SendFileByUrl.md)
+`sending.sendLink` | The method is aimed for sending a message with a link, by which an image preview, title and description will be added | [SendLink.md](https://github.com/green-api/docs/blob/master/ru/docs/api/sending/SendLink.md)
+`sending.sendListMessage` | The method is aimed for sending a message with a select button from a list of values to a personal or a group chat | [SendListMessage.md](https://github.com/green-api/docs/blob/master/ru/docs/api/sending/SendListMessage.md)
+`sending.sendLocation` | The method is aimed for sending a location message | [SendLocation.md](https://github.com/green-api/docs/blob/master/ru/docs/api/sending/SendLocation.md)
+`sending.sendMessage` | The method is aimed for sending a text message to a personal or a group chat | [SendMessage.md](https://github.com/green-api/docs/blob/master/ru/docs/api/sending/SendMessage.md)
+`sending.sendTemplateButtons` | The method is aimed for sending a message with template list interacrive buttons to a personal or a group chat | [SendTemplateButtons.md](https://github.com/green-api/docs/blob/master/ru/docs/api/sending/SendTemplateButtons.md)
+`serviceMethods.checkWhatsapp` | The method checks WhatsApp account availability on a phone number | [CheckWhatsapp.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/CheckWhatsapp.md)
+`serviceMethods.getAvatar` | The method returns a user or a group chat avatar | [GetAvatar.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/GetAvatar.md)
+`serviceMethods.getContactInfo` | The method is aimed for getting information on a contact | [GetContactInfo.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/GetContactInfo.md)
+`serviceMethods.getContacts` | The method is aimed for getting a list of the current account contacts | [GetContacts.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/GetContacts.md)
+`serviceMethods.setDisappearingChat` | The method is aimed for changing settings of disappearing messages in chats. The standard settings of the application are to be used: 0 (off), 86400 (24 hours), 604800 (7 days), 7776000 (90 days) | [SetDisappearingChat.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/SetDisappearingChat.md)
+`serviceMethods.archiveChat` | The method archives a chat. One can archive chats that have at least one incoming message | [ArchiveChat.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/ArchiveChat.md)
+`serviceMethods.deleteMessage` | The method deletes a message from a chat | [DeleteMessage.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/deleteMessage.md)
+`serviceMethods.unarchiveChat` | The method unarchives a chat | [UnarchiveChat.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/UnarchiveChat.md)
+`serviceMethods.setDisappearingChat` | The method is aimed for changing settings of disappearing messages in chats | [SetDisappearingChat.md](https://github.com/green-api/docs/blob/master/ru/docs/api/service/SetDisappearingChat.md)
+`webhooks.startReceivingNotifications` | The method is aimed for starting to receive webhooks | <library method>
+`webhooks.stopReceivingNotifications` | The method is aimed for stopping to receive webhooks | <library method>
 
-## Документация по методам сервиса
+## Service methods documentation
 
 [https://green-api.com/docs/api/](https://green-api.com/docs/api/)
 
-## Сторонние продукты
+## External products
 
-* [requests](https://requests.readthedocs.io) - для http запросов
+* [requests](https://requests.readthedocs.io) - for http requests
 
-## Лицензия
+## License
 
-Лицензировано на условиях MIT. Смотрите файл [LICENSE](LICENSE)
+Licensed under MIT terms. Please see file [LICENSE](LICENSE)
