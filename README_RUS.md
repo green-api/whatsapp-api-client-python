@@ -38,7 +38,7 @@ restApi = API.RestApi(ID_INSTANCE, API_TOKEN_INSTANCE)
 result = restApi.sending.sendMessage('79001234567@g.us', 'Message text')
 ```
 
-Ссылка на пример: [sendText.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendText.py)
+Ссылка на пример: [sendTextMessage.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendTextMessage.py)
 
 Обратите внимание, что ключи можно получать из переменных среды:
 ```
@@ -97,7 +97,7 @@ resultReceive = restApi.receiving.receiveNotification()
 
 Описание |  Модуль
 ----- | ----- 
-Пример отправки текста | [sendText.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendText.py)
+Пример отправки текста | [sendTextMessage.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendTextMessage.py)
 Пример отправки картинки по URL | [sendPictureByLink.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPictureByLink.py)
 Пример отправки картинки загрузкой с диска | [sendPictureByUpload.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPictureByUpload.py)
 Пример создание группы и отправка сообщения в группу | [createGroupAndSendMessage.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/createGroupAndSendMessage.py)
