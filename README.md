@@ -29,7 +29,7 @@ To send a message or to exacute some other Green-API method, you have to have th
 ### How to initialize an object
 
 ```
-restApi = API.RestApi(ID_INSTANCE, API_TOKEN_INSTANCE)
+restApi = greenAPI.RestApi(ID_INSTANCE, API_TOKEN_INSTANCE)
 ```
 
 ### Sending a text message to a WhatsApp number

@@ -1,5 +1,4 @@
 from array import array
-import mimetypes
 import requests
 import json
 from whatsapp_api_client_python.response import Response

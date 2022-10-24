@@ -29,7 +29,7 @@ from whatsapp_api_client_python import greenAPI
 ### Как инициализировать объект
 
 ```
-restApi = API.RestApi(ID_INSTANCE, API_TOKEN_INSTANCE)
+restApi = greenAPI.RestApi(ID_INSTANCE, API_TOKEN_INSTANCE)
 ```
 
 ### Отправка текстового сообщения на номер WhatsApp
