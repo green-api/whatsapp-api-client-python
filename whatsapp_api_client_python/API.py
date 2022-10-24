@@ -62,12 +62,11 @@ class GreenApi:
             result = requests.request(method, url, headers = headers, 
                                         data = payloadData, 
                                         files = files)
-            result.raise_for_status()
             status_code = result.status_code
             text = result.text
-        except requests.HTTPError as http_err:
-            status_code = 0
-            text = f'HTTP {method} error occurred: {http_err}'
+            result.raise_for_status()
+        except requests.HTTPError:
+            return Response(status_code, text)
         except Exception as err:
             status_code = 0
             text = f'Other error occurred: {err}'
