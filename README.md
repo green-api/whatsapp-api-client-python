@@ -18,7 +18,7 @@ pip install whatsapp-api-client-python
 ## Import 
 
 ```
-from whatsapp_api_client_python import greenAPI
+from whatsapp_api_client_python import API
 ```
 ## Authorization
 
@@ -29,13 +29,13 @@ To send a message or to exacute some other Green-API method, you have to have th
 ### How to initialize an object
 
 ```
-restApi = greenAPI.RestApi(ID_INSTANCE, API_TOKEN_INSTANCE)
+greenApi = API.GreenApi(ID_INSTANCE, API_TOKEN_INSTANCE)
 ```
 
 ### Sending a text message to a WhatsApp number
 
 ```
-result = restApi.sending.sendMessage('79001234567@g.us', 'Message text')
+result = greenApi.sending.sendMessage('79001234567@g.us', 'Message text')
 ```
 
 Example url: [sendTextMessage.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendTextMessage.py)
@@ -51,7 +51,7 @@ API_TOKEN_INSTANCE = environ['API_TOKEN_INSTANCE']
 ### Sending an image via URL
 
 ```
-result = restApi.sending.sendFileByUrl('120363025955348359@g.us', 
+result = greenApi.sending.sendFileByUrl('120363025955348359@g.us', 
         'https://www.google.ru/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png', 
         'googlelogo_color_272x92dp.png', 'Google logo')
 ```
@@ -61,7 +61,7 @@ Example url: [sendPictureByLink.py](https://github.com/green-api/whatsapp-api-cl
 ### Sending an image by uploading from the disk
 
 ```
-result = restApi.sending.sendFileByUpload('120363025955348359@g.us', 
+result = greenApi.sending.sendFileByUpload('120363025955348359@g.us', 
         'C:\Games\PicFromDisk.png', 
         'PicFromDisk.png', 'Picture from disk')
 ```
@@ -74,11 +74,11 @@ Example url: [sendPictureByUpload.py](https://github.com/green-api/whatsapp-api-
 chatIds = [
     "79001234567@c.us"
 ]
-resultCreate = restApi.groups.createGroup('GroupName', 
+resultCreate = greenApi.groups.createGroup('GroupName', 
     chatIds)
 
 if resultCreate.code == 200:
-    resultSend = restApi.sending.sendMessage(resultCreate.data['chatId'], 
+    resultSend = greenApi.sending.sendMessage(resultCreate.data['chatId'], 
         'Message text')
 ```
 
@@ -90,7 +90,7 @@ Example url: [createGroupAndSendMessage.py](https://github.com/green-api/whatsap
 ### Receiving incoming webhooks
 
 ```
-resultReceive = restApi.receiving.receiveNotification()
+resultReceive = greenApi.receiving.receiveNotification()
 ```
 
 ## Examples list

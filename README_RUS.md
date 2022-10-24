@@ -18,7 +18,7 @@ pip install whatsapp-api-client-python
 ## Import 
 
 ```
-from whatsapp_api_client_python import greenAPI
+from whatsapp_api_client_python import API
 ```
 ## Авторизация 
 
@@ -29,13 +29,13 @@ from whatsapp_api_client_python import greenAPI
 ### Как инициализировать объект
 
 ```
-restApi = greenAPI.RestApi(ID_INSTANCE, API_TOKEN_INSTANCE)
+greenApi = API.GreenApi(ID_INSTANCE, API_TOKEN_INSTANCE)
 ```
 
 ### Отправка текстового сообщения на номер WhatsApp
 
 ```
-result = restApi.sending.sendMessage('79001234567@g.us', 'Message text')
+result = greenApi.sending.sendMessage('79001234567@g.us', 'Message text')
 ```
 
 Ссылка на пример: [sendTextMessage.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendTextMessage.py)
@@ -51,7 +51,7 @@ API_TOKEN_INSTANCE = environ['API_TOKEN_INSTANCE']
 ### Отправка картинки по URL
 
 ```
-result = restApi.sending.sendFileByUrl('120363025955348359@g.us', 
+result = greenApi.sending.sendFileByUrl('120363025955348359@g.us', 
         'https://www.google.ru/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png', 
         'googlelogo_color_272x92dp.png', 'Google logo')
 ```
@@ -61,7 +61,7 @@ result = restApi.sending.sendFileByUrl('120363025955348359@g.us',
 ### Отправка картинки загрузкой с диска
 
 ```
-result = restApi.sending.sendFileByUpload('120363025955348359@g.us', 
+result = greenApi.sending.sendFileByUpload('120363025955348359@g.us', 
         'C:\Games\PicFromDisk.png', 
         'PicFromDisk.png', 'Picture from disk')
 ```
@@ -74,11 +74,11 @@ result = restApi.sending.sendFileByUpload('120363025955348359@g.us',
 chatIds = [
     "79001234567@c.us"
 ]
-resultCreate = restApi.groups.createGroup('GroupName', 
+resultCreate = greenApi.groups.createGroup('GroupName', 
     chatIds)
 
 if resultCreate.code == 200:
-    resultSend = restApi.sending.sendMessage(resultCreate.data['chatId'], 
+    resultSend = greenApi.sending.sendMessage(resultCreate.data['chatId'], 
         'Message text')
 ```
 
@@ -90,7 +90,7 @@ if resultCreate.code == 200:
 ### Получить входящие уведомления
 
 ```
-resultReceive = restApi.receiving.receiveNotification()
+resultReceive = greenApi.receiving.receiveNotification()
 ```
 
 ## Список примеров

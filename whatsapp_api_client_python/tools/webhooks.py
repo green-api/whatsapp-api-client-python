@@ -1,6 +1,6 @@
 class Webhooks:
-    def __init__(self, restApi) -> None:
-        self.restApi = restApi
+    def __init__(self, greenApi) -> None:
+        self.greenApi = greenApi
         self.started = False
 
     def startReceivingNotifications(self, onEvent) -> bool:
@@ -16,7 +16,7 @@ class Webhooks:
         'To interrupt, press Ctrl+C')
         try:
             while self.started == True:
-                resultReceive = self.restApi.receiving.receiveNotification()
+                resultReceive = self.greenApi.receiving.receiveNotification()
                 if resultReceive.code == 200:
                     if resultReceive.data == None:
                         # There are no incoming notifications, 
@@ -25,7 +25,7 @@ class Webhooks:
                     body = resultReceive.data['body']
                     typeWebhook = body['typeWebhook']
                     onEvent(typeWebhook, body)    
-                    self.restApi.receiving.deleteNotification(
+                    self.greenApi.receiving.deleteNotification(
                         resultReceive.data['receiptId'])
             print('End receiving')
         except KeyboardInterrupt:

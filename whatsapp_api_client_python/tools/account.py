@@ -3,21 +3,21 @@ from whatsapp_api_client_python.response import Response
 
 
 class Account:
-    def __init__(self, restApi) -> None:
-        self.restApi = restApi
+    def __init__(self, greenApi) -> None:
+        self.greenApi = greenApi
         
     def getSettings(self) -> Response:
             'The method is aimed for getting the '\
             'current account settings.'
             
-            return self.restApi.request('GET', 
+            return self.greenApi.request('GET', 
                 '{{host}}/waInstance{{idInstance}}'
                 '/getSettings/{{apiTokenInstance}}')
             
     def getStateInstance(self) -> Response:
             'The method is aimed for getting the account state.'
             
-            return self.restApi.request('GET', 
+            return self.greenApi.request('GET', 
                 '{{host}}/waInstance{{idInstance}}'
                 '/getStateInstance/{{apiTokenInstance}}')
 
@@ -25,14 +25,14 @@ class Account:
             'The method is aimed for getting the status of the account instance '\
             'socket connection with WhatsApp.'
             
-            return self.restApi.request('GET', 
+            return self.greenApi.request('GET', 
                 '{{host}}/waInstance{{idInstance}}'
                 '/getStatusInstance/{{apiTokenInstance}}')
 
     def logout(self) -> Response:
             'The method is aimed for logging out an account.'
             
-            return self.restApi.request('GET', 
+            return self.greenApi.request('GET', 
                 '{{host}}/waInstance{{idInstance}}'
                 '/Logout/{{apiTokenInstance}}')
 
@@ -42,14 +42,14 @@ class Account:
             'on your phone. You can also get a QR code and authorize your'\
             'account in your profile.'
             
-            return self.restApi.request('GET', 
+            return self.greenApi.request('GET', 
                 '{{host}}/waInstance{{idInstance}}'
                 '/QR/{{apiTokenInstance}}')
 
     def reboot(self) -> Response:
             'The method is aimed for rebooting an account.'
             
-            return self.restApi.request('GET', 
+            return self.greenApi.request('GET', 
                 '{{host}}/waInstance{{idInstance}}'
                 '/Reboot/{{apiTokenInstance}}')
 
@@ -63,7 +63,7 @@ class Account:
                 ('file',(file, open(path,'rb'),'image/jpeg'))
             ]
             
-            return self.restApi.request('POST', 
+            return self.greenApi.request('POST', 
                 '{{host}}/waInstance{{idInstance}}'
                 '/SetProfilePicture/{{apiTokenInstance}}', None, files)
 
@@ -71,7 +71,7 @@ class Account:
             'The method is aimed for setting account settings. '\
             'When this method is requested, the account is rebooted.'
             
-            return self.restApi.request('POST', 
+            return self.greenApi.request('POST', 
                 '{{host}}/waInstance{{idInstance}}'
                 '/SetSettings/{{apiTokenInstance}}',
                 requestBody)
@@ -81,6 +81,6 @@ class Account:
             'Use the method when you need to reset custom proxy '\
             'settings to system ones.'
             
-            return self.restApi.request('GET', 
+            return self.greenApi.request('GET', 
                 '{{host}}/waInstance{{idInstance}}'
                 '/SetSystemProxy/{{apiTokenInstance}}')

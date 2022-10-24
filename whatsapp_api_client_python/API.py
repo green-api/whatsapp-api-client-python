@@ -15,7 +15,7 @@ from whatsapp_api_client_python.tools.serviceMethods import ServiceMethods
 from whatsapp_api_client_python.tools.webhooks import Webhooks
 
 
-class RestApi:
+class GreenApi:
     'REST API class'
 
     host: str

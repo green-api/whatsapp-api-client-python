@@ -2,8 +2,8 @@ from whatsapp_api_client_python.response import Response
 
 
 class ServiceMethods:
-    def __init__(self, restApi) -> None:
-        self.restApi = restApi
+    def __init__(self, greenApi) -> None:
+        self.greenApi = greenApi
         
     def checkWhatsapp(self, phoneNumber: int) -> Response:
             'The method checks WhatsApp account availability on a phone number.'
@@ -12,7 +12,7 @@ class ServiceMethods:
                 'phoneNumber': phoneNumber
             }
 
-            return self.restApi.request('POST', 
+            return self.greenApi.request('POST', 
                 '{{host}}/waInstance{{idInstance}}'
                 '/CheckWhatsapp/{{apiTokenInstance}}',
                 requestBody)
@@ -24,7 +24,7 @@ class ServiceMethods:
                 'chatId': chatId
             }
 
-            return self.restApi.request('POST', 
+            return self.greenApi.request('POST', 
                 '{{host}}/waInstance{{idInstance}}'
                 '/GetAvatar/{{apiTokenInstance}}',
                 requestBody)
@@ -36,7 +36,7 @@ class ServiceMethods:
                 'chatId': chatId
             }
 
-            return self.restApi.request('POST', 
+            return self.greenApi.request('POST', 
                 '{{host}}/waInstance{{idInstance}}'
                 '/GetContactInfo/{{apiTokenInstance}}',
                 requestBody)
@@ -53,7 +53,7 @@ class ServiceMethods:
             'If the account is not recorded in the phone book and WhatsApp '\
             'account name is not assigned, then we get an empty field.'
 
-            return self.restApi.request('GET', 
+            return self.greenApi.request('GET', 
                 '{{host}}/waInstance{{idInstance}}'
                 '/GetContacts/{{apiTokenInstance}}')
 
@@ -65,7 +65,7 @@ class ServiceMethods:
                 'chatId': chatId
             }
 
-            return self.restApi.request('POST', 
+            return self.greenApi.request('POST', 
                 '{{host}}/waInstance{{idInstance}}'
                 '/ArchiveChat/{{apiTokenInstance}}',
                 requestBody)
@@ -78,7 +78,7 @@ class ServiceMethods:
                 'idMessage': idMessage
             }
 
-            return self.restApi.request('POST', 
+            return self.greenApi.request('POST', 
                 '{{host}}/waInstance{{idInstance}}'
                 '/DeleteMessage/{{apiTokenInstance}}',
                 requestBody)
@@ -90,7 +90,7 @@ class ServiceMethods:
                 'chatId': chatId
             }
 
-            return self.restApi.request('POST', 
+            return self.greenApi.request('POST', 
                 '{{host}}/waInstance{{idInstance}}'
                 '/UnarchiveChat/{{apiTokenInstance}}',
                 requestBody)
@@ -107,7 +107,7 @@ class ServiceMethods:
                 'ephemeralExpiration': ephemeralExpiration
             }
 
-            return self.restApi.request('POST', 
+            return self.greenApi.request('POST', 
                 '{{host}}/waInstance{{idInstance}}'
                 '/SetDisappearingChat/{{apiTokenInstance}}',
                 requestBody)
