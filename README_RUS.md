@@ -87,11 +87,24 @@ if resultCreate.code == 200:
 
 Ссылка на пример: [createGroupAndSendMessage.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/createGroupAndSendMessage.py)
 
-### Получить входящие уведомления
+### Получение входящих сообщений через HTTP API
+
+Общая концепция получения данных в Green API описана [здесь](https://green-api.com/docs/api/receiving/)
+Для старта получения сообщений через HTTP API требуется выполнить метод библиотеки:
 
 ```
-resultReceive = greenApi.receiving.receiveNotification()
+greenApi.webhooks.startReceivingNotifications(onEvent)
 ```
+
+onEvent - ваш метод, который должен содержать параметры:
+Параметр |  Описание
+----- | -----
+typeWebhook | тип полученного сообщения (строка)
+body | тело сообщения (json)
+
+Типы и форматы тел сообщений [здесь](https://green-api.com/docs/api/receiving/notifications-format/)
+
+Этот метод будет вызываться при получении входящего сообщения. Далее обрабатываете сообщения согласно бизнес-логике вашей системы.
 
 ## Список примеров
 

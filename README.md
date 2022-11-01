@@ -90,11 +90,24 @@ may block the sender's number. The number in the example is non-existent.
 
 Example url: [createGroupAndSendMessage.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/createGroupAndSendMessage.py)
 
-### Receiving incoming webhooks
+### Receive incoming messages by HTTP API
+
+The general concept of receiving data in the Green API is described [here](https://green-api.com/en/docs/api/receiving/)
+To start receiving messages by the HTTP API you need to execute the library method:
 
 ```
-resultReceive = greenApi.receiving.receiveNotification()
+greenApi.webhooks.startReceivingNotifications(onEvent)
 ```
+
+onEvent - your method which should contain parameters:
+Parameter | Description
+----- | -----
+typewebhook | received message type (string)
+body | message body (json)
+
+Message body types and formats [here](https://green-api.com/en/docs/api/receiving/notifications-format/)
+
+This method will be called when an incoming message is received. Next, process messages according to the business logic of your system.
 
 ## Examples list
 
