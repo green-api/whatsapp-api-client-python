@@ -29,13 +29,13 @@ from whatsapp_api_client_python import API
 ### Как инициализировать объект
 
 ```
-greenApi = API.GreenApi(ID_INSTANCE, API_TOKEN_INSTANCE)
+greenAPI = API.GreenApi(ID_INSTANCE, API_TOKEN_INSTANCE)
 ```
 
 ### Отправка текстового сообщения на номер WhatsApp
 
 ```
-result = greenApi.sending.sendMessage('79001234567@g.us', 'Message text')
+result = greenAPI.sending.sendMessage('79001234567@g.us', 'Message text')
 ```
 
 Ссылка на пример: [sendTextMessage.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendTextMessage.py)
@@ -51,7 +51,7 @@ API_TOKEN_INSTANCE = environ['API_TOKEN_INSTANCE']
 ### Отправка картинки по URL
 
 ```
-result = greenApi.sending.sendFileByUrl('120363025955348359@g.us', 
+result = greenAPI.sending.sendFileByUrl('120363025955348359@g.us', 
         'https://www.google.ru/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png', 
         'googlelogo_color_272x92dp.png', 'Google logo')
 ```
@@ -61,7 +61,7 @@ result = greenApi.sending.sendFileByUrl('120363025955348359@g.us',
 ### Отправка картинки загрузкой с диска
 
 ```
-result = greenApi.sending.sendFileByUpload('120363025955348359@g.us', 
+result = greenAPI.sending.sendFileByUpload('120363025955348359@g.us', 
         'C:\Games\PicFromDisk.png', 
         'PicFromDisk.png', 'Picture from disk')
 ```
@@ -74,11 +74,11 @@ result = greenApi.sending.sendFileByUpload('120363025955348359@g.us',
 chatIds = [
     "79001234567@c.us"
 ]
-resultCreate = greenApi.groups.createGroup('GroupName', 
+resultCreate = greenAPI.groups.createGroup('GroupName', 
     chatIds)
 
 if resultCreate.code == 200:
-    resultSend = greenApi.sending.sendMessage(resultCreate.data['chatId'], 
+    resultSend = greenAPI.sending.sendMessage(resultCreate.data['chatId'], 
         'Message text')
 ```
 
@@ -93,7 +93,7 @@ if resultCreate.code == 200:
 Для старта получения сообщений через HTTP API требуется выполнить метод библиотеки:
 
 ```
-greenApi.webhooks.startReceivingNotifications(onEvent)
+greenAPI.webhooks.startReceivingNotifications(onEvent)
 ```
 
 onEvent - ваш метод, который должен содержать параметры:

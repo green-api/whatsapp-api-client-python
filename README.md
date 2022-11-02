@@ -32,13 +32,13 @@ To send a message or to exacute some other Green-API method, you have to have th
 ### How to initialize an object
 
 ```
-greenApi = API.GreenApi(ID_INSTANCE, API_TOKEN_INSTANCE)
+greenAPI = API.GreenApi(ID_INSTANCE, API_TOKEN_INSTANCE)
 ```
 
 ### Sending a text message to a WhatsApp number
 
 ```
-result = greenApi.sending.sendMessage('79001234567@g.us', 'Message text')
+result = greenAPI.sending.sendMessage('79001234567@g.us', 'Message text')
 ```
 
 Example url: [sendTextMessage.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendTextMessage.py)
@@ -54,7 +54,7 @@ API_TOKEN_INSTANCE = environ['API_TOKEN_INSTANCE']
 ### Sending an image via URL
 
 ```
-result = greenApi.sending.sendFileByUrl('120363025955348359@g.us', 
+result = greenAPI.sending.sendFileByUrl('120363025955348359@g.us', 
         'https://www.google.ru/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png', 
         'googlelogo_color_272x92dp.png', 'Google logo')
 ```
@@ -64,7 +64,7 @@ Example url: [sendPictureByLink.py](https://github.com/green-api/whatsapp-api-cl
 ### Sending an image by uploading from the disk
 
 ```
-result = greenApi.sending.sendFileByUpload('120363025955348359@g.us', 
+result = greenAPI.sending.sendFileByUpload('120363025955348359@g.us', 
         'C:\Games\PicFromDisk.png', 
         'PicFromDisk.png', 'Picture from disk')
 ```
@@ -77,11 +77,11 @@ Example url: [sendPictureByUpload.py](https://github.com/green-api/whatsapp-api-
 chatIds = [
     "79001234567@c.us"
 ]
-resultCreate = greenApi.groups.createGroup('GroupName', 
+resultCreate = greenAPI.groups.createGroup('GroupName', 
     chatIds)
 
 if resultCreate.code == 200:
-    resultSend = greenApi.sending.sendMessage(resultCreate.data['chatId'], 
+    resultSend = greenAPI.sending.sendMessage(resultCreate.data['chatId'], 
         'Message text')
 ```
 
@@ -96,7 +96,7 @@ The general concept of receiving data in the Green API is described [here](https
 To start receiving messages by the HTTP API you need to execute the library method:
 
 ```
-greenApi.webhooks.startReceivingNotifications(onEvent)
+greenAPI.webhooks.startReceivingNotifications(onEvent)
 ```
 
 onEvent - your method which should contain parameters:
