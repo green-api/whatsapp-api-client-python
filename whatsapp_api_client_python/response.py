@@ -3,7 +3,7 @@ import typing
 
 
 class Response:
-    data: typing.Optional[json] = None
+    data: typing.Optional[typing.Union[dict, list]] = None
     error: typing.Optional[str] = None
     status_code: int
 
