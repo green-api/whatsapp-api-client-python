@@ -1,16 +1,15 @@
 import json
+import typing
 
 
 class Response:
-    code: int
-    data: json
-    error: str
+    data: typing.Optional[json] = None
+    error: typing.Optional[str] = None
+    status_code: int
 
-    def __init__(self, code: int, text: str) -> None:
-        self.code = code
-        if code == 200:
+    def __init__(self, status_code: int, text: str) -> None:
+        self.status_code = status_code
+        if status_code == 200:
             self.data = json.loads(text)
-            self.error = None
         else:
             self.error = text
-            self.data = None
