@@ -18,7 +18,7 @@ pip install whatsapp-api-client-python
 ## Import 
 
 ```
-from whatsapp_api_client_python import API
+from whatsapp_api_client_python import GreenAPI
 ```
 ## Авторизация 
 
@@ -29,7 +29,7 @@ from whatsapp_api_client_python import API
 ### Как инициализировать объект
 
 ```
-greenAPI = API.GreenApi(ID_INSTANCE, API_TOKEN_INSTANCE)
+greenAPI = API.GreenAPI(ID_INSTANCE, API_TOKEN_INSTANCE)
 ```
 
 ### Отправка текстового сообщения на номер WhatsApp
