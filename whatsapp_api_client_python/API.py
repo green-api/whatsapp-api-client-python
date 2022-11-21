@@ -1,73 +1,103 @@
-from array import array
-import requests
+import array
 import json
+import typing
+
+import requests
+
 from whatsapp_api_client_python.response import Response
+from whatsapp_api_client_python.tools import (
+    account,
+    device,
+    groups,
+    journals,
+    marking,
+    queues,
+    receiving,
+    sending,
+    serviceMethods,
+    webhooks
+)
 
-from whatsapp_api_client_python.tools.account import Account
-from whatsapp_api_client_python.tools.device import Device
-from whatsapp_api_client_python.tools.groups import Groups
-from whatsapp_api_client_python.tools.journals import Journals
-from whatsapp_api_client_python.tools.marking import Marking
-from whatsapp_api_client_python.tools.queues import Queues
-from whatsapp_api_client_python.tools.receiving import Receiving
-from whatsapp_api_client_python.tools.sending import Sending
-from whatsapp_api_client_python.tools.serviceMethods import ServiceMethods
-from whatsapp_api_client_python.tools.webhooks import Webhooks
 
+class GreenAPI:
+    """REST API class"""
 
-class GreenApi:
-    'REST API class'
-
-    host: str
-    idInstance: str
-    apiTokenInstance: str
-
-    def __init__(self, 
-                    idInstance: str, 
-                    apiTokenInstance: str,
-                    host: str = 'https://api.green-api.com') -> None:
+    def __init__(self, id_instance: str, token: str, host: str = "https://api.green-api.com") -> None:
+        self.id_instance = id_instance
+        self.token = token
         self.host = host
-        self.idInstance = idInstance
-        self.apiTokenInstance = apiTokenInstance
 
-        self.account = Account(self)
-        self.device = Device(self)
-        self.groups = Groups(self)
-        self.journals = Journals(self)
-        self.marking = Marking(self)
-        self.queues = Queues(self)
-        self.receiving = Receiving(self)
-        self.sending = Sending(self)
-        self.serviceMethods = ServiceMethods(self)
-        self.webhooks = Webhooks(self)
+    @property
+    def account(self) -> account.Account:
+        return account.Account(self)
 
-    def request(self, method: str, url: str, 
-                payload: any = None, files: array = None):
+    @property
+    def device(self) -> device.Device:
+        return device.Device(self)
+
+    @property
+    def groups(self) -> groups.Groups:
+        return groups.Groups(self)
+
+    @property
+    def journals(self) -> journals.Journals:
+        return journals.Journals(self)
+
+    @property
+    def marking(self) -> marking.Marking:
+        return marking.Marking(self)
+
+    @property
+    def queues(self) -> queues.Queues:
+        return queues.Queues(self)
+
+    @property
+    def receiving(self) -> receiving.Receiving:
+        return receiving.Receiving(self)
+
+    @property
+    def sending(self) -> sending.Sending:
+        return sending.Sending(self)
+
+    @property
+    def service_methods(self) -> serviceMethods.ServiceMethods:
+        return serviceMethods.ServiceMethods(self)
+
+    @property
+    def webhooks(self) -> webhooks.Webhooks:
+        return webhooks.Webhooks(self)
+
+    def request(
+            self,
+            method: typing.Literal["DELETE", "GET", "POST"],
+            url: str,
+            payload: typing.Optional[typing.Any] = None,
+            files: typing.Optional[array.array] = None
+    ):
         url = url.replace('{{host}}', self.host)
-        url = url.replace('{{idInstance}}', self.idInstance)
-        url = url.replace('{{apiTokenInstance}}', self.apiTokenInstance)
-        status_code = 0
-        text = ''
+        url = url.replace('{{idInstance}}', self.id_instance)
+        url = url.replace('{{apiTokenInstance}}', self.token)
+
+        headers = {}
+        payload_data = None
+        if payload:
+            if not files:
+                headers["Content-Type"] = "application/json"
+                payload_data = json.dumps(payload)
+            else:
+                payload_data = payload
+
+        response = requests.request(
+            method, url, headers=headers, data=payload_data, files=files
+        )
+
+        status_code = response.status_code
+        text = response.text
         try:
-            headers = {}
-            payloadData = None
-            if payload != None:
-                if files == None:
-                    headers = {
-                        'Content-Type': 'application/json'
-                    }
-                    payloadData = json.dumps(payload)
-                else:
-                    payloadData = payload   
-            result = requests.request(method, url, headers = headers, 
-                                        data = payloadData, 
-                                        files = files)
-            status_code = result.status_code
-            text = result.text
-            result.raise_for_status()
+            response.raise_for_status()
         except requests.HTTPError:
             return Response(status_code, text)
-        except Exception as err:
+        except Exception as error:
             status_code = 0
-            text = f'Other error occurred: {err}'
+            text = f'Other error occurred: {error}'
         return Response(status_code, text)
