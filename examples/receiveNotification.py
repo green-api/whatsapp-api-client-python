@@ -1,13 +1,13 @@
 from os import environ
 from datetime import datetime
 import json
-from whatsapp_api_client_python import API as API
+from whatsapp_api_client_python import GreenAPI
 
 
 ID_INSTANCE = environ['ID_INSTANCE']
 API_TOKEN_INSTANCE = environ['API_TOKEN_INSTANCE']
 
-greenAPI = API.GreenApi(ID_INSTANCE, API_TOKEN_INSTANCE)
+greenAPI = GreenAPI(ID_INSTANCE, API_TOKEN_INSTANCE)
 
 def main():
    greenAPI.webhooks.startReceivingNotifications(onEvent)

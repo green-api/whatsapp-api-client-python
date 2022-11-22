@@ -21,7 +21,7 @@ pip install whatsapp-api-client-python
 ## Import 
 
 ```
-from whatsapp_api_client_python import API
+from whatsapp_api_client_python import GreenAPI
 ```
 ## Authorization
 
@@ -32,7 +32,7 @@ To send a message or to exacute some other Green-API method, you have to have th
 ### How to initialize an object
 
 ```
-greenAPI = API.GreenApi(ID_INSTANCE, API_TOKEN_INSTANCE)
+greenAPI = GreenAPI(ID_INSTANCE, API_TOKEN_INSTANCE)
 ```
 
 ### Sending a text message to a WhatsApp number
