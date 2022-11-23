@@ -6,7 +6,9 @@ from .methods import (
     journals,
     mark_read,
     queues,
-    receiving
+    receiving,
+    sending,
+    service_methods
 )
 
 
@@ -41,6 +43,14 @@ class APICategories:
     @property
     def receiving(self) -> receiving.ReceivingCategory:
         return receiving.ReceivingCategory(self.api)
+
+    @property
+    def sending(self) -> sending.SendingCategory:
+        return sending.SendingCategory(self.api)
+
+    @property
+    def service_methods(self) -> service_methods.ServiceMethodCategory:
+        return service_methods.ServiceMethodCategory(self.api)
 
 
 __all__ = ["APICategories"]
