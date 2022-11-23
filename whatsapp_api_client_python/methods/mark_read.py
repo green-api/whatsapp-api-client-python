@@ -10,7 +10,6 @@ class MarkReadCategory(BaseCategory):
     ) -> Response:
         """The method is designed to mark chat messages as read."""
 
-        data = locals()
-        data.pop("self")
+        data = self.handle_parameters(locals())
 
         return self.api.request("POST", "ReadChat", data)

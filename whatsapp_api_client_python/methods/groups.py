@@ -9,24 +9,21 @@ class GroupCategory(BaseCategory):
     def create_group(self, groupName: str, chatIds: List[str]) -> Response:
         """The method is designed to create a group chat."""
 
-        data = locals()
-        data.pop("self")
+        data = self.handle_parameters(locals())
 
         return self.api.request("POST", "CreateGroup", data)
 
     def update_group_name(self, groupId: str, groupName: str) -> Response:
         """The method changes the name of the group chat."""
 
-        data = locals()
-        data.pop("self")
+        data = self.handle_parameters(locals())
 
         return self.api.request("POST", "UpdateGroupName", data)
 
     def get_group_data(self, groupId: str) -> Response:
         """The method gets the group chat data."""
 
-        data = locals()
-        data.pop("self")
+        data = self.handle_parameters(locals())
 
         return self.api.request("POST", "GetGroupData", data)
 
@@ -35,8 +32,7 @@ class GroupCategory(BaseCategory):
     ) -> Response:
         """The method adds a participant to the group chat."""
 
-        data = locals()
-        data.pop("self")
+        data = self.handle_parameters(locals())
 
         return self.api.request("POST", "AddGroupParticipant", data)
 
@@ -45,8 +41,7 @@ class GroupCategory(BaseCategory):
     ) -> Response:
         """The method removes the participant from the group chat."""
 
-        data = locals()
-        data.pop("self")
+        data = self.handle_parameters(locals())
 
         return self.api.request("POST", "RemoveGroupParticipant", data)
 
@@ -58,8 +53,7 @@ class GroupCategory(BaseCategory):
         as an administrator.
         """
 
-        data = locals()
-        data.pop("self")
+        data = self.handle_parameters(locals())
 
         return self.api.request("POST", "SetGroupAdmin", data)
 
@@ -69,16 +63,14 @@ class GroupCategory(BaseCategory):
         administration rights.
         """
 
-        data = locals()
-        data.pop("self")
+        data = self.handle_parameters(locals())
 
         return self.api.request("POST", "RemoveAdmin", data)
 
     def set_group_picture(self, path, groupId: str) -> Response:
         """The method sets the avatar of the group."""
 
-        data = locals()
-        data.pop("self")
+        data = self.handle_parameters(locals())
 
         file_name = Path(path).name
         files = {"file": (file_name, open(path, "rb"), "image/jpg")}
@@ -91,7 +83,6 @@ class GroupCategory(BaseCategory):
         from the group chat.
         """
 
-        data = locals()
-        data.pop("self")
+        data = self.handle_parameters(locals())
 
         return self.api.request("POST", "LeaveGroup", data)

@@ -34,8 +34,7 @@ class AccountCategory(BaseCategory):
     ) -> Response:
         """The method is for setting account settings."""
 
-        data = locals()
-        data.pop("self")
+        data = self.handle_parameters(locals())
 
         return self.api.request("POST", "SetSettings", data)
 

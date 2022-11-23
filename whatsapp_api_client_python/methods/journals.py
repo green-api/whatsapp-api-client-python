@@ -10,8 +10,7 @@ class JournalCategory(BaseCategory):
     ) -> Response:
         """The method returns the chat message history."""
 
-        data = locals()
-        data.pop("self")
+        data = self.handle_parameters(locals())
 
         return self.api.request("POST", "GetChatHistory", data)
 
@@ -23,8 +22,7 @@ class JournalCategory(BaseCategory):
         of the account.
         """
 
-        data = locals()
-        data.pop("self")
+        data = self.handle_parameters(locals())
 
         return self.api.request("GET", "lastIncomingMessages", data)
 
@@ -33,7 +31,6 @@ class JournalCategory(BaseCategory):
     ) -> Response:
         """The method returns the last sent messages of the account."""
 
-        data = locals()
-        data.pop("self")
+        data = self.handle_parameters(locals())
 
         return self.api.request("GET", "LastOutgoingMessages", data)
