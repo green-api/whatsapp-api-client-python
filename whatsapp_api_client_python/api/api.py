@@ -28,22 +28,17 @@ class GreenAPI(AbstractAPI, APICategories):
             http_method: str,
             method: str,
             data: Optional[dict] = None,
-            files=None
+            files: Optional[dict] = None
     ) -> Response:
         url = (
             f"{self.host}/waInstance{self.id_instance}/"
             f"{method}/{self.api_token_instance}"
         )
-        headers = {} if files else {"Content-Type": "application/json"}
-        data = data if files else json.dumps(data)
+        headers = {"Content-Type": "application/json"}
+        data = json.dumps(data) if data else data
 
         response = requests.request(
             http_method, url, headers=headers, data=data, files=files
         )
-
-        try:
-            response.raise_for_status()
-        except requests.HTTPError:
-            return Response(response.status_code, response.text)
 
         return Response(response.status_code, response.text)

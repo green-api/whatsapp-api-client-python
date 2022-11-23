@@ -11,6 +11,6 @@ class AbstractAPI(ABC):
             http_method: str,
             method: str,
             data: Optional[dict] = None,
-            files=None
+            files: Optional[dict] = None
     ) -> Response:
         pass

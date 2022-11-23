@@ -67,12 +67,12 @@ class AccountCategory(BaseCategory):
 
         return self.api.request("GET", "Logout")
 
-    def qr(self):
+    def qr(self) -> Response:
         """The method is designed to get a QR code."""
 
         return self.api.request("GET", "qr")
 
-    def set_profile_picture(self, path):
+    def set_profile_picture(self, path) -> Response:
         """The method is for setting an account avatar."""
 
         file_name = Path(path).name
