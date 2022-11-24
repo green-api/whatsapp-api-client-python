@@ -71,10 +71,10 @@ class AccountCategory(BaseCategory):
 
         return self.api.request("GET", "qr")
 
-    def set_profile_picture(self, path) -> Response:
+    def set_profile_picture(self, file: str) -> Response:
         """The method is for setting an account avatar."""
 
-        file_name = Path(path).name
-        files = {"file": (file_name, open(path, "rb"), "image/jpg")}
+        file_name = Path(file).name
+        files = {"file": (file_name, open(file, "rb"), "image/jpg")}
 
         return self.api.request("POST", "setProfilePicture", files=files)

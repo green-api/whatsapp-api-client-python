@@ -67,13 +67,15 @@ class GroupCategory(BaseCategory):
 
         return self.api.request("POST", "RemoveAdmin", data)
 
-    def set_group_picture(self, path, groupId: str) -> Response:
+    def set_group_picture(self, file: str, groupId: str) -> Response:
         """The method sets the avatar of the group."""
 
         data = self.handle_parameters(locals())
 
-        file_name = Path(path).name
-        files = {"file": (file_name, open(path, "rb"), "image/jpg")}
+        file_name = Path(file).name
+        files = {"file": (file_name, open(file, "rb"), "image/jpg")}
+
+        data.pop("file")
 
         return self.api.request("POST", "setGroupPicture", data, files=files)
 

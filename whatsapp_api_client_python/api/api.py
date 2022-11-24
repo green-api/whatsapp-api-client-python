@@ -35,7 +35,12 @@ class GreenAPI(AbstractAPI, APICategories):
             f"{method}/{self.api_token_instance}"
         )
         headers = {"Content-Type": "application/json"}
-        data = json.dumps(data) if data else data
+
+        if data:
+            if files:
+                headers.pop("Content-Type")
+            else:
+                data = json.dumps(data)
 
         response = requests.request(
             http_method, url, headers=headers, data=data, files=files
