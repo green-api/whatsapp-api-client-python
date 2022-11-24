@@ -27,7 +27,7 @@ def handler(type_webhook: str, body: Union[dict, list]):
             text_message = message_data["textMessageData"]["textMessage"]
 
             greenAPI.sending.send_message(
-                chatId="",
+                chatId=sender_data["chatId"],
                 message=f"You wrote: {text_message}."
             )
 

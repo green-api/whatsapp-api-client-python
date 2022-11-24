@@ -9,7 +9,7 @@ greenAPI = GreenAPI(ID_INSTANCE, API_TOKEN_INSTANCE)
 
 
 def main():
-    response = greenAPI.sending.send_message("79177376311@c.us", "Any message")
+    response = greenAPI.sending.send_message("79001234567@c.us", "Any message")
 
     print(response.data)
 
