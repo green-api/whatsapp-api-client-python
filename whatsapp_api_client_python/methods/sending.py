@@ -84,7 +84,7 @@ class SendingCategory(BaseCategory):
     def send_file_by_upload(
             self,
             chatId: str,
-            path,
+            file: str,
             fileName: Optional[str] = None,
             caption: Optional[str] = None,
             quotedMessageId: Optional[str] = None
@@ -96,9 +96,11 @@ class SendingCategory(BaseCategory):
 
         data = self.handle_parameters(locals())
 
-        file_name = pathlib.Path(path).name
+        file_name = pathlib.Path(file).name
         mime_type = mimetypes.guess_type(file_name)[0]
-        files = {"file": (file_name, open(path, "rb"), mime_type)}
+        files = {"file": (file_name, open(file, "rb"), mime_type)}
+
+        data.pop("file")
 
         return self.api.request("POST", "SendFileByUpload", data, files=files)
 
