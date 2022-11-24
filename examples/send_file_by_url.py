@@ -22,12 +22,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-def main():
-    result = greenAPI.sending.sendFileByUrl('79001234567@c.us', 
-        'https://www.google.ru/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png', 
-        'googlelogo_color_272x92dp.png', 'Google logo')
-    print(result.data)
-
-if __name__ == "__main__":
-    main()

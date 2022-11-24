@@ -20,14 +20,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-def main():
-    result = greenAPI.sending.sendFileByUpload('79001234567@c.us',
-                                               'C:\Games\PicFromDisk.png',
-                                               'PicFromDisk.png', 'Picture from disk')
-    print(result.data)
-
-
-if __name__ == "__main__":
-    main()
