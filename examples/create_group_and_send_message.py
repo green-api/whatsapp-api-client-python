@@ -14,6 +14,7 @@ def main():
         groupName="Group Name",
         chatIds=["79001234567@c.us"]
     )
+
     print(create_group_response.data)
 
     chatId = create_group_response.data["chatId"]
@@ -21,6 +22,7 @@ def main():
         chatId=chatId,
         message="Any message"
     )
+
     print(send_message_response.data)
 
 

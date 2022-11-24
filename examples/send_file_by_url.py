@@ -13,8 +13,7 @@ def main():
     response = greenAPI.sending.send_file_by_url(
         chatId="79001234567@c.us",
         urlFile="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
-        fileName="googlelogo_color_272x92dp.png",
-        caption="Google logo"
+        fileName="googlelogo_color_272x92dp.png"
     )
 
     print(response.data)
