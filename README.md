@@ -5,9 +5,9 @@
 
 - [Документация на русском языке](README_RUS.md)
 
-Python library for intagration with WhatsAPP messanger via API of [green-api.com](https://green-api.com) service. To use
-the library you have to get a registration token and an account id in the [personal area](https://console.green-api.com)
-. There is a free developer account tariff plan.
+Python library for integration with WhatsApp messenger via API of [green-api.com](https://green-api.com) service. To use
+the library you have to get a registration token and an account id in the [personal area](https://console.green-api.com). 
+There is a free developer account tariff plan.
 
 ## API
 
