@@ -6,13 +6,13 @@ class BaseCategory:
         self.api = api
 
     @classmethod
-    def handle_parameters(cls, parameters: dict):
-        new_parameters = parameters.copy()
+    def handle_parameters(cls, parameters: dict) -> dict:
+        handled_parameters = parameters.copy()
 
-        new_parameters.pop("self")
+        handled_parameters.pop("self")
 
         for key, value in parameters.items():
             if value is None:
-                new_parameters.pop(key)
+                handled_parameters.pop(key)
 
-        return new_parameters
+        return handled_parameters
