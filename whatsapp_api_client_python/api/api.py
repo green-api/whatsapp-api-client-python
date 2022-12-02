@@ -1,48 +1,58 @@
-import json
-from typing import Optional
+from typing import NoReturn, Optional, Union
 
-import requests
+from requests import Response, Session
 
-from whatsapp_api_client_python.api.abc import AbstractAPI
-from whatsapp_api_client_python.categories import APICategories
-from whatsapp_api_client_python.response import Response
+from .abc import AbstractAPI
 
 
-class GreenAPI(AbstractAPI, APICategories):
-    """REST API class"""
+class GreenAPI(AbstractAPI):
+    API_URL = "https://api.green-api.com/waInstance"
 
-    def __init__(
-            self,
-            id_instance: str,
-            api_token_instance: str,
-            host: str = "https://api.green-api.com"
-    ):
+    def __init__(self, id_instance: str, api_token_instance: str):
         self.id_instance = id_instance
         self.api_token_instance = api_token_instance
-        self.host = host
 
-        super(GreenAPI, self).__init__(self)
+        super().__init__(self)
 
     def request(
             self,
-            http_method: str,
             method: str,
+            http_method: str = "GET",
             data: Optional[dict] = None,
             files: Optional[dict] = None
-    ) -> Response:
+    ) -> dict:
         url = (
-            f"{self.host}/waInstance{self.id_instance}/"
+            f"{self.API_URL}{self.id_instance}/"
             f"{method}/{self.api_token_instance}"
         )
-        headers = {}
 
-        if data and not files:
-            data = json.dumps(data)
+        with Session() as session:
+            if not files:
+                response = session.request(
+                    method=http_method, url=url, json=data
+                )
+            else:
+                response = session.request(
+                    method=http_method, url=url, data=data, files=files
+                )
 
-            headers = {"Content-Type": "application/json"}
+        response = self.validate_response(response)
 
-        response = requests.request(
-            http_method, url, headers=headers, data=data, files=files
-        )
+        return response
 
-        return Response(response.status_code, response.text)
+    def validate_response(self, response: Response) -> Union[dict, NoReturn]:
+        if response.status_code == 200:
+            return response.json()
+        raise GreenAPIError(response.status_code, response.text)
+
+
+class GreenAPIError(Exception):
+    def __init__(self, status_code: int, error_message: str):
+        self.status_code = status_code
+        self.error_message = error_message
+
+    def __str__(self) -> str:
+        return f"{self.status_code=} | {self.error_message=}"
+
+
+__all__ = ["GreenAPI", "GreenAPIError"]
