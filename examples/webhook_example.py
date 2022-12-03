@@ -1,5 +1,4 @@
 from os import environ
-from typing import Union
 
 from whatsapp_api_client_python import GreenAPI
 from whatsapp_api_client_python.tools import Webhook
@@ -17,7 +16,7 @@ def main():
     webhook.run_forever(handler)
 
 
-def handler(type_webhook: str, body: Union[dict, list]):
+def handler(type_webhook: str, body: dict):
     if type_webhook == "incomingMessageReceived":
         sender_data = body["senderData"]
         message_data = body["messageData"]

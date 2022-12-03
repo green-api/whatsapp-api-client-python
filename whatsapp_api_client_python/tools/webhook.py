@@ -1,30 +1,32 @@
-from typing import Any, Callable, Union
+from typing import Any, Callable
 
-from whatsapp_api_client_python.api import GreenAPI
+from requests import JSONDecodeError
+
+from whatsapp_api_client_python.api import AbstractAPI
 
 
 class Webhook:
-    def __init__(self, api: GreenAPI):
+    def __init__(self, api: AbstractAPI):
         self.api = api
 
-    def run_forever(self, handler: Callable[[str, Union[dict, list]], Any]):
+    def run_forever(self, handler: Callable[[str, dict], Any]) -> None:
         print("Start receiving notifications. To interrupt, press Ctrl+C")
 
         while True:
             try:
-                response = self.api.receiving.receive_notification()
-                if response.status_code == 200:
-                    if response.data is None:
-                        continue
+                try:
+                    response = self.api.receiving.receive_notification()
+                except JSONDecodeError:
+                    continue
 
-                    body = response.data["body"]
-                    type_webhook = body["typeWebhook"]
+                body = response["body"]
+                type_webhook = body["typeWebhook"]
 
-                    handler(type_webhook, body)
+                handler(type_webhook, body)
 
-                    self.api.receiving.delete_notification(
-                        response.data["receiptId"]
-                    )
+                self.api.receiving.delete_notification(
+                    response["receiptId"]
+                )
             except KeyboardInterrupt:
                 print("KeyboardInterrupt")
 
