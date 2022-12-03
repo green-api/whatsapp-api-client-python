@@ -2,16 +2,15 @@ from pathlib import Path
 from typing import Optional
 
 from whatsapp_api_client_python.base import BaseCategory
-from whatsapp_api_client_python.response import Response
 
 
 class AccountCategory(BaseCategory):
-    def get_settings(self) -> Response:
+    def get_settings(self) -> dict:
         """
         The method is designed to get the current account settings.
         """
 
-        return self.api.request("GET", "GetSettings")
+        return self.api.request("GetSettings")
 
     def set_settings(
             self,
@@ -31,50 +30,55 @@ class AccountCategory(BaseCategory):
             sendFromUTC: Optional[str] = None,
             sendToUTC: Optional[str] = None,
             sharedSession: Optional[str] = None
-    ) -> Response:
-        """The method is for setting account settings."""
+    ) -> dict:
+        """The method is for setting the account settings."""
 
         data = self.handle_parameters(locals())
 
-        return self.api.request("POST", "SetSettings", data)
+        if not data:
+            return self.api.request("SetSettings")
+        return self.api.request("SetSettings", "POST", data)
 
-    def set_system_proxy(self) -> Response:
+    def set_system_proxy(self) -> dict:
         """The method is for setting up a system proxy."""
 
-        return self.api.request("GET", "SetSystemProxy")
+        return self.api.request("SetSystemProxy")
 
-    def get_state_instance(self) -> Response:
+    def get_state_instance(self) -> dict:
         """The method is designed to get the state of the account."""
 
-        return self.api.request("GET", "getStateInstance")
+        return self.api.request("getStateInstance")
 
-    def get_status_instance(self) -> Response:
+    def get_status_instance(self) -> dict:
         """
-        The method is designed to get the socket connection state
-        of the account instance with WhatsApp.
+        The method is designed to get the socket connection state of
+        the account instance with WhatsApp.
         """
 
-        return self.api.request("GET", "getStatusInstance")
+        return self.api.request("getStatusInstance")
 
-    def reboot(self) -> Response:
+    def reboot(self) -> dict:
         """The method is for restarting the account."""
 
-        return self.api.request("GET", "Reboot")
+        return self.api.request("Reboot")
 
-    def logout(self) -> Response:
-        """The method is for logging out of the account."""
+    def logout(self) -> dict:
+        """The method is designed to logout the account."""
 
-        return self.api.request("GET", "Logout")
+        return self.api.request("Logout")
 
-    def qr(self) -> Response:
+    def qr(self) -> dict:
         """The method is designed to get a QR code."""
 
-        return self.api.request("GET", "qr")
+        return self.api.request("qr")
 
-    def set_profile_picture(self, file: str) -> Response:
+    def set_profile_picture(self, file: str) -> dict:
         """The method is for setting an account avatar."""
 
         file_name = Path(file).name
-        files = {"file": (file_name, open(file, "rb"), "image/jpg")}
+        files = {"file": (file_name, open(file, "rb"), "image/jpeg")}
 
-        return self.api.request("POST", "setProfilePicture", files=files)
+        return self.api.request("setProfilePicture", "POST", files=files)
+
+
+__all__ = ["AccountCategory"]

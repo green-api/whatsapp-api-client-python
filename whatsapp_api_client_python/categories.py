@@ -1,11 +1,15 @@
-from .api import AbstractAPI
-from .methods import (
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from whatsapp_api_client_python.api import AbstractAPI
+
+from whatsapp_api_client_python.methods import (
     account,
     device,
     groups,
     journals,
-    mark_read,
     queues,
+    read_mark,
     receiving,
     sending,
     service_methods
@@ -13,7 +17,7 @@ from .methods import (
 
 
 class APICategories:
-    def __init__(self, api: AbstractAPI):
+    def __init__(self, api: "AbstractAPI"):
         self.api = api
 
     @property
@@ -25,20 +29,20 @@ class APICategories:
         return device.DeviceCategory(self.api)
 
     @property
-    def groups(self) -> groups.GroupCategory:
-        return groups.GroupCategory(self.api)
+    def groups(self) -> groups.GroupsCategory:
+        return groups.GroupsCategory(self.api)
 
     @property
-    def journals(self) -> journals.JournalCategory:
-        return journals.JournalCategory(self.api)
+    def journals(self) -> journals.JournalsCategory:
+        return journals.JournalsCategory(self.api)
 
     @property
-    def mark_read(self) -> mark_read.MarkReadCategory:
-        return mark_read.MarkReadCategory(self.api)
+    def queues(self) -> queues.QueuesCategory:
+        return queues.QueuesCategory(self.api)
 
     @property
-    def queues(self) -> queues.QueueCategory:
-        return queues.QueueCategory(self.api)
+    def read_mark(self) -> read_mark.ReadMarkCategory:
+        return read_mark.ReadMarkCategory(self.api)
 
     @property
     def receiving(self) -> receiving.ReceivingCategory:
@@ -49,8 +53,8 @@ class APICategories:
         return sending.SendingCategory(self.api)
 
     @property
-    def service_methods(self) -> service_methods.ServiceMethodCategory:
-        return service_methods.ServiceMethodCategory(self.api)
+    def service_methods(self) -> service_methods.ServiceMethodsCategory:
+        return service_methods.ServiceMethodsCategory(self.api)
 
 
 __all__ = ["APICategories"]
