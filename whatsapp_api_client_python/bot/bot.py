@@ -1,10 +1,10 @@
-from abc import ABC
-from typing import Any, Callable, List, Optional
+from typing import Any, Callable, List, Optional, TYPE_CHECKING
 
-from whatsapp_api_client_python.api import AbstractAPI
+if TYPE_CHECKING:
+    from whatsapp_api_client_python.api import AbstractAPI
 
 
-class AbstractHandler(ABC):
+class AbstractHandler:
     type_webhook: str
     function: Callable[[dict], Any]
 
@@ -21,38 +21,44 @@ class MessageHandler(AbstractHandler):
     def __init__(
             self,
             function: Callable[[dict], Any],
-            text: Optional[str] = None
+            message_text: Optional[str] = None
     ):
         self.function = function
-        self.text = text
+        self.message_text = message_text
 
-    def check_text(self, body: dict) -> Optional[bool]:
-        if not self.text:
+    def check_message_text(self, body: dict) -> bool:
+        if self.message_text is None:
             return True
 
         message_data = body["messageData"]
         type_message = message_data["typeMessage"]
         if type_message == "textMessage":
             text_message = message_data["textMessageData"]["textMessage"]
-            if text_message == self.text:
+            if text_message == self.message_text:
                 return True
+
+        return False
 
 
 class Bot:
-    def __init__(self, api: AbstractAPI):
+    def __init__(self, api: "AbstractAPI"):
         self.api = api
 
         self.handlers: List[AbstractHandler] = []
 
-    def handler(self, type_webhook: str):
-        def decorator(function: Callable[[dict], Any]):
+    def handler(
+            self, type_webhook: str
+    ) -> Callable[[Callable[[dict], Any]], None]:
+        def decorator(function: Callable[[dict], Any]) -> None:
             self.handlers.append(Handler(type_webhook, function))
 
         return decorator
 
-    def message(self, text: Optional[str] = None):
-        def decorator(function: Callable[[dict], Any]):
-            self.handlers.append(MessageHandler(function, text))
+    def message(
+            self, message_text: Optional[str] = None
+    ) -> Callable[[Callable[[dict], Any]], None]:
+        def decorator(function: Callable[[dict], Any]) -> None:
+            self.handlers.append(MessageHandler(function, message_text))
 
         return decorator
 
@@ -71,15 +77,18 @@ class Bot:
                         if isinstance(handler, Handler):
                             handler.function(body)
                         elif isinstance(handler, MessageHandler):
-                            check_result = handler.check_text(body)
+                            check_result = handler.check_message_text(body)
                             if check_result:
-                                handler_response = handler.function(body)
-                                if isinstance(handler_response, str):
+                                message = handler.function(body)
+                                if isinstance(message, str):
                                     self.api.sending.send_message(
                                         chatId=body["senderData"]["chatId"],
-                                        message=handler_response
+                                        message=message
                                     )
 
                 self.api.receiving.delete_notification(response["receiptId"])
             except KeyboardInterrupt:
                 break
+
+
+__all__ = ["Bot"]

@@ -1,8 +1,5 @@
 from typing import TYPE_CHECKING
 
-if TYPE_CHECKING:
-    from whatsapp_api_client_python.api import AbstractAPI
-
 from whatsapp_api_client_python.methods import (
     account,
     device,
@@ -14,6 +11,9 @@ from whatsapp_api_client_python.methods import (
     sending,
     service_methods
 )
+
+if TYPE_CHECKING:
+    from whatsapp_api_client_python.api import AbstractAPI
 
 
 class APICategories:

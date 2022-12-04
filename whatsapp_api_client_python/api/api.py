@@ -1,14 +1,17 @@
-from typing import NoReturn, Optional, Union
+from typing import NoReturn, Optional, TYPE_CHECKING, Union
 
-from requests import Response, Session
+from requests import Session
 
 from .abc import AbstractAPI
 
+if TYPE_CHECKING:
+    from requests import Response
+
 
 class GreenAPI(AbstractAPI):
-    API_URL = "https://api.green-api.com/waInstance"
+    API_URL: str = "https://api.green-api.com/waInstance"
 
-    def __init__(self, id_instance: str, api_token_instance: str):
+    def __init__(self, id_instance: Union[int, str], api_token_instance: str):
         self.id_instance = id_instance
         self.api_token_instance = api_token_instance
 
@@ -20,7 +23,7 @@ class GreenAPI(AbstractAPI):
             http_method: str = "GET",
             data: Optional[dict] = None,
             files: Optional[dict] = None
-    ) -> dict:
+    ) -> Optional[dict]:
         url = (
             f"{self.API_URL}{self.id_instance}/"
             f"{method}/{self.api_token_instance}"
@@ -46,7 +49,9 @@ class GreenAPI(AbstractAPI):
 
         return response
 
-    def validate_response(self, response: Response) -> Union[dict, NoReturn]:
+    def validate_response(
+            self, response: "Response"
+    ) -> Union[Optional[dict], NoReturn]:
         if response.status_code == 200:
             return response.json()
         raise GreenAPIError(response.status_code, response.text)
