@@ -1,8 +1,6 @@
 from abc import ABC
 from typing import Any, Callable, List, Optional
 
-from requests import JSONDecodeError
-
 from whatsapp_api_client_python.api import AbstractAPI
 
 
@@ -28,7 +26,7 @@ class MessageHandler(AbstractHandler):
         self.function = function
         self.text = text
 
-    def check_text(self, body: dict):
+    def check_text(self, body: dict) -> Optional[bool]:
         if not self.text:
             return True
 
@@ -58,12 +56,11 @@ class Bot:
 
         return decorator
 
-    def run_forever(self):
+    def run_forever(self) -> None:
         while True:
             try:
-                try:
-                    response = self.api.receiving.receive_notification()
-                except JSONDecodeError:
+                response = self.api.receiving.receive_notification()
+                if not response:
                     continue
 
                 body = response["body"]
