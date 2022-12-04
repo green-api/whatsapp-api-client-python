@@ -12,7 +12,7 @@ bot = Bot(greenAPI)
 
 
 @bot.handler("stateInstanceChanged")
-def handler(body: dict):
+def handler(body: dict) -> None:
     print(body["instanceData"])
     print("stateInstanceChanged")
 

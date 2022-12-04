@@ -67,18 +67,18 @@ class Bot:
                 type_webhook = body["typeWebhook"]
 
                 for handler in self.handlers:
-                    if isinstance(handler, Handler):
-                        if handler.type_webhook == type_webhook:
+                    if handler.type_webhook == type_webhook:
+                        if isinstance(handler, Handler):
                             handler.function(body)
-                    elif isinstance(handler, MessageHandler):
-                        check_result = handler.check_text(body)
-                        if check_result:
-                            handler_response = handler.function(body)
-                            if isinstance(handler_response, str):
-                                self.api.sending.send_message(
-                                    chatId=body["senderData"]["chatId"],
-                                    message=handler_response
-                                )
+                        elif isinstance(handler, MessageHandler):
+                            check_result = handler.check_text(body)
+                            if check_result:
+                                handler_response = handler.function(body)
+                                if isinstance(handler_response, str):
+                                    self.api.sending.send_message(
+                                        chatId=body["senderData"]["chatId"],
+                                        message=handler_response
+                                    )
 
                 self.api.receiving.delete_notification(response["receiptId"])
             except KeyboardInterrupt:

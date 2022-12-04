@@ -28,9 +28,15 @@ class GreenAPI(AbstractAPI):
 
         with Session() as session:
             if not files:
-                response = session.request(
-                    method=http_method, url=url, json=data
-                )
+                if http_method == "DELETE":
+                    response = session.request(
+                        method=http_method,
+                        url=f"""{url}/{data["receiptId"]}"""
+                    )
+                else:
+                    response = session.request(
+                        method=http_method, url=url, json=data
+                    )
             else:
                 response = session.request(
                     method=http_method, url=url, data=data, files=files
