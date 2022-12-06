@@ -1,12 +1,14 @@
 from whatsapp_api_client_python.base import BaseCategory
-from whatsapp_api_client_python.response import Response
 
 
 class DeviceCategory(BaseCategory):
-    def get_device_info(self) -> Response:
+    def get_device_info(self) -> dict:
         """
-        The method is designed to get information
-        about the device (phone).
+        The method is designed to get information about the device
+        (phone) on which WhatsApp Business is running.
         """
 
-        return self.api.request("GET", "GetDeviceInfo")
+        return self.api.request("GetDeviceInfo")
+
+
+__all__ = ["DeviceCategory"]
