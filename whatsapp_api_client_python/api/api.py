@@ -63,7 +63,10 @@ class GreenAPIError(Exception):
         self.error_message = error_message
 
     def __str__(self) -> str:
-        return f"{self.status_code=} | {self.error_message=}"
+        return (
+            f"status_code={self.status_code}, "
+            f"error_message={self.error_message}"
+        )
 
 
 __all__ = ["GreenAPI", "GreenAPIError"]

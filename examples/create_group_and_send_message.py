@@ -15,15 +15,14 @@ def main():
         chatIds=["79001234567@c.us"]
     )
 
-    print(create_group_response.data)
+    print(create_group_response)
 
-    chatId = create_group_response.data["chatId"]
     send_message_response = greenAPI.sending.send_message(
-        chatId=chatId,
+        chatId=create_group_response["chatId"],
         message="Any message"
     )
 
-    print(send_message_response.data)
+    print(send_message_response)
 
 
 if __name__ == "__main__":

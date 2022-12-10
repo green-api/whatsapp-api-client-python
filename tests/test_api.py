@@ -10,15 +10,15 @@ greenAPI = GreenAPI(ID_INSTANCE, API_TOKEN_INSTANCE)
 
 
 class GreenAPITestCase(unittest.TestCase):
-    def test_getSettings(self):
-        response = greenAPI.account.get_settings()
-
-        self.assertEqual(response.status_code, 200, response.error)
-
-    def test_getStateInstance(self):
+    def test_GetStateInstance(self):
         response = greenAPI.account.get_state_instance()
 
-        self.assertEqual(response.status_code, 200, response.error)
+        self.assertTrue(response)
+
+    def test_CheckWhatsapp(self):
+        response = greenAPI.service_methods.check_whatsapp(79001234567)
+
+        self.assertTrue(response)
 
 
 if __name__ == '__main__':
