@@ -1,50 +1,33 @@
+from abc import ABC, abstractmethod
 from typing import Any, Callable, List, Optional, TYPE_CHECKING
+
+from .handlers import Handler, MessageHandler
 
 if TYPE_CHECKING:
     from whatsapp_api_client_python.api import AbstractAPI
+    from .handlers import AbstractHandler
 
 
-class AbstractHandler:
-    type_webhook: str
-    function: Callable[[dict], Any]
+class AbstractBot(ABC):
+    api: "AbstractAPI"
+    handlers: List["AbstractHandler"]
+
+    @abstractmethod
+    def handler(
+            self, type_webhook: str
+    ) -> Callable[[Callable[[dict], Any]], None]:
+        pass
+
+    @abstractmethod
+    def run_forever(self) -> None:
+        pass
 
 
-class Handler(AbstractHandler):
-    def __init__(self, type_webhook: str, function: Callable[[dict], Any]):
-        self.type_webhook = type_webhook
-        self.function = function
-
-
-class MessageHandler(AbstractHandler):
-    type_webhook = "incomingMessageReceived"
-
-    def __init__(
-            self,
-            function: Callable[[dict], Any],
-            message_text: Optional[str] = None
-    ):
-        self.function = function
-        self.message_text = message_text
-
-    def check_message_text(self, body: dict) -> bool:
-        if self.message_text is None:
-            return True
-
-        message_data = body["messageData"]
-        type_message = message_data["typeMessage"]
-        if type_message == "textMessage":
-            text_message = message_data["textMessageData"]["textMessage"]
-            if text_message == self.message_text:
-                return True
-
-        return False
-
-
-class Bot:
+class Bot(AbstractBot):
     def __init__(self, api: "AbstractAPI"):
         self.api = api
 
-        self.handlers: List[AbstractHandler] = []
+        self.handlers = []
 
     def handler(
             self, type_webhook: str
@@ -91,4 +74,4 @@ class Bot:
                 break
 
 
-__all__ = ["Bot"]
+__all__ = ["AbstractBot", "Bot"]

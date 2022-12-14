@@ -12,10 +12,10 @@ greenAPI = GreenAPI(ID_INSTANCE, API_TOKEN_INSTANCE)
 def main():
     response = greenAPI.sending.send_file_by_upload(
         chatId="79001234567@c.us",
-        path="C:\\Games\\PicFromDisk.png"
+        file="C:\\Games\\PicFromDisk.png"
     )
 
-    print(response.data)
+    print(response)
 
 
 if __name__ == "__main__":
