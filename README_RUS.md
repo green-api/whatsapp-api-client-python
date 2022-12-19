@@ -3,6 +3,9 @@
 [![Python application](https://github.com/green-api/whatsapp-api-client-python/actions/workflows/python-app.yml/badge.svg)](https://github.com/green-api/whatsapp-api-client-python/actions/workflows/python-app.yml)
 [![Upload Python Package](https://github.com/green-api/whatsapp-api-client-python/actions/workflows/python-publish.yml/badge.svg)](https://github.com/green-api/whatsapp-api-client-python/actions/workflows/python-publish.yml)
 
+- [English documentation](README.md)
+- [Документация на русском языке](README_RUS.md)
+
 Python библиотека для интеграции с мессенджером WhatsAPP через API сервиса [green-api.com](https://green-api.com). Чтобы
 воспользоваться библиотекой нужно получить регистрационный токен и id аккаунта
 в [личном кабинете](https://console.green-api.com). Есть бесплатный тариф аккаунта разработчика.
