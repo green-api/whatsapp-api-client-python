@@ -191,7 +191,7 @@ of your system. Pass the handler to the run_forever function without brackets.
 
 ## Service methods documentation
 
-[https://green-api.com/docs/api/](https://green-api.com/en/docs/api/)
+[https://green-api.com/en/docs/api/](https://green-api.com/en/docs/api/)
 
 ## External products
 
