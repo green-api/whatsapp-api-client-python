@@ -1,11 +1,6 @@
-from os import environ
-
 from whatsapp_api_client_python import GreenAPI, Bot
 
-ID_INSTANCE = environ["ID_INSTANCE"]
-API_TOKEN_INSTANCE = environ["API_TOKEN_INSTANCE"]
-
-greenAPI = GreenAPI(ID_INSTANCE, API_TOKEN_INSTANCE)
+greenAPI = GreenAPI("ID_INSTANCE", "API_TOKEN_INSTANCE")
 
 bot = Bot(greenAPI)
 
