@@ -1,26 +1,27 @@
-from whatsapp_api_client_python import GreenAPI, Bot
+from whatsapp_api_client_python import GreenAPI, Webhook
 
 ID_INSTANCE = "1101000001"
 API_TOKEN_INSTANCE = "3e03ea9ff3324e228ae3dfdf4d48e409bfa1b1ad0b0c46bf8c"
 
 greenAPI = GreenAPI(ID_INSTANCE, API_TOKEN_INSTANCE)
 
-bot = Bot(greenAPI)
+webhook = Webhook(greenAPI)
 
 
-@bot.handler(type_webhook="incomingMessageReceived")
+def main():
+    webhook.start_receiving_notifications(handler)
+
+
 def handler(body: dict) -> None:
-    greenAPI.read_mark.read_chat(
-        chatId=body["senderData"]["chatId"],
-        idMessage=body["idMessage"]
-    )
+    type_webhook = body["typeWebhook"]
+    if type_webhook == "incomingMessageReceived":
+        response = greenAPI.sending.send_message(
+            chatId=body["senderData"]["chatId"],
+            message="Any message"
+        )
+
+        print(response)
 
 
-@bot.message(message_text="Hello")
-def message_handler(body: dict) -> str:
-    sender_name = body["senderData"]["senderName"]
-
-    return f"Hello, {sender_name}."
-
-
-bot.run_forever()
+if __name__ == '__main__':
+    main()
