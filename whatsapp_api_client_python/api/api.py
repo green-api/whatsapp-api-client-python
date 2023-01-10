@@ -2,6 +2,7 @@ from typing import NoReturn, Optional, TYPE_CHECKING, Union
 
 from requests import Session
 
+from whatsapp_api_client_python.webhook import Webhook
 from .abc import AbstractAPI
 
 if TYPE_CHECKING:
@@ -55,6 +56,10 @@ class GreenAPI(AbstractAPI):
         if response.status_code == 200:
             return response.json()
         raise GreenAPIError(response.status_code, response.text)
+
+    @property
+    def webhook(self) -> Webhook:
+        return Webhook(self)
 
 
 class GreenAPIError(Exception):
