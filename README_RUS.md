@@ -3,6 +3,8 @@
 [![Python application](https://github.com/green-api/whatsapp-api-client-python/actions/workflows/python-app.yml/badge.svg)](https://github.com/green-api/whatsapp-api-client-python/actions/workflows/python-app.yml)
 [![Upload Python Package](https://github.com/green-api/whatsapp-api-client-python/actions/workflows/python-publish.yml/badge.svg)](https://github.com/green-api/whatsapp-api-client-python/actions/workflows/python-publish.yml)
 
+- [English documentation](README.md)
+
 Python библиотека для интеграции с мессенджером WhatsAPP через API сервиса [green-api.com](https://green-api.com). Чтобы воспользоваться библиотекой нужно получить регистрационный токен и id аккаунта в [личном кабинете](https://console.green-api.com). Есть бесплатный тариф аккаунта разработчика.
 
 ## API
@@ -11,15 +13,10 @@ Python библиотека для интеграции с мессенджер�
 
 ## Установка
 
-```
+```shell
 pip install whatsapp-api-client-python
 ```
 
-## Import 
-
-```
-from whatsapp_api_client_python import API
-```
 ## Авторизация 
 
 Чтобы отправить сообщение или выполнить другой метод Green-API, аккаунт WhatsApp в приложении телефона должен быть в авторизованном состоянии. Для авторизации аккаунта перейдите в [личный кабинет](https://console.green-api.com) и сканируйте QR-код с использованием приложения WhatsApp.
@@ -28,20 +25,20 @@ from whatsapp_api_client_python import API
 
 ### Как инициализировать объект
 
-```
+```python
 greenAPI = API.GreenApi(ID_INSTANCE, API_TOKEN_INSTANCE)
 ```
 
 ### Отправка текстового сообщения на номер WhatsApp
 
-```
+```python
 result = greenAPI.sending.sendMessage('79001234567@g.us', 'Message text')
 ```
 
 Ссылка на пример: [sendTextMessage.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendTextMessage.py)
 
 Обратите внимание, что ключи можно получать из переменных среды:
-```
+```python
 from os import environ
 
 ID_INSTANCE = environ['ID_INSTANCE']
@@ -50,7 +47,7 @@ API_TOKEN_INSTANCE = environ['API_TOKEN_INSTANCE']
 
 ### Отправка картинки по URL
 
-```
+```python
 result = greenAPI.sending.sendFileByUrl('120363025955348359@g.us', 
         'https://www.google.ru/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png', 
         'googlelogo_color_272x92dp.png', 'Google logo')
@@ -60,9 +57,9 @@ result = greenAPI.sending.sendFileByUrl('120363025955348359@g.us',
 
 ### Отправка картинки загрузкой с диска
 
-```
+```python
 result = greenAPI.sending.sendFileByUpload('120363025955348359@g.us', 
-        'C:\Games\PicFromDisk.png', 
+        'C:\\Games\\PicFromDisk.png', 
         'PicFromDisk.png', 'Picture from disk')
 ```
 
@@ -70,7 +67,7 @@ result = greenAPI.sending.sendFileByUpload('120363025955348359@g.us',
 
 ### Создание группы и отправка сообщения в эту группу
 
-```
+```python
 chatIds = [
     "79001234567@c.us"
 ]
@@ -92,7 +89,7 @@ if resultCreate.code == 200:
 Общая концепция получения данных в Green API описана [здесь](https://green-api.com/docs/api/receiving/)
 Для старта получения сообщений через HTTP API требуется выполнить метод библиотеки:
 
-```
+```python
 greenAPI.webhooks.startReceivingNotifications(onEvent)
 ```
 

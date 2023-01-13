@@ -3,7 +3,6 @@
 [![Python application](https://github.com/green-api/whatsapp-api-client-python/actions/workflows/python-app.yml/badge.svg)](https://github.com/green-api/whatsapp-api-client-python/actions/workflows/python-app.yml)
 [![Upload Python Package](https://github.com/green-api/whatsapp-api-client-python/actions/workflows/python-publish.yml/badge.svg)](https://github.com/green-api/whatsapp-api-client-python/actions/workflows/python-publish.yml)
 
-
 - [Документация на русском языке](README_RUS.md)
 
 Python library for intagration with WhatsAPP messanger via API of [green-api.com](https://green-api.com) service. To use the library you have to get a registration token and an account id in the [personal area](https://console.green-api.com). There is a free developer account tariff plan.
@@ -14,7 +13,7 @@ You can find REST API documentation by [url](https://green-api.com/docs/api/). T
 
 ## Installation
 
-```
+```shell
 pip install whatsapp-api-client-python
 ```
 
@@ -31,20 +30,20 @@ To send a message or to exacute some other Green-API method, you have to have th
 
 ### How to initialize an object
 
-```
+```python
 greenAPI = API.GreenApi(ID_INSTANCE, API_TOKEN_INSTANCE)
 ```
 
 ### Sending a text message to a WhatsApp number
 
-```
+```python
 result = greenAPI.sending.sendMessage('79001234567@g.us', 'Message text')
 ```
 
 Example url: [sendTextMessage.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendTextMessage.py)
 
 Please note that keys can be obtained from environment variables:
-```
+```python
 from os import environ
 
 ID_INSTANCE = environ['ID_INSTANCE']
@@ -53,7 +52,7 @@ API_TOKEN_INSTANCE = environ['API_TOKEN_INSTANCE']
 
 ### Sending an image via URL
 
-```
+```python
 result = greenAPI.sending.sendFileByUrl('120363025955348359@g.us', 
         'https://www.google.ru/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png', 
         'googlelogo_color_272x92dp.png', 'Google logo')
@@ -63,7 +62,7 @@ Example url: [sendPictureByLink.py](https://github.com/green-api/whatsapp-api-cl
 
 ### Sending an image by uploading from the disk
 
-```
+```python
 result = greenAPI.sending.sendFileByUpload('120363025955348359@g.us', 
         'C:\Games\PicFromDisk.png', 
         'PicFromDisk.png', 'Picture from disk')
@@ -73,7 +72,7 @@ Example url: [sendPictureByUpload.py](https://github.com/green-api/whatsapp-api-
 
 ### Group creation and sending a message to the group
 
-```
+```python
 chatIds = [
     "79001234567@c.us"
 ]
@@ -95,7 +94,7 @@ Example url: [createGroupAndSendMessage.py](https://github.com/green-api/whatsap
 The general concept of receiving data in the Green API is described [here](https://green-api.com/en/docs/api/receiving/)
 To start receiving messages by the HTTP API you need to execute the library method:
 
-```
+```python
 greenAPI.webhooks.startReceivingNotifications(onEvent)
 ```
 
@@ -174,7 +173,7 @@ Method | Description |  Documentation
 
 ## Service methods documentation
 
-[https://green-api.com/docs/api/](https://green-api.com/docs/api/)
+[https://green-api.com/en/docs/api/](https://green-api.com/en/docs/api/)
 
 ## External products
 
