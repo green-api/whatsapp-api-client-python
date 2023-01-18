@@ -281,3 +281,24 @@ class Sending:
                 '{{host}}/waInstance{{idInstance}}'
                 '/SendTemplateButtons/{{apiTokenInstance}}',
                 requestBody)
+
+    def forwardMessages(self, chatId: str, chatIdFrom: str,
+                        messages: array) -> Response:
+            'The method is intended for forwarding messages to a personal or ' \
+            'group chat. The forwarded messages will be added to the send queue.' \
+            'Checking whatsapp authorization on the phone (i.e. availability in linked' \
+            'devices) is not performed. The message will be kept for 24 hours ' \
+            'in the queue and will be sent immediately after phone authorization. ' \
+            'The rate at which messages are sent from the queue is managed by ' \
+            'Message sending delay parameter.'
+
+            requestBody = {
+                'chatId': chatId,
+                'chatIdFrom': chatIdFrom,
+                'messages': messages,
+            }
+
+            return self.greenApi.request('POST',
+                                         '{{host}}/waInstance{{idInstance}}'
+                                         '/ForwardMessages/{{apiTokenInstance}}',
+                                         requestBody)
