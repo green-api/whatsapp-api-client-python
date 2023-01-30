@@ -5,7 +5,7 @@ with open("README.md") as file:
 
 setuptools.setup(
     name="whatsapp-api-client-python",
-    version="0.0.27",
+    version="0.0.31",
     install_requires=['requests'],
     author="Ivan Sadovy",
     author_email="sadiv@bk.ru",
