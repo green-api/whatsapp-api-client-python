@@ -41,7 +41,7 @@ class ServiceMethods:
                 '/GetContactInfo/{{apiTokenInstance}}',
                 requestBody)
 
-    def getContacts(self, chatId: str) -> Response:
+    def getContacts(self) -> Response:
             'The method is aimed for getting a list of the current account '\
             'contacts. Sends contacts of all recipients whom the account '\
             'connected with. Parameter "contact name" "name" takes on '\
