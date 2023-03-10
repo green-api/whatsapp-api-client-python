@@ -100,6 +100,19 @@ class Sending:
                 '/SendFileByUpload/{{apiTokenInstance}}',
                 requestBody, files = files)
 
+    def uploadFile(self, path: str) -> Response:
+            with open(path, 'rb') as f:
+                payload = f.read()
+
+            mimeType = mimetypes.guess_type(path)[0]
+            print("mimeType")
+            print(mimeType)
+
+            return self.greenApi.request('POST_FILE',
+                '{{host}}/waInstance{{idInstance}}'
+                '/uploadFile/{{apiTokenInstance}}',
+                payload = payload, mimeType = mimeType)
+
     def sendFileByUrl(self, chatId: str, urlFile: str,
                     fileName: str = None,
                     caption: str = None,

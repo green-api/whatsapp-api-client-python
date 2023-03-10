@@ -42,7 +42,7 @@ class GreenApi:
         self.webhooks = Webhooks(self)
 
     def request(self, method: str, url: str, 
-                payload: any = None, files: array = None):
+                payload: any = None, files: array = None, mimeType: str = None):
         url = url.replace('{{host}}', self.host)
         url = url.replace('{{idInstance}}', self.idInstance)
         url = url.replace('{{apiTokenInstance}}', self.apiTokenInstance)
@@ -53,12 +53,19 @@ class GreenApi:
             payloadData = None
             if payload != None:
                 if files == None:
-                    headers = {
-                        'Content-Type': 'application/json'
-                    }
-                    payloadData = json.dumps(payload)
+                    if method == 'POST_FILE':
+                        method = 'POST'
+                        payloadData = payload
+                        headers = {
+                            'Content-Type': mimeType
+                        }
+                    else:
+                        headers = {
+                            'Content-Type': 'application/json'
+                        }
+                        payloadData = json.dumps(payload)
                 else:
-                    payloadData = payload   
+                    payloadData = payload
             result = requests.request(method, url, headers = headers, 
                                         data = payloadData, 
                                         files = files)
