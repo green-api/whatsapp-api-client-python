@@ -75,12 +75,3 @@ class Account:
                 '{{host}}/waInstance{{idInstance}}'
                 '/SetSettings/{{apiTokenInstance}}',
                 requestBody)
-
-    def setSettings(self) -> Response:
-            'The method is aimed for setting a system proxy. '\
-            'Use the method when you need to reset custom proxy '\
-            'settings to system ones.'
-            
-            return self.greenApi.request('GET', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/SetSystemProxy/{{apiTokenInstance}}')
