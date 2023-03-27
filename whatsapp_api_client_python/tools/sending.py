@@ -105,8 +105,6 @@ class Sending:
                 payload = f.read()
 
             mimeType = mimetypes.guess_type(path)[0]
-            print("mimeType")
-            print(mimeType)
 
             return self.greenApi.request('POST_FILE',
                 '{{host}}/waInstance{{idInstance}}'
