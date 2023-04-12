@@ -184,6 +184,7 @@ body | тело сообщения (json)
 Эта работа распространяется под лицензией
 [Creative Commons Attribution-NoDerivatives 4.0 International License][cc-by-nd].
 
+[cc-by-nd]: https://creativecommons.org/licenses/by-nd/4.0/
 [cc-by-nd-shield]: https://img.shields.io/badge/License-CC%20BY--ND%204.0-lightgrey.svg
 
 Пожалуйста, смотрите файл [LICENSE](LICENSE)
