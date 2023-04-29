@@ -7,7 +7,7 @@ if TYPE_CHECKING:
 
 
 class Journals:
-    def __init__(self, api: GreenApi):
+    def __init__(self, api: "GreenApi"):
         self.api = api
 
     def get_chat_history(
