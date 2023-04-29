@@ -72,6 +72,6 @@ class Journals:
         return self.api.request(
             "GET", (
                 "{{host}}/waInstance{{idInstance}}/"
-                "lastIncomingMessages/{{apiTokenInstance}}"
+                "LastOutgoingMessages/{{apiTokenInstance}}"
             ), request_body
         )
