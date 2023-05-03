@@ -11,7 +11,7 @@ class Journals:
         self.api = api
 
     def get_chat_history(
-            self, chat_id: str, count: Optional[int] = None
+            self, chatId: str, count: Optional[int] = None
     ) -> Response:
         """The method returns the chat message history."""
 
@@ -27,7 +27,7 @@ class Journals:
             ), request_body
         )
 
-    def get_message(self, chat_id: str, id_message: str) -> Response:
+    def get_message(self, chatId: str, idMessage: str) -> Response:
         """The method returns the chat message."""
 
         request_body = locals()

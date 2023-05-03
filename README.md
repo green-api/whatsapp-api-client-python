@@ -5,11 +5,11 @@
 
 - [Документация на русском языке](README_RUS.md)
 
-Python library for intagration with WhatsAPP messanger via API of [green-api.com](https://green-api.com) service. To use the library you have to get a registration token and an account id in the [personal area](https://console.green-api.com). There is a free developer account tariff plan.
+Python library for intagration with WhatsAPP messanger via API of [green-api.com](https://green-api.com/en/) service. To use the library you have to get a registration token and an account id in the [personal area](https://console.green-api.com). There is a free developer account tariff plan.
 
 ## API
 
-You can find REST API documentation by [url](https://green-api.com/docs/api/). The library is a wrapper for REST API, so the documentation at the above url applies to the library as well.
+You can find REST API documentation by [url](https://green-api.com/en/docs/api/). The library is a wrapper for REST API, so the documentation at the above url applies to the library as well.
 
 ## Installation
 
