@@ -115,6 +115,6 @@ class Account:
         return self.api.request(
             "POST", (
                 "{{host}}/waInstance{{idInstance}}/"
-                "SetSettings/{{apiTokenInstance}}"
+                "setProfilePicture/{{apiTokenInstance}}"
             ), files=files
         )
