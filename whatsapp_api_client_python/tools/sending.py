@@ -1,304 +1,246 @@
-from array import array
-import os.path
 import mimetypes
-from whatsapp_api_client_python.response import Response
+import pathlib
+from typing import Dict, List, Optional, TYPE_CHECKING, Union
+
+from ..response import Response
+
+if TYPE_CHECKING:
+    from ..API import GreenApi
 
 
 class Sending:
-    def __init__(self, greenApi) -> None:
-        self.greenApi = greenApi
-        
-    def sendButtons(self, chatId: str, message: str, footer: str,
-                    buttons: array, quotedMessageId: str = None, 
-                    archiveChat: bool = None) -> Response:
-            'The method is aimed for sending a button message to a personal '\
-            'or a group chat. The message will be added to the send queue. '\
-            'Checking whatsapp authorization on the phone (i.e. availability '\
-            'in linked devices) is not performed. The message will be kept '\
-            'for 24 hours in the queue and will be sent immediately after '\
-            'phone authorization. The rate at which messages are sent from '\
-            'the queue is managed by Message sending delay parameter.'
+    def __init__(self, api: "GreenApi"):
+        self.api = api
 
-            requestBody = {
-                'chatId': chatId,
-                'message': message,
-                'footer': footer,
-                'buttons': buttons,
-            }
+    def sendMessage(
+            self,
+            chatId: str,
+            message: str,
+            quotedMessageId: Optional[str] = None,
+            archiveChat: Optional[bool] = None,
+            linkPreview: Optional[bool] = None
+    ) -> Response:
+        """
+        The method is aimed for sending a text message to a personal or
+        a group chat.
+        """
 
-            if quotedMessageId != None:
-                requestBody['quotedMessageId'] = quotedMessageId
-            if archiveChat != None:
-                requestBody['archiveChat'] = archiveChat
+        request_body = self.__handle_parameters(locals())
 
-            return self.greenApi.request('POST', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/SendButtons/{{apiTokenInstance}}',
-                requestBody)
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "sendMessage/{{apiTokenInstance}}"
+            ), request_body
+        )
 
-    def sendContact(self, chatId: str, contact: object,
-                    quotedMessageId: str = None) -> Response:
-            'The method is aimed for sending a contact message. '\
-            'Contact visit card is created and sent to a chat. '\
-            'The message will be added to the send queue. '\
-            'Linked device not required when sending. '\
-            'Messages will be kept for 24 hours in the queue until account '\
-            'will be authorized The rate at which messages are sent from '\
-            'the queue is managed by Message sending delay parameter.'
+    def sendButtons(
+            self,
+            chatId: str,
+            message: str,
+            buttons: List[Dict[str, Union[int, str]]],
+            footer: Optional[str] = None,
+            quotedMessageId: Optional[str] = None,
+            archiveChat: Optional[bool] = None
+    ) -> Response:
+        """
+        The method is aimed for sending a button message to a personal
+        or a group chat.
+        """
 
-            requestBody = {
-                'chatId': chatId,
-                'contact': contact
-            }
+        request_body = self.__handle_parameters(locals())
 
-            if quotedMessageId != None:
-                requestBody['quotedMessageId'] = quotedMessageId
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "sendButtons/{{apiTokenInstance}}"
+            ), request_body
+        )
 
-            return self.greenApi.request('POST', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/SendContact/{{apiTokenInstance}}',
-                requestBody)
+    def sendTemplateButtons(
+            self,
+            chatId: str,
+            message: str,
+            templateButtons: List[Dict[str, Union[int, Dict[str, str]]]],
+            footer: Optional[str] = None,
+            quotedMessageId: Optional[str] = None,
+            archiveChat: Optional[bool] = None
+    ) -> Response:
+        """
+        The method is aimed for sending a message with template list
+        interactive buttons to a personal or a group chat.
+        """
 
-    def sendFileByUpload(self, chatId: str, path: str,
-                    fileName: str = None,
-                    caption: str = None,
-                    quotedMessageId: str = None) -> Response:
-            'The method is aimed for sending a file uploaded by form '\
-            '(form-data). The message will be added to the send queue. '\
-            'The rate at which messages are sent from the queue is managed '\
-            'by Message sending delay parameter.'\
-            'Video, audio and image files available for viewing and listening '\
-            'to are sent as in native-mode WhatsApp. Documents are sent in '\
-            'the same way as in native-mode WhatsApp. Outgoing file type and '\
-            'send method is determined by the file extension. '\
-            'Description is only added to images and video.'\
-            'The maximum size of outgoing files is 37 MB.'
+        request_body = self.__handle_parameters(locals())
 
-            pathParts = os.path.split(path)
-            if fileName == None:
-                fileName = pathParts[pathParts.count - 1]
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "sendTemplateButtons/{{apiTokenInstance}}"
+            ), request_body
+        )
 
-            mimeType = mimetypes.guess_type(path)[0]
+    def sendListMessage(
+            self,
+            chatId: str,
+            message: str,
+            buttonText: str,
+            sections: List[Dict[str, Union[str, List[Dict[str, str]]]]],
+            title: Optional[str] = None,
+            footer: Optional[str] = None,
+            quotedMessageId: Optional[str] = None,
+            archiveChat: Optional[bool] = None
+    ) -> Response:
+        """
+        The method is aimed for sending a message with a select button
+        from a list of values to a personal or a group chat.
+        """
 
-            files = [
-                ('file', (fileName, open(path,'rb'), mimeType))
-            ]
+        request_body = self.__handle_parameters(locals())
 
-            requestBody = {
-                'chatId': chatId,
-                'fileName': fileName
-            }
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "sendListMessage/{{apiTokenInstance}}"
+            ), request_body
+        )
 
-            if caption != None:
-                requestBody['caption'] = caption
+    def sendFileByUpload(
+            self,
+            chatId: str,
+            path: str,
+            fileName: Optional[str] = None,
+            caption: Optional[str] = None,
+            quotedMessageId: Optional[str] = None
+    ) -> Response:
+        """
+        The method is aimed for sending a file uploaded by form
+        (form-data).
+        """
 
-            if quotedMessageId != None:
-                requestBody['quotedMessageId'] = quotedMessageId
+        request_body = self.__handle_parameters(locals())
 
-            return self.greenApi.request('POST', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/SendFileByUpload/{{apiTokenInstance}}',
-                requestBody, files = files)
+        file_name = pathlib.Path(path).name
+        content_type = mimetypes.guess_type(file_name)[0]
 
-    def sendFileByUrl(self, chatId: str, urlFile: str,
-                    fileName: str = None,
-                    caption: str = None,
-                    quotedMessageId: str = None,
-                    archiveChat: bool = None) -> Response:
-            'The method is aimed for sending a file uploaded by Url '\
-            'The message will be added to the send queue. '\
-            'The rate at which messages are sent from the queue is managed '\
-            'by Message sending delay parameter.'\
-            'Video, audio and image files available for viewing and listening '\
-            'to are sent as in native-mode WhatsApp. Documents are sent in '\
-            'the same way as in native-mode WhatsApp. Outgoing file type and '\
-            'send method is determined by the file extension. '\
-            'Description is only added to images and video.'\
-            'The maximum size of outgoing files is 37 MB.'
+        files = {"file": (file_name, open(path, "rb"), content_type)}
 
-            requestBody = {
-                'chatId': chatId,
-                'urlFile': urlFile,
-                'fileName': fileName
-            }
+        del request_body["path"]
 
-            if caption != None:
-                requestBody['caption'] = caption
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "sendFileByUpload/{{apiTokenInstance}}"
+            ), request_body, files
+        )
 
-            if quotedMessageId != None:
-                requestBody['quotedMessageId'] = quotedMessageId
+    def sendFileByUrl(
+            self,
+            chatId: str,
+            urlFile: str,
+            fileName: str,
+            caption: Optional[str] = None,
+            quotedMessageId: Optional[str] = None,
+            archiveChat: Optional[bool] = None
+    ) -> Response:
+        """The method is aimed for sending a file uploaded by URL."""
 
-            if archiveChat != None:
-                requestBody['archiveChat'] = archiveChat
+        request_body = self.__handle_parameters(locals())
 
-            return self.greenApi.request('POST', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/SendFileByUrl/{{apiTokenInstance}}',
-                requestBody)
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "sendFileByUrl/{{apiTokenInstance}}"
+            ), request_body
+        )
 
-    def sendLink(self, chatId: str, urlLink: str,
-                    quotedMessageId: str = None) -> Response:
-            'The method is aimed for sending a message with a link, by which '\
-            'an image preview, title and description will be added. '\
-            'Linked device not required when sending. Messages will be kept '\
-            'for 24 hours in the queue until account will be authorized '\
-            'Image, title and description are obtained from Open Graph page '\
-            'template being linked to. The message will be added to the send '\
-            'queue. The rate at which messages are sent from the queue is '\
-            'managed by Messages sending delay parameter.'
+    def sendLocation(
+            self,
+            chatId: str,
+            latitude: float,
+            longitude: float,
+            nameLocation: Optional[str] = None,
+            address: Optional[str] = None,
+            quotedMessageId: Optional[str] = None
+    ) -> Response:
+        """The method is aimed for sending location message."""
 
-            requestBody = {
-                'chatId': chatId,
-                'urlLink': urlLink
-            }
+        request_body = self.__handle_parameters(locals())
 
-            if quotedMessageId != None:
-                requestBody['quotedMessageId'] = quotedMessageId
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "sendLocation/{{apiTokenInstance}}"
+            ), request_body
+        )
 
-            return self.greenApi.request('POST', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/SendLink/{{apiTokenInstance}}',
-                requestBody)
+    def sendContact(
+            self,
+            chatId: str,
+            contact: Dict[str, Union[int, str]],
+            quotedMessageId: Optional[str] = None
+    ) -> Response:
+        """The method is aimed for sending a contact message."""
 
-    def sendListMessage(self, chatId: str, message: str, sections: array,
-                    title: str = None,
-                    footer: str = None,
-                    buttonText: str = None,
-                    quotedMessageId: str = None,
-                    archiveChat: str = None) -> Response:
-            'The method is aimed for sending a message with a select button '\
-            'from a list of values to a personal or a group chat. '\
-            'The message will be added to the send queue. Checking whatsapp '\
-            'authorization on the phone (i.e. availability in linked devices) '\
-            'is not performed. The message will be kept for 24 hours in the '\
-            'queue and will be sent immediately after phone authorization. '\
-            'The rate at which messages are sent from the queue is managed by '\
-            'Message sending delay parameter.'
+        request_body = self.__handle_parameters(locals())
 
-            requestBody = {
-                'chatId': chatId,
-                'message': message,
-                'sections': sections
-            }
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "sendContact/{{apiTokenInstance}}"
+            ), request_body
+        )
 
-            if title != None:
-                requestBody['title'] = title
-            if footer != None:
-                requestBody['footer'] = footer
-            if buttonText != None:
-                requestBody['buttonText'] = buttonText
-            if quotedMessageId != None:
-                requestBody['quotedMessageId'] = quotedMessageId 
-            if archiveChat != None:
-                requestBody['archiveChat'] = archiveChat
+    def sendLink(
+            self,
+            chatId: str,
+            urlLink: str,
+            quotedMessageId: Optional[str] = None
+    ) -> Response:
+        """
+        The method is deprecated. Please use SendMessage.
 
-            return self.greenApi.request('POST', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/SendListMessage/{{apiTokenInstance}}',
-                requestBody)
+        The method is aimed for sending a message with a link, by which
+        an image preview, title and description will be added.
+        """
 
-    def sendLocation(self, chatId: str, latitude: float, longitude: float,
-                    nameLocation: str = None,
-                    address: str = None,
-                    quotedMessageId: str = None) -> Response:
-            'The method is aimed for sending location message. The message '\
-            'will be added to the send queue. Linked device not required '\
-            'when sending. Messages will be kept for 24 hours in the queue '\
-            'until account will be authorized The rate at which messages are '\
-            'sent from the queue is managed by Message sending delay parameter.'
+        request_body = self.__handle_parameters(locals())
 
-            requestBody = {
-                'chatId': chatId,
-                'latitude': latitude,
-                'longitude': longitude
-            }
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "sendLink/{{apiTokenInstance}}"
+            ), request_body
+        )
 
-            if nameLocation != None:
-                requestBody['nameLocation'] = nameLocation
-            if address != None:
-                requestBody['address'] = address
-            if quotedMessageId != None:
-                requestBody['quotedMessageId'] = quotedMessageId 
+    def forwardMessages(
+            self,
+            chatId: str,
+            chatIdFrom: str,
+            messages: List[str]
+    ) -> Response:
+        """
+        The method is intended for forwarding messages to a personal or
+        group chat.
+        """
 
-            return self.greenApi.request('POST', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/SendLocation/{{apiTokenInstance}}',
-                requestBody)
+        request_body = self.__handle_parameters(locals())
 
-    def sendMessage(self, chatId: str, message: str,
-                    quotedMessageId: str = None,
-                    archiveChat: str = None) -> Response:
-            'The method is aimed for sending a text message to a personal or '\
-            'a group chat. The message will be added to the send queue. '\
-            'Linked device not required when sending. Messages will be kept '\
-            'for 24 hours in the queue until account will be authorized '\
-            'The rate at which messages are sent from the queue is managed '\
-            'by Message sending delay parameter.'
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "forwardMessages/{{apiTokenInstance}}"
+            ), request_body
+        )
 
-            requestBody = {
-                'chatId': chatId,
-                'message': message
-            }
+    @classmethod
+    def __handle_parameters(cls, parameters: dict) -> dict:
+        handled_parameters = parameters.copy()
 
-            if quotedMessageId != None:
-                requestBody['quotedMessageId'] = quotedMessageId
-            if archiveChat != None:
-                requestBody['archiveChat'] = archiveChat 
+        handled_parameters.pop("self")
 
-            return self.greenApi.request('POST', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/SendMessage/{{apiTokenInstance}}',
-                requestBody)
+        for key, value in parameters.items():
+            if value is None:
+                handled_parameters.pop(key)
 
-    def sendTemplateButtons(self, chatId: str, message: str,
-                    templateButtons: array,
-                    footer: str = None,
-                    quotedMessageId: str = None,
-                    archiveChat: str = None) -> Response:
-            'The method is aimed for sending a message with template list '\
-            'interacrive buttons to a personal or a group chat. The message '\
-            'will be added to the send queue. Checking whatsapp authorization '\
-            'on the phone (i.e. availability in linked devices) '\
-            'is not performed. The message will be kept for 24 hours in the '\
-            'queue and will be sent immediately after phone authorization. '\
-            'The rate at which messages are sent from the queue is managed '\
-            'by Message sending delay parameter.'
-
-            requestBody = {
-                'chatId': chatId,
-                'message': message,
-                'templateButtons': templateButtons
-            }
-
-            if footer != None:
-                requestBody['footer'] = footer
-            if quotedMessageId != None:
-                requestBody['quotedMessageId'] = quotedMessageId
-            if archiveChat != None:
-                requestBody['archiveChat'] = archiveChat 
-
-            return self.greenApi.request('POST', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/SendTemplateButtons/{{apiTokenInstance}}',
-                requestBody)
-
-    def forwardMessages(self, chatId: str, chatIdFrom: str,
-                        messages: array) -> Response:
-            'The method is intended for forwarding messages to a personal or ' \
-            'group chat. The forwarded messages will be added to the send queue.' \
-            'Checking whatsapp authorization on the phone (i.e. availability in linked' \
-            'devices) is not performed. The message will be kept for 24 hours ' \
-            'in the queue and will be sent immediately after phone authorization. ' \
-            'The rate at which messages are sent from the queue is managed by ' \
-            'Message sending delay parameter.'
-
-            requestBody = {
-                'chatId': chatId,
-                'chatIdFrom': chatIdFrom,
-                'messages': messages,
-            }
-
-            return self.greenApi.request('POST',
-                                         '{{host}}/waInstance{{idInstance}}'
-                                         '/ForwardMessages/{{apiTokenInstance}}',
-                                         requestBody)
+        return handled_parameters
