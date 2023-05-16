@@ -10,7 +10,7 @@ class Journals:
     def __init__(self, api: "GreenApi"):
         self.api = api
 
-    def get_chat_history(
+    def getChatHistory(
             self, chatId: str, count: Optional[int] = None
     ) -> Response:
         """The method returns the chat message history."""
@@ -23,11 +23,11 @@ class Journals:
         return self.api.request(
             "POST", (
                 "{{host}}/waInstance{{idInstance}}/"
-                "GetChatHistory/{{apiTokenInstance}}"
+                "getChatHistory/{{apiTokenInstance}}"
             ), request_body
         )
 
-    def get_message(self, chatId: str, idMessage: str) -> Response:
+    def getMessage(self, chatId: str, idMessage: str) -> Response:
         """The method returns the chat message."""
 
         request_body = locals()
@@ -40,7 +40,7 @@ class Journals:
             ), request_body
         )
 
-    def last_incoming_messages(
+    def lastIncomingMessages(
             self, minutes: Optional[int] = None
     ) -> Response:
         """
@@ -58,7 +58,7 @@ class Journals:
             ), request_body
         )
 
-    def last_outgoing_messages(
+    def lastOutgoingMessages(
             self, minutes: Optional[int] = None
     ) -> Response:
         """
@@ -72,6 +72,6 @@ class Journals:
         return self.api.request(
             "GET", (
                 "{{host}}/waInstance{{idInstance}}/"
-                "LastOutgoingMessages/{{apiTokenInstance}}"
+                "lastOutgoingMessages/{{apiTokenInstance}}"
             ), request_body
         )
