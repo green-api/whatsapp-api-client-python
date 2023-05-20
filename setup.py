@@ -21,6 +21,7 @@ setup(
         "Environment :: Console",
         "Intended Audience :: Developers",
         "License :: Other/Proprietary License",
+        "Operating System :: OS Independent",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
@@ -28,7 +29,9 @@ setup(
         "Programming Language :: Python :: 3.11",
         "Topic :: Software Development :: Libraries :: Application Frameworks"
     ],
-    license="Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)",
+    license=(
+        "Creative Commons Attribution-NoDerivatives 4.0 International"
+    ),
     install_requires=["requests==2.30.0"],
     python_requires=">=3.7"
 )
