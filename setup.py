@@ -33,6 +33,6 @@ setup(
         "Creative Commons Attribution-NoDerivatives 4.0 International"
         " (CC BY-ND 4.0)"
     ),
-    install_requires=["requests==2.30.0"],
+    install_requires=["requests==2.31.0"],
     python_requires=">=3.7"
 )
