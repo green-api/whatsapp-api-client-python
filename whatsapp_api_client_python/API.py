@@ -51,8 +51,8 @@ class GreenApi:
         try:
             headers = {}
             payloadData = None
-            if payload != None:
-                if files == None:
+            if payload is not None:
+                if files is None:
                     headers = {
                         'Content-Type': 'application/json'
                     }
