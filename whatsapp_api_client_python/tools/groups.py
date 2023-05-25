@@ -1,5 +1,6 @@
-from array import ArrayType, array
 import os.path
+from array import array
+
 from whatsapp_api_client_python.response import Response
 
 
