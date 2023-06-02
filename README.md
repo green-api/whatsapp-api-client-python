@@ -1,7 +1,10 @@
 ﻿# whatsapp-api-client-python
 
-[![Python application](https://github.com/green-api/whatsapp-api-client-python/actions/workflows/python-app.yml/badge.svg)](https://github.com/green-api/whatsapp-api-client-python/actions/workflows/python-app.yml)
-[![Upload Python Package](https://github.com/green-api/whatsapp-api-client-python/actions/workflows/python-publish.yml/badge.svg)](https://github.com/green-api/whatsapp-api-client-python/actions/workflows/python-publish.yml)
+![](https://img.shields.io/badge/license-CC%20BY--ND%204.0-green)
+![](https://img.shields.io/pypi/status/whatsapp-api-client-python)
+![](https://img.shields.io/pypi/pyversions/whatsapp-api-client-python)
+![](https://img.shields.io/github/actions/workflow/status/green-api/whatsapp-api-client-python/python-package.yml)
+![](https://img.shields.io/pypi/dm/whatsapp-api-client-python)
 
 - [Документация на русском языке](README_RUS.md)
 
