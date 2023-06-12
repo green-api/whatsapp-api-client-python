@@ -8,18 +8,18 @@
 
 - [Документация на русском языке](https://github.com/green-api/whatsapp-api-client-python/blob/master/README_RUS.md).
 
-Python library for integration with WhatsAPP messanger via API of [green-api.com](https://green-api.com/en/) service. To
-use the library you have to get a registration token and an account id in
-the [personal cabinet](https://console.green-api.com/). There is a free developer account tariff plan.
+whatsapp-api-client-python is a library for integration with WhatsApp messenger using the API
+service [green-api.com](https://green-api.com/en/). You should get a registration token and an account ID in
+your [personal cabinet](https://console.green-api.com/) to use the library. There is a free developer account tariff.
 
 ## API
 
-You can find REST API documentation by [link](https://green-api.com/en/docs/). The library is a wrapper for REST API,
-so the documentation at the above url applies to the library as well.
+The documentation for the REST API can be found at the [link](https://green-api.com/en/docs/). The library is a wrapper
+for the REST API, so the documentation at the link above also applies.
 
 ## Authorization
 
-To send a message or perform other Green API methods, the WhatsApp account in the phone app must be authorized. To
+To send a message or perform other GREEN API methods, the WhatsApp account in the phone app must be authorized. To
 authorize the account, go to your [cabinet](https://console.green-api.com/) and scan the QR code using the WhatsApp app.
 
 ## Installation
@@ -39,7 +39,9 @@ from whatsapp_api_client_python import API
 ### How to initialize an object
 
 ```
-greenAPI = API.GreenApi(ID_INSTANCE, API_TOKEN_INSTANCE)
+greenAPI = API.GreenApi(
+    "1101000001", "d75b3a66374942c5b3c019c698abc2067e151558acbd412345"
+)
 ```
 
 ### Sending a text message to a WhatsApp number
@@ -49,7 +51,9 @@ https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sen
 ).
 
 ```
-greenAPI.sending.sendMessage('11001234567@c.us', 'Message text')
+response = greenAPI.sending.sendMessage("11001234567@c.us", "Message text")
+
+print(response.data)
 ```
 
 ### Sending an image via URL
@@ -59,12 +63,13 @@ https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sen
 ).
 
 ```
-greenAPI.sending.sendFileByUrl(
-    '11001234567@c.us',
-    'https://www.google.ru/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png',
-    'googlelogo_color_272x92dp.png',
-    'Google logo'
+response = greenAPI.sending.sendFileByUrl(
+    "11001234567@c.us",
+    "https://green-api.com/green-api-logo_2.png",
+    "green-api-logo_2.png"
 )
+
+print(response.data)
 ```
 
 ### Sending an image by uploading from the disk
@@ -74,34 +79,29 @@ https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sen
 ).
 
 ```
-greenAPI.sending.sendFileByUpload(
-    '11001234567@c.us',
-    'C:\Games\PicFromDisk.png',
-    'PicFromDisk.png',
-    'Picture from disk'
+response = greenAPI.sending.sendFileByUpload(
+    "11001234567@c.us", "data/green-api-logo_2.png"
 )
+
+print(response.data)
 ```
 
 ### Group creation and sending a message to the group
 
-IMPORTANT: If one tries to create a group with a non-existent number, WhatsApp may block the sender's number. The number
-in the example is non-existent.
+**Attention**. If one tries to create a group with a non-existent number, WhatsApp may block the sender's number. The
+number in the example is non-existent.
 
 Link to example: [createGroupAndSendMessage.py](
 https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/createGroupAndSendMessage.py
 ).
 
 ```
-chatIds = [
-    "11001234567@c.us"
-]
-resultCreate = greenAPI.groups.createGroup(
-    'GroupName', chatIds
+create_group_response = greenAPI.groups.createGroup(
+    "Group Name", ["11001234567@c.us"]
 )
-
-if resultCreate.code == 200:
-    resultSend = greenAPI.sending.sendMessage(
-        resultCreate.data['chatId'], 'Message text'
+if create_group_response.code == 200:
+    send_message_response = greenAPI.sending.sendMessage(
+        create_group_response.data["chatId"], "Message text"
     )
 ```
 
@@ -111,24 +111,27 @@ Link to example: [receiveNotification.py](
 https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/receiveNotification.py
 ).
 
-The general concept of receiving data in the Green API is described [here](https://green-api.com/en/docs/api/receiving/)
-To start receiving messages by the HTTP API you need to execute the library method:
+The general concept of receiving data in the GREEN API is described [here](
+https://green-api.com/en/docs/api/receiving/
+). To start receiving notifications by the HTTP API you need to execute the library method:
 
 ```
 greenAPI.webhooks.startReceivingNotifications(onEvent)
 ```
 
-onEvent - your method which should contain parameters:
+onEvent - your function which should contain parameters:
 
-| Parameter   | Description                    |
-|-------------|--------------------------------|
-| typeWebhook | received message type (string) |
-| body        | message body (json)            |
+| Parameter   | Description                      |
+|-------------|----------------------------------|
+| typeWebhook | received notification type (str) |
+| body        | notification body (dict)         |
 
-Message body types and formats [here](https://green-api.com/en/docs/api/receiving/notifications-format/).
+Notification body types and formats can be found [here](
+https://green-api.com/en/docs/api/receiving/notifications-format/
+).
 
-This method will be called when an incoming message is received. Next, process messages according to the business logic
-of your system.
+This method will be called when an incoming notification is received. Next, process notifications according to the
+business logic of your system.
 
 ## Examples list
 
@@ -199,7 +202,7 @@ of your system.
 
 ## External products
 
-- [requests](https://requests.readthedocs.io/en/latest/) - for http requests.
+- [requests](https://requests.readthedocs.io/en/latest/) - for HTTP requests.
 
 ## License
 

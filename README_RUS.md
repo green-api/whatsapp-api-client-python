@@ -6,9 +6,9 @@
 ![](https://img.shields.io/github/actions/workflow/status/green-api/whatsapp-api-client-python/python-package.yml)
 ![](https://img.shields.io/pypi/dm/whatsapp-api-client-python)
 
-Python библиотека для интеграции с мессенджером WhatsApp через API сервиса [green-api.com](https://green-api.com/).
-Чтобы воспользоваться библиотекой, нужно получить регистрационный токен и ID аккаунта
-в [личном кабинете](https://console.green-api.com/). Есть бесплатный тариф аккаунта разработчика.
+whatsapp-api-client-python - библиотека для интеграции с мессенджером WhatsApp через API
+сервиса [green-api.com](https://green-api.com/). Чтобы воспользоваться библиотекой, нужно получить регистрационный токен
+и ID аккаунта в [личном кабинете](https://console.green-api.com/). Есть бесплатный тариф аккаунта разработчика.
 
 ## API
 
@@ -38,7 +38,9 @@ from whatsapp_api_client_python import API
 ### Как инициализировать объект
 
 ```
-greenAPI = API.GreenApi(ID_INSTANCE, API_TOKEN_INSTANCE)
+greenAPI = API.GreenApi(
+    "1101000001", "d75b3a66374942c5b3c019c698abc2067e151558acbd412345"
+)
 ```
 
 ### Отправка текстового сообщения на номер WhatsApp
@@ -46,7 +48,9 @@ greenAPI = API.GreenApi(ID_INSTANCE, API_TOKEN_INSTANCE)
 Ссылка на пример: [sendTextMessage.py](examples/sendTextMessage.py).
 
 ```
-greenAPI.sending.sendMessage('11001234567@c.us', 'Message text')
+response = greenAPI.sending.sendMessage("11001234567@c.us", "Message text")
+
+print(response.data)
 ```
 
 ### Отправка картинки по URL
@@ -54,12 +58,13 @@ greenAPI.sending.sendMessage('11001234567@c.us', 'Message text')
 Ссылка на пример: [sendPictureByLink.py](examples/sendPictureByLink.py).
 
 ```
-greenAPI.sending.sendFileByUrl(
-    '11001234567@c.us',
-    'https://www.google.ru/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png',
-    'googlelogo_color_272x92dp.png',
-    'Google logo'
+response = greenAPI.sending.sendFileByUrl(
+    "11001234567@c.us",
+    "https://green-api.com/green-api-logo_2.png",
+    "green-api-logo_2.png"
 )
+
+print(response.data)
 ```
 
 ### Отправка картинки загрузкой с диска
@@ -67,56 +72,51 @@ greenAPI.sending.sendFileByUrl(
 Ссылка на пример: [sendPictureByUpload.py](examples/sendPictureByUpload.py).
 
 ```
-greenAPI.sending.sendFileByUpload(
-    '11001234567@c.us',
-    'C:\\Games\\PicFromDisk.png',
-    'PicFromDisk.png',
-    'Picture from disk'
+response = greenAPI.sending.sendFileByUpload(
+    "11001234567@c.us", "data/green-api-logo_2.png"
 )
+
+print(response.data)
 ```
 
 ### Создание группы и отправка сообщения в эту группу
 
-ВАЖНО: Если попытаться создать группу с несуществующим номером WhatsApp может заблокировать номер отправителя. Номер в
-примере не существует.
+**Важно**. Если попытаться создать группу с несуществующим номером WhatsApp, то может заблокировать номер отправителя.
+Номер в примере не существует.
 
 Ссылка на пример: [createGroupAndSendMessage.py](examples/createGroupAndSendMessage.py).
 
 ```
-chatIds = [
-    "11001234567@c.us"
-]
-resultCreate = greenAPI.groups.createGroup(
-    'GroupName', chatIds
+create_group_response = greenAPI.groups.createGroup(
+    "Group Name", ["11001234567@c.us"]
 )
-
-if resultCreate.code == 200:
-    resultSend = greenAPI.sending.sendMessage(
-        resultCreate.data['chatId'], 'Message text'
+if create_group_response.code == 200:
+    send_message_response = greenAPI.sending.sendMessage(
+        create_group_response.data["chatId"], "Message text"
     )
 ```
 
-### Получение входящих сообщений через HTTP API
+### Получение входящих уведомлений через HTTP API
 
 Ссылка на пример: [receiveNotification.py](examples/receiveNotification.py).
 
-Общая концепция получения данных в Green API описана [здесь](https://green-api.com/docs/api/receiving/). Для старта
-получения сообщений через HTTP API требуется выполнить метод библиотеки:
+Общая концепция получения данных в GREEN API описана [здесь](https://green-api.com/docs/api/receiving/). Для старта
+получения уведомлений через HTTP API требуется выполнить метод библиотеки:
 
 ```
 greenAPI.webhooks.startReceivingNotifications(onEvent)
 ```
 
-onEvent - ваш метод, который должен содержать параметры:
+onEvent - ваша функция, которая должен содержать параметры:
 
-| Параметр    | Описание                           |
-|-------------|------------------------------------|
-| typeWebhook | тип полученного сообщения (строка) |
-| body        | тело сообщения (json)              |
+| Параметр    | Описание                          |
+|-------------|-----------------------------------|
+| typeWebhook | тип полученного уведомления (str) |
+| body        | тело уведомления (dict)           |
 
-Типы и форматы тел сообщений [здесь](https://green-api.com/docs/api/receiving/notifications-format/).
+Типы и форматы тел уведомлений находятся [здесь](https://green-api.com/docs/api/receiving/notifications-format/).
 
-Этот метод будет вызываться при получении входящего сообщения. Далее обрабатываете сообщения согласно бизнес-логике
+Эта функция будет вызываться при получении входящего уведомления. Далее обрабатываете уведомления согласно бизнес-логике
 вашей системы.
 
 ## Список примеров
@@ -188,7 +188,7 @@ onEvent - ваш метод, который должен содержать па
 
 ## Сторонние продукты
 
-- [requests](https://requests.readthedocs.io/en/latest/) - для http запросов.
+- [requests](https://requests.readthedocs.io/en/latest/) - для HTTP запросов.
 
 ## Лицензия
 
