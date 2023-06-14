@@ -9,7 +9,8 @@ def main():
     response = greenAPI.sending.sendFileByUrl(
         "11001234567@c.us",
         "https://green-api.com/green-api-logo_2.png",
-        "green-api-logo_2.png"
+        "green-api-logo_2.png",
+        "GREEN API logo"
     )
 
     print(response.data)

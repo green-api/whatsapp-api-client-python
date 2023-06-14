@@ -66,7 +66,8 @@ https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sen
 response = greenAPI.sending.sendFileByUrl(
     "11001234567@c.us",
     "https://green-api.com/green-api-logo_2.png",
-    "green-api-logo_2.png"
+    "green-api-logo_2.png",
+    "GREEN API logo"
 )
 
 print(response.data)
@@ -80,7 +81,10 @@ https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sen
 
 ```
 response = greenAPI.sending.sendFileByUpload(
-    "11001234567@c.us", "data/green-api-logo_2.png"
+    "11001234567@c.us",
+    "data/green-api-logo_2.png",
+    "green-api-logo_2.png",
+    "GREEN API logo"
 )
 
 print(response.data)
