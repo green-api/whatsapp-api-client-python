@@ -6,116 +6,132 @@
 ![](https://img.shields.io/github/actions/workflow/status/green-api/whatsapp-api-client-python/python-package.yml)
 ![](https://img.shields.io/pypi/dm/whatsapp-api-client-python)
 
-- [English documentation](README.md)
-
-Python библиотека для интеграции с мессенджером WhatsAPP через API сервиса [green-api.com](https://green-api.com/). Чтобы воспользоваться библиотекой нужно получить регистрационный токен и id аккаунта в [личном кабинете](https://console.green-api.com). Есть бесплатный тариф аккаунта разработчика.
+whatsapp-api-client-python - библиотека для интеграции с мессенджером WhatsApp через API
+сервиса [green-api.com](https://green-api.com/). Чтобы воспользоваться библиотекой, нужно получить регистрационный токен
+и ID аккаунта в [личном кабинете](https://console.green-api.com/). Есть бесплатный тариф аккаунта разработчика.
 
 ## API
 
-Документация к REST API находится по [ссылке](https://green-api.com/docs/api/). Библиотека является оберткой к REST API, поэтому документация по ссылке выше применима и к самой библиотеке.
+Документация к REST API находится по [ссылке](https://green-api.com/docs/api/). Библиотека является обёрткой к REST API,
+поэтому документация по ссылке выше применима и к самой библиотеке.
+
+## Авторизация
+
+Чтобы отправить сообщение или выполнить другие методы GREEN API, аккаунт WhatsApp в приложении телефона должен быть в
+авторизованном состоянии. Для авторизации аккаунта перейдите в [личный кабинет](https://console.green-api.com/) и
+сканируйте QR-код с использованием приложения WhatsApp.
 
 ## Установка
 
 ```shell
-pip install whatsapp-api-client-python
+python -m pip install whatsapp-api-client-python
 ```
 
-## Авторизация 
+## Импорт
 
-Чтобы отправить сообщение или выполнить другой метод Green-API, аккаунт WhatsApp в приложении телефона должен быть в авторизованном состоянии. Для авторизации аккаунта перейдите в [личный кабинет](https://console.green-api.com) и сканируйте QR-код с использованием приложения WhatsApp.
+```
+from whatsapp_api_client_python import API
+```
 
 ## Примеры
 
 ### Как инициализировать объект
 
-```python
-greenAPI = API.GreenApi(ID_INSTANCE, API_TOKEN_INSTANCE)
+```
+greenAPI = API.GreenApi(
+    "1101000001", "d75b3a66374942c5b3c019c698abc2067e151558acbd412345"
+)
 ```
 
 ### Отправка текстового сообщения на номер WhatsApp
 
-```python
-result = greenAPI.sending.sendMessage('79001234567@g.us', 'Message text')
+Ссылка на пример: [sendTextMessage.py](examples/sendTextMessage.py).
+
 ```
+response = greenAPI.sending.sendMessage("11001234567@c.us", "Message text")
 
-Ссылка на пример: [sendTextMessage.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendTextMessage.py)
-
-Обратите внимание, что ключи можно получать из переменных среды:
-```python
-from os import environ
-
-ID_INSTANCE = environ['ID_INSTANCE']
-API_TOKEN_INSTANCE = environ['API_TOKEN_INSTANCE']
+print(response.data)
 ```
 
 ### Отправка картинки по URL
 
-```python
-result = greenAPI.sending.sendFileByUrl('120363025955348359@g.us', 
-        'https://www.google.ru/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png', 
-        'googlelogo_color_272x92dp.png', 'Google logo')
-```
+Ссылка на пример: [sendPictureByLink.py](examples/sendPictureByLink.py).
 
-Ссылка на пример: [sendPictureByLink.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPictureByLink.py)
+```
+response = greenAPI.sending.sendFileByUrl(
+    "11001234567@c.us",
+    "https://green-api.com/green-api-logo_2.png",
+    "green-api-logo_2.png",
+    "GREEN API logo"
+)
+
+print(response.data)
+```
 
 ### Отправка картинки загрузкой с диска
 
-```python
-result = greenAPI.sending.sendFileByUpload('120363025955348359@g.us', 
-        'C:\\Games\\PicFromDisk.png', 
-        'PicFromDisk.png', 'Picture from disk')
-```
+Ссылка на пример: [sendPictureByUpload.py](examples/sendPictureByUpload.py).
 
-Ссылка на пример: [sendPictureByUpload.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPictureByUpload.py)
+```
+response = greenAPI.sending.sendFileByUpload(
+    "11001234567@c.us",
+    "data/green-api-logo_2.png",
+    "green-api-logo_2.png",
+    "GREEN API logo"
+)
+
+print(response.data)
+```
 
 ### Создание группы и отправка сообщения в эту группу
 
-```python
-chatIds = [
-    "79001234567@c.us"
-]
-resultCreate = greenAPI.groups.createGroup('GroupName', 
-    chatIds)
+**Важно**. Если попытаться создать группу с несуществующим номером WhatsApp, то может заблокировать номер отправителя.
+Номер в примере не существует.
 
-if resultCreate.code == 200:
-    resultSend = greenAPI.sending.sendMessage(resultCreate.data['chatId'], 
-        'Message text')
+Ссылка на пример: [createGroupAndSendMessage.py](examples/createGroupAndSendMessage.py).
+
+```
+create_group_response = greenAPI.groups.createGroup(
+    "Group Name", ["11001234567@c.us"]
+)
+if create_group_response.code == 200:
+    send_message_response = greenAPI.sending.sendMessage(
+        create_group_response.data["chatId"], "Message text"
+    )
 ```
 
-ВАЖНО: Если попытаться создать группу с несуществующим номером WhatsApp 
-может заблокировать номер отправителя. Номер в примере не существует.
+### Получение входящих уведомлений через HTTP API
 
-Ссылка на пример: [createGroupAndSendMessage.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/createGroupAndSendMessage.py)
+Ссылка на пример: [receiveNotification.py](examples/receiveNotification.py).
 
-### Получение входящих сообщений через HTTP API
+Общая концепция получения данных в GREEN API описана [здесь](https://green-api.com/docs/api/receiving/). Для старта
+получения уведомлений через HTTP API требуется выполнить метод библиотеки:
 
-Общая концепция получения данных в Green API описана [здесь](https://green-api.com/docs/api/receiving/)
-Для старта получения сообщений через HTTP API требуется выполнить метод библиотеки:
-
-```python
+```
 greenAPI.webhooks.startReceivingNotifications(onEvent)
 ```
 
-onEvent - ваш метод, который должен содержать параметры:
-Параметр |  Описание
------ | -----
-typeWebhook | тип полученного сообщения (строка)
-body | тело сообщения (json)
+onEvent - ваша функция, которая должен содержать параметры:
 
-Типы и форматы тел сообщений [здесь](https://green-api.com/docs/api/receiving/notifications-format/)
+| Параметр    | Описание                          |
+|-------------|-----------------------------------|
+| typeWebhook | тип полученного уведомления (str) |
+| body        | тело уведомления (dict)           |
 
-Этот метод будет вызываться при получении входящего сообщения. Далее обрабатываете сообщения согласно бизнес-логике вашей системы.
+Типы и форматы тел уведомлений находятся [здесь](https://green-api.com/docs/api/receiving/notifications-format/).
+
+Эта функция будет вызываться при получении входящего уведомления. Далее обрабатываете уведомления согласно бизнес-логике
+вашей системы.
 
 ## Список примеров
 
-Описание |  Модуль
------ | ----- 
-Пример отправки текста | [sendTextMessage.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendTextMessage.py)
-Пример отправки картинки по URL | [sendPictureByLink.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPictureByLink.py)
-Пример отправки картинки загрузкой с диска | [sendPictureByUpload.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPictureByUpload.py)
-Пример создание группы и отправка сообщения в группу | [createGroupAndSendMessage.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/createGroupAndSendMessage.py)
-Пример получения входящих уведомлений | [receiveNotification.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/receiveNotification.py)
-
+| Описание                                             | Модуль                                                                |
+|------------------------------------------------------|-----------------------------------------------------------------------|
+| Пример отправки текста                               | [sendTextMessage.py](examples/sendTextMessage.py)                     |
+| Пример отправки картинки по URL                      | [sendPictureByLink.py](examples/sendPictureByLink.py)                 |
+| Пример отправки картинки загрузкой с диска           | [sendPictureByUpload.py](examples/sendPictureByUpload.py)             |
+| Пример создание группы и отправка сообщения в группу | [createGroupAndSendMessage.py](examples/createGroupAndSendMessage.py) |
+| Пример получения входящих уведомлений                | [receiveNotification.py](examples/receiveNotification.py)             |
 
 ## Полный список методов библиотеки
 
@@ -172,22 +188,15 @@ body | тело сообщения (json)
 
 ## Документация по методам сервиса
 
-[https://green-api.com/docs/api/](https://green-api.com/docs/api/)
+[https://green-api.com/docs/api/](https://green-api.com/docs/api/).
 
 ## Сторонние продукты
 
-* [requests](https://requests.readthedocs.io) - для http запросов
+- [requests](https://requests.readthedocs.io/en/latest/) - для HTTP запросов.
 
 ## Лицензия
 
-Лицензировано на условиях MIT. Смотрите файл [LICENSE](LICENSE)
-
-[![CC BY-ND 4.0][cc-by-nd-shield]][cc-by-nd]
-
-Эта работа распространяется под лицензией
-[Creative Commons Attribution-NoDerivatives 4.0 International License][cc-by-nd].
-
-[cc-by-nd]: https://creativecommons.org/licenses/by-nd/4.0/
-[cc-by-nd-shield]: https://img.shields.io/badge/License-CC%20BY--ND%204.0-lightgrey.svg
-
-Пожалуйста, смотрите файл [LICENSE](LICENSE)
+Лицензировано на условиях [
+Creative Commons Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)
+](https://creativecommons.org/licenses/by-nd/4.0/).
+[LICENSE](LICENSE).

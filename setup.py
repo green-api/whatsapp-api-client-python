@@ -5,7 +5,7 @@ with open("README.md", encoding="UTF-8") as file:
 
 setup(
     name="whatsapp-api-client-python",
-    version="0.0.36",
+    version="0.0.37",
     description=(
         "This library helps you easily create"
         " a Python application with WhatsApp API."
@@ -15,7 +15,7 @@ setup(
     author="GREEN API",
     author_email="support@green-api.com",
     url="https://github.com/green-api/whatsapp-api-client-python",
-    packages=find_packages(exclude=["examples", "tests"]),
+    packages=find_packages(exclude=["tests"]),
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Environment :: Console",

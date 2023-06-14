@@ -1,27 +1,27 @@
-from whatsapp_api_client_python import API as API
+from whatsapp_api_client_python import API
 
-ID_INSTANCE = '1101000001'
-API_TOKEN_INSTANCE = '3e03ea9ff3324e228ae3dfdf4d48e409bfa1b1ad0b0c46bf8c'
+greenAPI = API.GreenApi(
+    "1101000001", "d75b3a66374942c5b3c019c698abc2067e151558acbd412345"
+)
 
-greenAPI = API.GreenApi(ID_INSTANCE, API_TOKEN_INSTANCE)
 
 def main():
-    chatIds = [
-        "11001234567@c.us"
-    ]
-    resultCreate = greenAPI.groups.createGroup('GroupName', 
-        chatIds)
+    create_group_response = greenAPI.groups.createGroup(
+        "Group Name", ["11001234567@c.us"]
+    )
+    if create_group_response.code == 200:
+        print(create_group_response.data)
 
-    if resultCreate.code == 200:
-        print(resultCreate.data)
-        resultSend = greenAPI.sending.sendMessage(resultCreate.data['chatId'], 
-            'Message text')
-        if resultSend.code == 200:
-            print(resultSend.data)
+        send_message_response = greenAPI.sending.sendMessage(
+            create_group_response.data["chatId"], "Message text"
+        )
+        if send_message_response.code == 200:
+            print(send_message_response.data)
         else:
-            print(resultSend.error)    
+            print(send_message_response.error)
     else:
-        print(resultCreate.error)
+        print(create_group_response.error)
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
     main()

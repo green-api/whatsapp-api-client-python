@@ -1,11 +1,12 @@
-from datetime import datetime
 import json
-from whatsapp_api_client_python import API as API
+from datetime import datetime
 
-ID_INSTANCE = '1101000001'
-API_TOKEN_INSTANCE = '3e03ea9ff3324e228ae3dfdf4d48e409bfa1b1ad0b0c46bf8c'
+from whatsapp_api_client_python import API
 
-greenAPI = API.GreenApi(ID_INSTANCE, API_TOKEN_INSTANCE)
+greenAPI = API.GreenApi(
+    "1101000001", "d75b3a66374942c5b3c019c698abc2067e151558acbd412345"
+)
+
 
 def main():
    greenAPI.webhooks.startReceivingNotifications(onEvent)
