@@ -15,10 +15,10 @@ class Webhooks:
         print('Incoming notifications are being received. '\
         'To interrupt, press Ctrl+C')
         try:
-            while self.started == True:
+            while self.started:
                 resultReceive = self.greenApi.receiving.receiveNotification()
                 if resultReceive.code == 200:
-                    if resultReceive.data == None:
+                    if resultReceive.data is None:
                         # There are no incoming notifications, 
                         # we send the request again
                         continue

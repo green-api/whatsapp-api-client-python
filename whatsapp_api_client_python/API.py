@@ -22,8 +22,8 @@ class GreenApi:
     idInstance: str
     apiTokenInstance: str
 
-    def __init__(self, 
-                    idInstance: str, 
+    def __init__(self,
+                    idInstance: str,
                     apiTokenInstance: str,
                     host: str = 'https://api.green-api.com') -> None:
         self.host = host
@@ -41,8 +41,8 @@ class GreenApi:
         self.serviceMethods = ServiceMethods(self)
         self.webhooks = Webhooks(self)
 
-    def request(self, method: str, url: str, 
-                payload: any = None, files: array = None, mimeType: str = None):
+    def request(self, method: str, url: str,
+                payload: any = None, files: array = None):
         url = url.replace('{{host}}', self.host)
         url = url.replace('{{idInstance}}', self.idInstance)
         url = url.replace('{{apiTokenInstance}}', self.apiTokenInstance)
@@ -51,23 +51,16 @@ class GreenApi:
         try:
             headers = {}
             payloadData = None
-            if payload != None:
-                if files == None:
-                    if method == 'POST_FILE':
-                        method = 'POST'
-                        payloadData = payload
-                        headers = {
-                            'Content-Type': mimeType
-                        }
-                    else:
-                        headers = {
-                            'Content-Type': 'application/json'
-                        }
-                        payloadData = json.dumps(payload)
+            if payload is not None:
+                if files is None:
+                    headers = {
+                        'Content-Type': 'application/json'
+                    }
+                    payloadData = json.dumps(payload)
                 else:
                     payloadData = payload
-            result = requests.request(method, url, headers = headers, 
-                                        data = payloadData, 
+            result = requests.request(method, url, headers = headers,
+                                        data = payloadData,
                                         files = files)
             status_code = result.status_code
             text = result.text

@@ -1,24 +1,38 @@
-import setuptools
+from setuptools import setup, find_packages
 
-with open("README.md") as file:
-    read_me_description = file.read()
+with open("README.md", encoding="UTF-8") as file:
+    long_description = file.read()
 
-setuptools.setup(
+setup(
     name="whatsapp-api-client-python",
-    version="0.0.31",
-    install_requires=['requests'],
-    author="Ivan Sadovy",
-    author_email="sadiv@bk.ru",
-    description="This library helps you easily create a python '\
-        'application to connect the WhatsApp API using service green-api.com",
-    long_description=read_me_description,
+    version="0.0.37",
+    description=(
+        "This library helps you easily create"
+        " a Python application with WhatsApp API."
+    ),
+    long_description=long_description,
     long_description_content_type="text/markdown",
+    author="GREEN API",
+    author_email="support@green-api.com",
     url="https://github.com/green-api/whatsapp-api-client-python",
-    packages=['whatsapp_api_client_python', 'whatsapp_api_client_python.tools'],
+    packages=find_packages(exclude=["tests"]),
     classifiers=[
-        "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
+        "Development Status :: 5 - Production/Stable",
+        "Environment :: Console",
+        "Intended Audience :: Developers",
+        "License :: Other/Proprietary License",
         "Operating System :: OS Independent",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Topic :: Software Development :: Libraries :: Application Frameworks"
     ],
-    python_requires='>=3.5',
+    license=(
+        "Creative Commons Attribution-NoDerivatives 4.0 International"
+        " (CC BY-ND 4.0)"
+    ),
+    install_requires=["requests==2.31.0"],
+    python_requires=">=3.7"
 )

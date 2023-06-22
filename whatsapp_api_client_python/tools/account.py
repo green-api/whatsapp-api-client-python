@@ -1,86 +1,95 @@
-import os.path
-from whatsapp_api_client_python.response import Response
+from pathlib import Path
+from typing import Dict, TYPE_CHECKING, Union
+
+from ..response import Response
+
+if TYPE_CHECKING:
+    from ..API import GreenApi
 
 
 class Account:
-    def __init__(self, greenApi) -> None:
-        self.greenApi = greenApi
-        
+    def __init__(self, api: "GreenApi"):
+        self.api = api
+
     def getSettings(self) -> Response:
-            'The method is aimed for getting the '\
-            'current account settings.'
-            
-            return self.greenApi.request('GET', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/getSettings/{{apiTokenInstance}}')
-            
+        """
+        The method is aimed for getting the current account settings.
+        """
+
+        return self.api.request(
+            "GET", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "getSettings/{{apiTokenInstance}}"
+            )
+        )
+
+    def setSettings(self, requestBody: Dict[str, Union[int, str]]) -> Response:
+        """The method is aimed for setting account settings."""
+
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "setSettings/{{apiTokenInstance}}"
+            ), requestBody
+        )
+
     def getStateInstance(self) -> Response:
-            'The method is aimed for getting the account state.'
-            
-            return self.greenApi.request('GET', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/getStateInstance/{{apiTokenInstance}}')
+        """The method is aimed for getting the account state."""
+
+        return self.api.request(
+            "GET", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "getStateInstance/{{apiTokenInstance}}"
+            )
+        )
 
     def getStatusInstance(self) -> Response:
-            'The method is aimed for getting the status of the account instance '\
-            'socket connection with WhatsApp.'
-            
-            return self.greenApi.request('GET', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/getStatusInstance/{{apiTokenInstance}}')
+        """
+        The method is aimed for getting the status of the account
+        instance socket connection with WhatsApp.
+        """
 
-    def logout(self) -> Response:
-            'The method is aimed for logging out an account.'
-            
-            return self.greenApi.request('GET', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/Logout/{{apiTokenInstance}}')
-
-    def qr(self) -> Response:
-            'The method is aimed for getting QR code. To authorize your account, '\
-            'you have to scan a QR code from application WhatsApp Business'\
-            'on your phone. You can also get a QR code and authorize your'\
-            'account in your profile.'
-            
-            return self.greenApi.request('GET', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/QR/{{apiTokenInstance}}')
+        return self.api.request(
+            "GET", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "getStatusInstance/{{apiTokenInstance}}"
+            )
+        )
 
     def reboot(self) -> Response:
-            'The method is aimed for rebooting an account.'
-            
-            return self.greenApi.request('GET', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/Reboot/{{apiTokenInstance}}')
+        """The method is aimed for rebooting an account."""
 
-    def setProfilePicture(self, path) -> Response:
-            'The method is aimed for setting an account picture.'
+        return self.api.request(
+            "GET", (
+                "{{host}}/waInstance{{idInstance}}/reboot/{{apiTokenInstance}}"
+            )
+        )
 
-            pathParts = os.path.split(path)
-            file = pathParts[1]
+    def logout(self) -> Response:
+        """The method is aimed for logging out an account."""
 
-            files = [
-                ('file',(file, open(path,'rb'),'image/jpeg'))
-            ]
-            
-            return self.greenApi.request('POST', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/SetProfilePicture/{{apiTokenInstance}}', None, files)
+        return self.api.request(
+            "GET", (
+                "{{host}}/waInstance{{idInstance}}/logout/{{apiTokenInstance}}"
+            )
+        )
 
-    def setSettings(self, requestBody) -> Response:
-            'The method is aimed for setting account settings. '\
-            'When this method is requested, the account is rebooted.'
-            
-            return self.greenApi.request('POST', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/SetSettings/{{apiTokenInstance}}',
-                requestBody)
+    def qr(self) -> Response:
+        """The method is aimed for getting QR code."""
 
-    def setSettings(self) -> Response:
-            'The method is aimed for setting a system proxy. '\
-            'Use the method when you need to reset custom proxy '\
-            'settings to system ones.'
-            
-            return self.greenApi.request('GET', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/SetSystemProxy/{{apiTokenInstance}}')
+        return self.api.request(
+            "GET", "{{host}}/waInstance{{idInstance}}/qr/{{apiTokenInstance}}"
+        )
+
+    def setProfilePicture(self, path: str) -> Response:
+        """The method is aimed for setting an account picture."""
+
+        file_name = Path(path).name
+        files = {"file": (file_name, open(path, "rb"), "image/jpeg")}
+
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "setProfilePicture/{{apiTokenInstance}}"
+            ), files=files
+        )
