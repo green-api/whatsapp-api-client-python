@@ -17,8 +17,8 @@ class Journals:
 
         request_body = locals()
         if count is None:
-            del request_body["count"]
-        del request_body["self"]
+            request_body.pop("count")
+        request_body.pop("self")
 
         return self.api.request(
             "POST", (
@@ -31,7 +31,7 @@ class Journals:
         """The method returns the chat message."""
 
         request_body = locals()
-        del request_body["self"]
+        request_body.pop("self")
 
         return self.api.request(
             "POST", (
