@@ -7,7 +7,7 @@ api = GreenApi("", "")
 
 
 class MethodsTestCase(unittest.TestCase):
-    @patch("whatsapp_api_client_python.API.requests.request")
+    @patch("whatsapp_api_client_python.API.Session.request")
     def test_methods(self, mock_request):
         mock_request.return_value = Mock(
             status_code=200, text="{\"example\": {\"key\": \"value\"}}"
