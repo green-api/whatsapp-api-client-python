@@ -5,7 +5,7 @@ from whatsapp_api_client_python.API import GreenApi
 
 api = GreenApi("", "")
 
-path = "../examples/data/green-api-logo_2.png"
+path = "examples/data/green-api-logo_2.png"
 
 
 class MethodsTestCase(unittest.TestCase):
