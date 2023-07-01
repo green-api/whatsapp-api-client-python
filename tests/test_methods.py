@@ -1,9 +1,11 @@
 import unittest
-from unittest.mock import patch, Mock
+from unittest.mock import Mock, patch
 
 from whatsapp_api_client_python.API import GreenApi
 
 api = GreenApi("", "")
+
+path = "../examples/data/green-api-logo_2.png"
 
 
 class MethodsTestCase(unittest.TestCase):
@@ -41,7 +43,7 @@ class MethodsTestCase(unittest.TestCase):
             api.account.reboot(),
             api.account.logout(),
             api.account.qr(),
-            # api.account.setProfilePicture("")
+            api.account.setProfilePicture(path)
         ]
 
     @property
@@ -58,7 +60,7 @@ class MethodsTestCase(unittest.TestCase):
             api.groups.removeGroupParticipant("", ""),
             api.groups.setGroupAdmin("", ""),
             api.groups.removeAdmin("", ""),
-            # api.groups.setGroupPicture("", ""),
+            api.groups.setGroupPicture("", path),
             api.groups.leaveGroup("")
         ]
 
@@ -80,14 +82,14 @@ class MethodsTestCase(unittest.TestCase):
 
     @property
     def read_mark_methods(self):
-        return [api.marking.readChat("", "")]
+        return [api.marking.readChat("")]
 
     @property
     def receiving_methods(self):
         return [
             api.receiving.receiveNotification(),
             api.receiving.deleteNotification(0),
-            api.receiving.downloadFile("")
+            api.receiving.downloadFile("", "")
         ]
 
     @property
@@ -97,7 +99,7 @@ class MethodsTestCase(unittest.TestCase):
             api.sending.sendButtons("", "", []),
             api.sending.sendTemplateButtons("", "", []),
             api.sending.sendListMessage("", "", "", []),
-            # api.sending.sendFileByUpload("", ""),
+            api.sending.sendFileByUpload("", path),
             api.sending.sendFileByUrl("", "", ""),
             api.sending.sendLocation("", 0.0, 0.0),
             api.sending.sendContact("", {}),
@@ -115,7 +117,7 @@ class MethodsTestCase(unittest.TestCase):
             api.serviceMethods.deleteMessage("", ""),
             api.serviceMethods.archiveChat(""),
             api.serviceMethods.unarchiveChat(""),
-            api.serviceMethods.setDisappearingChat("", 0)
+            api.serviceMethods.setDisappearingChat("")
         ]
 
 
