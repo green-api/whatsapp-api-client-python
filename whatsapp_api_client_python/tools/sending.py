@@ -156,8 +156,8 @@ class Sending:
 
     def uploadFile(self, path: str) -> Response:
         """
-        The method is designed to upload a file to the cloud storage, which
-        can be sent using the sendFileByUrl method.
+        The method is designed to upload a file to the cloud storage,
+        which can be sent using the sendFileByUrl method.
         """
 
         file_name = pathlib.Path(path).name
