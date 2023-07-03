@@ -40,9 +40,7 @@ class Journals:
             ), request_body
         )
 
-    def lastIncomingMessages(
-            self, minutes: Optional[int] = None
-    ) -> Response:
+    def lastIncomingMessages(self, minutes: Optional[int] = None) -> Response:
         """
         The method returns the last incoming messages of the account.
         """
@@ -58,9 +56,7 @@ class Journals:
             ), request_body
         )
 
-    def lastOutgoingMessages(
-            self, minutes: Optional[int] = None
-    ) -> Response:
+    def lastOutgoingMessages(self, minutes: Optional[int] = None) -> Response:
         """
         The method returns the last outgoing messages of the account.
         """

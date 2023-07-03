@@ -13,7 +13,9 @@ class Marking:
     def readChat(
             self, chatId: str, idMessage: Optional[str] = None
     ) -> Response:
-        """The method is aimed for marking messages in a chat as read."""
+        """
+        The method is aimed for marking messages in a chat as read.
+        """
 
         request_body = locals()
         if idMessage is None:
