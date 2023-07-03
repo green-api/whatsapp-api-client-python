@@ -1,33 +1,88 @@
+import logging
+from typing import Any, Callable, Optional, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from ..API import GreenApi
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("whatsapp-api-client-python")
+
+
 class Webhooks:
-    def __init__(self, greenApi) -> None:
-        self.greenApi = greenApi
-        self.started = False
+    _running: Optional[bool] = None
 
-    def startReceivingNotifications(self, onEvent) -> bool:
-        self.started = True
-        self.job(onEvent)
+    def __init__(self, api: "GreenApi"):
+        self.api = api
 
-    def stopReceivingNotifications(self) -> bool:
-        self.started = False
+    @property
+    def started(self) -> bool:
+        return self._running
 
-    
-    def job(self, onEvent) -> None:
-        print('Incoming notifications are being received. '\
-        'To interrupt, press Ctrl+C')
-        try:
-            while self.started:
-                resultReceive = self.greenApi.receiving.receiveNotification()
-                if resultReceive.code == 200:
-                    if resultReceive.data is None:
-                        # There are no incoming notifications, 
-                        # we send the request again
+    @started.setter
+    def started(self, value: bool) -> None:
+        self._running = value
+
+    def startReceivingNotifications(
+            self, onEvent: Callable[[str, dict], Any]
+    ) -> None:
+        self._running = True
+
+        self._start_polling(onEvent)
+
+    def stopReceivingNotifications(self) -> None:
+        self._running = False
+
+    def job(self, onEvent: Callable[[str, dict], Any]) -> None:
+        """Deprecated"""
+
+        logger.log(logging.WARNING, "Deprecated")
+
+        print((
+            "Started receiving incoming notifications."
+            " To stop the process, press Ctrl + C."
+        ))
+
+        while self.started:
+            try:
+                response = self.api.receiving.receiveNotification()
+                if response.code == 200:
+                    if not response.data:
                         continue
-                    body = resultReceive.data['body']
-                    typeWebhook = body['typeWebhook']
-                    onEvent(typeWebhook, body)    
-                    self.greenApi.receiving.deleteNotification(
-                        resultReceive.data['receiptId'])
-            print('End receiving')
-        except KeyboardInterrupt:
-            print('End receiving')
-            pass
+                    response = response.data
+
+                    body = response["body"]
+                    type_webhook = body["typeWebhook"]
+
+                    onEvent(type_webhook, body)
+
+                    self.api.receiving.deleteNotification(
+                        response["receiptId"]
+                    )
+            except KeyboardInterrupt:
+                break
+
+        print("Stopped receiving incoming notifications.")
+
+    def _start_polling(self, handler: Callable[[str, dict], Any]):
+        logger.log(logging.INFO, "Started receiving incoming notifications.")
+
+        while self._running:
+            try:
+                response = self.api.receiving.receiveNotification()
+                if response.code == 200:
+                    if not response.data:
+                        continue
+                    response = response.data
+
+                    body = response["body"]
+                    type_webhook = body["typeWebhook"]
+
+                    handler(type_webhook, body)
+
+                    self.api.receiving.deleteNotification(
+                        response["receiptId"]
+                    )
+            except KeyboardInterrupt:
+                break
+
+        logger.log(logging.INFO, "Stopped receiving incoming notifications.")

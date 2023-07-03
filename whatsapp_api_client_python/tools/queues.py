@@ -1,22 +1,37 @@
-from whatsapp_api_client_python.response import Response
+from typing import TYPE_CHECKING
+
+from ..response import Response
+
+if TYPE_CHECKING:
+    from ..API import GreenApi
 
 
 class Queues:
-    def __init__(self, greenApi) -> None:
-        self.greenApi = greenApi
-        
-    def clearMessagesQueue(self) -> Response:
-            'The method is aimed for clearing the queue of messages to be sent.'
-
-            return self.greenApi.request('GET', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/ClearMessagesQueue/{{apiTokenInstance}}')
+    def __init__(self, api: "GreenApi"):
+        self.api = api
 
     def showMessagesQueue(self) -> Response:
-            'The method is aimed for getting a list of messages in the queue '\
-            'to be sent. Messages sending rate is managed by Messages sending '\
-            'delay parameter.'
+        """
+        The method is aimed for getting a list of messages in the queue
+        to be sent.
+        """
 
-            return self.greenApi.request('GET', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/ShowMessagesQueue/{{apiTokenInstance}}')
+        return self.api.request(
+            "GET", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "showMessagesQueue/{{apiTokenInstance}}"
+            )
+        )
+
+    def clearMessagesQueue(self) -> Response:
+        """
+        The method is aimed for clearing the queue of messages to be
+        sent.
+        """
+
+        return self.api.request(
+            "GET", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "clearMessagesQueue/{{apiTokenInstance}}"
+            )
+        )
