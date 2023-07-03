@@ -101,6 +101,7 @@ class MethodsTestCase(unittest.TestCase):
             api.sending.sendListMessage("", "", "", []),
             api.sending.sendFileByUpload("", path),
             api.sending.sendFileByUrl("", "", ""),
+            # api.sending.uploadFile(""),
             api.sending.sendLocation("", 0.0, 0.0),
             api.sending.sendContact("", {}),
             api.sending.sendLink("", ""),

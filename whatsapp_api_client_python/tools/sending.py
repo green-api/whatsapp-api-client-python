@@ -154,6 +154,24 @@ class Sending:
             ), request_body
         )
 
+    def uploadFile(self, path: str) -> Response:
+        """
+        The method is designed to upload a file to the cloud storage,
+        which can be sent using the sendFileByUrl method.
+        """
+
+        file_name = pathlib.Path(path).name
+        content_type = mimetypes.guess_type(file_name)[0]
+
+        files = {"file": (file_name, open(path, "rb"), content_type)}
+
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "uploadFile/{{apiTokenInstance}}"
+            ), files=files
+        )
+
     def sendLocation(
             self,
             chatId: str,
