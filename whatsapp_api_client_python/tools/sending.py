@@ -125,7 +125,7 @@ class Sending:
 
         files = {"file": (file_name, open(path, "rb"), content_type)}
 
-        del request_body["path"]
+        request_body.pop("path")
 
         return self.api.request(
             "POST", (

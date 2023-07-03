@@ -1,14 +1,24 @@
-from whatsapp_api_client_python.response import Response
+from typing import TYPE_CHECKING
+
+from ..response import Response
+
+if TYPE_CHECKING:
+    from ..API import GreenApi
 
 
 class Device:
-    def __init__(self, greenApi) -> None:
-        self.greenApi = greenApi
-        
+    def __init__(self, api: "GreenApi"):
+        self.api = api
+
     def getDeviceInfo(self) -> Response:
-            'The method is aimed for getting information about the device '\
-            '(phone) running WhatsApp Business application.'
-            
-            return self.greenApi.request('GET', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/GetDeviceInfo/{{apiTokenInstance}}')
+        """
+        The method is aimed for getting information about the device
+        (phone) running WhatsApp Business application.
+        """
+
+        return self.api.request(
+            "GET", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "getDeviceInfo/{{apiTokenInstance}}"
+            )
+        )

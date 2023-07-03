@@ -1,19 +1,28 @@
-from whatsapp_api_client_python.response import Response
+from typing import Optional, TYPE_CHECKING
+
+from ..response import Response
+
+if TYPE_CHECKING:
+    from ..API import GreenApi
 
 
 class Marking:
-    def __init__(self, greenApi) -> None:
-        self.greenApi = greenApi
-        
-    def readChat(self, chatId: str, idMessage: str) -> Response:
-            'The method returns the chat message history.'
+    def __init__(self, api: "GreenApi"):
+        self.api = api
 
-            requestBody = {
-                'chatId': chatId,
-                'idMessage': idMessage,
-            }
+    def readChat(
+            self, chatId: str, idMessage: Optional[str] = None
+    ) -> Response:
+        """The method is aimed for marking messages in a chat as read."""
 
-            return self.greenApi.request('POST', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/ReadChat/{{apiTokenInstance}}',
-                requestBody)
+        request_body = locals()
+        if idMessage is None:
+            request_body.pop("idMessage")
+        request_body.pop("self")
+
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "readChat/{{apiTokenInstance}}"
+            ), request_body
+        )

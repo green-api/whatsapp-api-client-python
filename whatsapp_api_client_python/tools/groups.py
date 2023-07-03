@@ -1,141 +1,148 @@
-import os.path
-from array import array
+from pathlib import Path
+from typing import List, TYPE_CHECKING
 
-from whatsapp_api_client_python.response import Response
+from ..response import Response
+
+if TYPE_CHECKING:
+    from ..API import GreenApi
 
 
 class Groups:
-    def __init__(self, greenApi) -> None:
-        self.greenApi = greenApi
-        
-    def addGroupParticipant(self, 
-            groupId: str, 
-            participantChatId: str) -> Response:
-            'The method adds a participant to a group chat.'
+    def __init__(self, api: "GreenApi"):
+        self.api = api
 
-            requestBody = {
-                'groupId': groupId,
-                'participantChatId': participantChatId,
-            }
-            
-            return self.greenApi.request('POST', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/AddGroupParticipant/{{apiTokenInstance}}',
-                requestBody)
+    def createGroup(self, groupName: str, chatIds: List[str]) -> Response:
+        """The method is aimed for creating a group chat."""
 
-    def createGroup(self, groupName: str, chatIds: array) -> Response:
-            'The method is aimed for creating a group chat.'
-            
-            requestBody = {
-                'groupName': groupName,
-                'chatIds': chatIds
-            }
+        request_body = self.__handle_parameters(locals())
 
-            return self.greenApi.request('POST', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/CreateGroup/{{apiTokenInstance}}',
-                requestBody)
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "createGroup/{{apiTokenInstance}}"
+            ), request_body
+        )
+
+    def updateGroupName(self, groupId: str, groupName: str) -> Response:
+        """The method changes a group chat name."""
+
+        request_body = self.__handle_parameters(locals())
+
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "updateGroupName/{{apiTokenInstance}}"
+            ), request_body
+        )
 
     def getGroupData(self, groupId: str) -> Response:
-            'The method gets group chat data.'
+        """The method gets group chat data."""
 
-            requestBody = {
-                'groupId': groupId
-            }
-            
-            return self.greenApi.request('POST', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/GetGroupData/{{apiTokenInstance}}',
-                requestBody)
+        request_body = self.__handle_parameters(locals())
 
-    def leaveGroup(self, groupId: str) -> Response:
-            'The method makes the current account user leave the group chat.'
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "getGroupData/{{apiTokenInstance}}"
+            ), request_body
+        )
 
-            requestBody = {
-                'groupId': groupId
-            }
-            
-            return self.greenApi.request('POST', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/LeaveGroup/{{apiTokenInstance}}',
-                requestBody)
+    def addGroupParticipant(
+            self, groupId: str, participantChatId: str
+    ) -> Response:
+        """The method adds a participant to a group chat."""
+
+        request_body = self.__handle_parameters(locals())
+
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "addGroupParticipant/{{apiTokenInstance}}"
+            ), request_body
+        )
+
+    def removeGroupParticipant(
+            self, groupId: str, participantChatId: str
+    ) -> Response:
+        """The method removes a participant from a group chat."""
+
+        request_body = self.__handle_parameters(locals())
+
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "removeGroupParticipant/{{apiTokenInstance}}"
+            ), request_body
+        )
+
+    def setGroupAdmin(self, groupId: str, participantChatId: str) -> Response:
+        """
+        The method sets a group chat participant as an administrator.
+        """
+
+        request_body = self.__handle_parameters(locals())
+
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "setGroupAdmin/{{apiTokenInstance}}"
+            ), request_body
+        )
 
     def removeAdmin(self, groupId: str, participantChatId: str) -> Response:
-            'The method removes a participant from group chat '\
-            'administartion rights.'
+        """
+        The method removes a participant from group chat administration
+        rights.
+        """
 
-            requestBody = {
-                'groupId': groupId,
-                'participantChatId': participantChatId
-            }
-            
-            return self.greenApi.request('POST', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/RemoveAdmin/{{apiTokenInstance}}',
-                requestBody)
+        request_body = self.__handle_parameters(locals())
 
-    def removeGroupParticipant(self, 
-        groupId: str, 
-        participantChatId: str) -> Response:
-            'The method removes a participant from a group chat.'
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "removeAdmin/{{apiTokenInstance}}"
+            ), request_body
+        )
 
-            requestBody = {
-                'groupId': groupId,
-                'participantChatId': participantChatId
-            }
-            
-            return self.greenApi.request('POST', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/RemoveGroupParticipant/{{apiTokenInstance}}',
-                requestBody)
+    def setGroupPicture(self, groupId: str, path: str) -> Response:
+        """The method sets a group picture."""
 
-    def setGroupAdmin(self, 
-        groupId: str, 
-        participantChatId: str) -> Response:
-            'The method sets a group chat participant as an administrator.'
+        request_body = self.__handle_parameters(locals())
 
-            requestBody = {
-                'groupId': groupId,
-                'participantChatId': participantChatId
-            }
-            
-            return self.greenApi.request('POST', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/SetGroupAdmin/{{apiTokenInstance}}',
-                requestBody)
+        file_name = Path(path).name
+        files = {"file": (file_name, open(path, "rb"), "image/jpeg")}
 
-    def setGroupPicture(self, 
-        groupId: str, 
-        path: str) -> Response:
-            'The method sets a group picture.'
+        request_body.pop("path")
 
-            requestBody = {
-                'groupId': groupId
-            }
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "setGroupPicture/{{apiTokenInstance}}"
+            ), request_body, files
+        )
 
-            pathParts = os.path.split(path)
-            file = pathParts[1]
+    def leaveGroup(self, groupId: str) -> Response:
+        """
+        The method makes the current account user leave the group chat.
+        """
 
-            files = [
-                ('file',(file, open(path,'rb'),'image/jpeg'))
-            ]
-            
-            return self.greenApi.request('POST', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/SetGroupPicture/{{apiTokenInstance}}',
-                requestBody, files)
+        request_body = self.__handle_parameters(locals())
 
-    def updateGroupName(self, 
-        groupId: str, 
-        groupName: str) -> Response:
-            'The method changes a group chat name.'
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "leaveGroup/{{apiTokenInstance}}"
+            ), request_body
+        )
 
-            requestBody = {
-                'groupId': groupId,
-                'groupName': groupName
-            }
-            
-            return self.greenApi.request('POST', 
-                '{{host}}/waInstance{{idInstance}}'
-                '/UpdateGroupName/{{apiTokenInstance}}',
-                requestBody)
+    @classmethod
+    def __handle_parameters(cls, parameters: dict) -> dict:
+        handled_parameters = parameters.copy()
+
+        handled_parameters.pop("self")
+
+        for key, value in parameters.items():
+            if value is None:
+                handled_parameters.pop(key)
+
+        return handled_parameters
