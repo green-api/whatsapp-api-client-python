@@ -1,7 +1,9 @@
+import typing
 import unittest
 from unittest.mock import Mock, patch
 
 from whatsapp_api_client_python.API import GreenApi
+from whatsapp_api_client_python.response import Response
 
 api = GreenApi("", "")
 
@@ -12,7 +14,7 @@ class MethodsTestCase(unittest.TestCase):
     @patch("whatsapp_api_client_python.API.Session.request")
     def test_methods(self, mock_request):
         mock_request.return_value = Mock(
-            status_code=200, text="{\"example\": {\"key\": \"value\"}}"
+            status_code=200, text="""{"example": {"key": "value"}}"""
         )
 
         methods = [
@@ -34,7 +36,7 @@ class MethodsTestCase(unittest.TestCase):
         self.assertEqual(mock_request.call_count, len(methods))
 
     @property
-    def account_methods(self):
+    def account_methods(self) -> typing.List[Response]:
         return [
             api.account.getSettings(),
             api.account.setSettings({}),
@@ -47,11 +49,11 @@ class MethodsTestCase(unittest.TestCase):
         ]
 
     @property
-    def device_methods(self):
+    def device_methods(self) -> typing.List[Response]:
         return [api.device.getDeviceInfo()]
 
     @property
-    def group_methods(self):
+    def group_methods(self) -> typing.List[Response]:
         return [
             api.groups.createGroup("", []),
             api.groups.updateGroupName("", ""),
@@ -65,7 +67,7 @@ class MethodsTestCase(unittest.TestCase):
         ]
 
     @property
-    def log_methods(self):
+    def log_methods(self) -> typing.List[Response]:
         return [
             api.journals.getChatHistory(""),
             api.journals.getMessage("", ""),
@@ -74,18 +76,18 @@ class MethodsTestCase(unittest.TestCase):
         ]
 
     @property
-    def queue_methods(self):
+    def queue_methods(self) -> typing.List[Response]:
         return [
             api.queues.showMessagesQueue(),
             api.queues.clearMessagesQueue()
         ]
 
     @property
-    def read_mark_methods(self):
+    def read_mark_methods(self) -> typing.List[Response]:
         return [api.marking.readChat("")]
 
     @property
-    def receiving_methods(self):
+    def receiving_methods(self) -> typing.List[Response]:
         return [
             api.receiving.receiveNotification(),
             api.receiving.deleteNotification(0),
@@ -93,7 +95,7 @@ class MethodsTestCase(unittest.TestCase):
         ]
 
     @property
-    def sending_methods(self):
+    def sending_methods(self) -> typing.List[Response]:
         return [
             api.sending.sendMessage("", ""),
             api.sending.sendButtons("", "", []),
@@ -109,7 +111,7 @@ class MethodsTestCase(unittest.TestCase):
         ]
 
     @property
-    def service_methods(self):
+    def service_methods(self) -> typing.List[Response]:
         return [
             api.serviceMethods.checkWhatsapp(0),
             api.serviceMethods.getAvatar(""),
