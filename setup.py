@@ -22,7 +22,7 @@ setup(
         "Intended Audience :: Developers",
         "License :: Other/Proprietary License",
         "Natural Language :: English",
-        "Natural Language :: Russian"
+        "Natural Language :: Russian",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
