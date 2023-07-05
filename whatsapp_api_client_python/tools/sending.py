@@ -129,7 +129,7 @@ class Sending:
 
         return self.api.request(
             "POST", (
-                "{{host}}/waInstance{{idInstance}}/"
+                "{{media}}/waInstance{{idInstance}}/"
                 "sendFileByUpload/{{apiTokenInstance}}"
             ), request_body, files
         )
@@ -167,7 +167,7 @@ class Sending:
 
         return self.api.request(
             "POST", (
-                "{{host}}/waInstance{{idInstance}}/"
+                "{{media}}/waInstance{{idInstance}}/"
                 "uploadFile/{{apiTokenInstance}}"
             ), files=files
         )

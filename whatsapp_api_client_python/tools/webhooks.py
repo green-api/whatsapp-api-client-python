@@ -15,7 +15,7 @@ class Webhooks:
         self.api = api
 
     @property
-    def started(self) -> bool:
+    def started(self) -> Optional[bool]:
         return self._running
 
     @started.setter
@@ -35,7 +35,7 @@ class Webhooks:
     def job(self, onEvent: Callable[[str, dict], Any]) -> None:
         """Deprecated"""
 
-        logger.log(logging.WARNING, "Deprecated")
+        logger.log(logging.WARNING, "This function is deprecated.")
 
         print((
             "Started receiving incoming notifications."
@@ -63,7 +63,7 @@ class Webhooks:
 
         print("Stopped receiving incoming notifications.")
 
-    def _start_polling(self, handler: Callable[[str, dict], Any]):
+    def _start_polling(self, handler: Callable[[str, dict], Any]) -> None:
         logger.log(logging.INFO, "Started receiving incoming notifications.")
 
         while self._running:

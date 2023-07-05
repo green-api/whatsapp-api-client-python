@@ -24,7 +24,10 @@ class Receiving:
         )
 
     def deleteNotification(self, receiptId: int) -> Response:
-        """"""
+        """
+        The method is aimed for deleting an incoming notification from
+        the notification queue.
+        """
 
         url = (
             "{{host}}/waInstance{{idInstance}}/"
@@ -34,7 +37,9 @@ class Receiving:
         return self.api.request("DELETE", f"{url}/{receiptId}")
 
     def downloadFile(self, chatId: str, idMessage: str) -> Response:
-        """"""
+        """
+        The method is aimed for downloading incoming and outgoing files.
+        """
 
         request_body = locals()
         request_body.pop("self")
