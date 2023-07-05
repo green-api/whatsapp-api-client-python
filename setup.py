@@ -43,5 +43,5 @@ setup(
         " (CC BY-ND 4.0)"
     ),
     install_requires=["requests==2.31.0"],
-    python_requires=">=3.8"
+    python_requires=">=3.7"
 )
