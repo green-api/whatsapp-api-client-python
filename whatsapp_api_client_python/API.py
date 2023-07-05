@@ -19,6 +19,7 @@ from .tools import (
 
 class GreenApi:
     host: str
+    media: str
     idInstance: str
     apiTokenInstance: str
 
@@ -26,9 +27,11 @@ class GreenApi:
             self,
             idInstance: str,
             apiTokenInstance: str,
-            host: str = "https://api.green-api.com"
+            host: str = "https://api.green-api.com",
+            media: str = "https://media.green-api.com"
     ):
         self.host = host
+        self.media = media
         self.idInstance = idInstance
         self.apiTokenInstance = apiTokenInstance
 
@@ -51,6 +54,7 @@ class GreenApi:
             files: Optional[dict] = None
     ) -> Response:
         url = url.replace("{{host}}", self.host)
+        url = url.replace("{{media}}", self.media)
         url = url.replace("{{idInstance}}", self.idInstance)
         url = url.replace("{{apiTokenInstance}}", self.apiTokenInstance)
 
