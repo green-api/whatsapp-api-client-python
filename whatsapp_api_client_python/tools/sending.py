@@ -2,6 +2,8 @@ import mimetypes
 import pathlib
 from typing import Dict, List, Optional, TYPE_CHECKING, Union
 
+from requests import Session
+
 from ..response import Response
 
 if TYPE_CHECKING:
@@ -163,14 +165,21 @@ class Sending:
         file_name = pathlib.Path(path).name
         content_type = mimetypes.guess_type(file_name)[0]
 
-        files = {"file": (file_name, open(path, "rb"), content_type)}
-
-        return self.api.request(
-            "POST", (
-                "{{media}}/waInstance{{idInstance}}/"
-                "uploadFile/{{apiTokenInstance}}"
-            ), files=files
-        )
+        try:
+            with open(path, "rb") as file:
+                with Session() as session:
+                    response = session.request(
+                        method="POST",
+                        url=(
+                            f"{self.api.media}/waInstance{self.api.idInstance}/"
+                            f"uploadFile/{self.api.apiTokenInstance}"
+                        ),
+                        data=file.read(),
+                        headers={"Content-Type": content_type}
+                    )
+        except Exception as error:
+            return Response(None, f"Other error occurred: {error}.")
+        return Response(response.status_code, response.text)
 
     def sendLocation(
             self,
