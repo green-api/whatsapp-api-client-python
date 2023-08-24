@@ -1,6 +1,7 @@
 from typing import Optional
 
 from requests import Session
+from requests.adapters import HTTPAdapter, Retry
 
 from .response import Response
 from .tools import (
@@ -35,6 +36,9 @@ class GreenApi:
         self.idInstance = idInstance
         self.apiTokenInstance = apiTokenInstance
 
+        self.session = Session()
+        self.__prepare_session()
+
         self.account = account.Account(self)
         self.device = device.Device(self)
         self.groups = groups.Groups(self)
@@ -59,15 +63,25 @@ class GreenApi:
         url = url.replace("{{apiTokenInstance}}", self.apiTokenInstance)
 
         try:
-            with Session() as session:
-                if not files:
-                    response = session.request(
-                        method=method, url=url, json=payload
-                    )
-                else:
-                    response = session.request(
-                        method=method, url=url, data=payload, files=files
-                    )
+            if not files:
+                response = self.session.request(
+                    method=method, url=url, json=payload
+                )
+            else:
+                response = self.session.request(
+                    method=method, url=url, data=payload, files=files
+                )
         except Exception as error:
             return Response(None, f"Other error occurred: {error}.")
         return Response(response.status_code, response.text)
+
+    def __prepare_session(self) -> None:
+        retry = Retry(
+            total=3,
+            backoff_factor=1.0,
+            allowed_methods=None,
+            status_forcelist=[400, 429]
+        )
+
+        self.session.mount("http://", HTTPAdapter(max_retries=retry))
+        self.session.mount("https://", HTTPAdapter(max_retries=retry))
