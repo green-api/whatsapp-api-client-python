@@ -1,6 +1,6 @@
 import json
 import logging
-from typing import Optional
+from typing import NoReturn, Optional
 
 from requests import Response, Session
 from requests.adapters import HTTPAdapter, Retry
@@ -94,23 +94,31 @@ class GreenApi:
 
         return GreenAPIResponse(response.status_code, response.text)
 
-    def __handle_response(self, response: Response):
-        if response.status_code != 200:
-            error_message = (
-                f"Request was failed with status code: {response.status_code}."
-            )
-
-            if self.raise_errors:
-                raise GreenAPIError(error_message)
-            self.logger.log(logging.ERROR, error_message)
-
-        if self.debug_mode:
+    def __handle_response(self, response: Response) -> Optional[NoReturn]:
+        status_code = response.status_code
+        if status_code != 200 or self.debug_mode:
             data = json.dumps(
                 json.loads(response.text), ensure_ascii=False, indent=4
             )
 
+            if status_code != 200:
+                data = json.dumps(
+                    json.loads(response.text), ensure_ascii=False, indent=4
+                )
+
+                error_message = (
+                    f"Request was failed with status code: {status_code}."
+                    f" Data: {data}"
+                )
+
+                if self.raise_errors:
+                    raise GreenAPIError(error_message)
+                self.logger.log(logging.ERROR, error_message)
+
+                return None
+
             self.logger.log(
-                logging.DEBUG, f"Request was successful with data: {data}\n"
+                logging.DEBUG, f"Request was successful with data: {data}"
             )
 
     def __prepare_logger(self) -> None:
