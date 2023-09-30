@@ -76,12 +76,18 @@ class GreenApi:
         return Response(response.status_code, response.text)
 
     def __prepare_session(self) -> None:
+        self.session.headers["Connection"] = "close"
+
         retry = Retry(
             total=3,
             backoff_factor=1.0,
             allowed_methods=None,
-            status_forcelist=[400, 429]
+            status_forcelist=[429]
         )
 
         self.session.mount("http://", HTTPAdapter(max_retries=retry))
         self.session.mount("https://", HTTPAdapter(max_retries=retry))
+
+
+class GreenAPI(GreenApi):
+    pass

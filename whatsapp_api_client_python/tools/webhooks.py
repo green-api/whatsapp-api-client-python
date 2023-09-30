@@ -14,12 +14,18 @@ class Webhooks:
     def __init__(self, api: "GreenApi"):
         self.api = api
 
+        self.api.session.headers["Connection"] = "keep-alive"
+
     @property
     def started(self) -> Optional[bool]:
+        """Deprecated"""
+
         return self._running
 
     @started.setter
     def started(self, value: bool) -> None:
+        """Deprecated"""
+
         self._running = value
 
     def startReceivingNotifications(
