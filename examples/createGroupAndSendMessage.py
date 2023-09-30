@@ -7,7 +7,7 @@ greenAPI = API.GreenApi(
 
 def main():
     create_group_response = greenAPI.groups.createGroup(
-        "Group Name", ["11001234567@c.us"]
+        "Group Name", ["11001234567@c.us", "11001234567@c.us"]
     )
     if create_group_response.code == 200:
         print(create_group_response.data)
