@@ -11,8 +11,6 @@ class Webhooks:
     def __init__(self, api: "GreenApi"):
         self.api = api
 
-        self.api.session.headers["Connection"] = "keep-alive"
-
     @property
     def started(self) -> Optional[bool]:
         """Deprecated"""
@@ -67,6 +65,8 @@ class Webhooks:
         print("Stopped receiving incoming notifications.")
 
     def _start_polling(self, handler: Callable[[str, dict], Any]) -> None:
+        self.api.session.headers["Connection"] = "keep-alive"
+
         self.api.logger.log(
             logging.INFO, "Started receiving incoming notifications."
         )
@@ -89,6 +89,8 @@ class Webhooks:
                     )
             except KeyboardInterrupt:
                 break
+
+        self.api.session.headers["Connection"] = "close"
 
         self.api.logger.log(
             logging.INFO, "Stopped receiving incoming notifications."
