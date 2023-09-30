@@ -1,5 +1,5 @@
-import json
 from datetime import datetime
+from json import dumps
 
 from whatsapp_api_client_python import API
 
@@ -9,89 +9,109 @@ greenAPI = API.GreenApi(
 
 
 def main():
-   greenAPI.webhooks.startReceivingNotifications(onEvent)
-
-def onEvent(typeWebhook, body):
-   if typeWebhook == 'incomingMessageReceived':
-      onIncomingMessageReceived(body)      
-   elif typeWebhook == 'deviceInfo':   
-      onDeviceInfo(body)              
-   elif typeWebhook == 'incomingCall':
-      onIncomingCall(body)
-   elif typeWebhook == 'outgoingAPIMessageReceived':
-      onOutgoingAPIMessageReceived(body)
-   elif typeWebhook == 'outgoingMessageReceived':
-      onOutgoingMessageReceived(body)
-   elif typeWebhook == 'outgoingMessageStatus':
-      onOutgoingMessageStatus(body)
-   elif typeWebhook == 'stateInstanceChanged':
-      onStateInstanceChanged(body)
-   elif typeWebhook == 'statusInstanceChanged':
-      onStatusInstanceChanged(body)
-
-def onIncomingMessageReceived(body):
-        idMessage = body['idMessage']
-        eventDate = datetime.fromtimestamp(body['timestamp'])
-        senderData = body['senderData']
-        messageData = body['messageData']
-        print(idMessage + ': ' 
-            + 'At ' + str(eventDate) + ' Incoming from ' \
-            + json.dumps(senderData, ensure_ascii=False) \
-            + ' message = ' + json.dumps(messageData, ensure_ascii=False))
-
-def onIncomingCall(body):
-   idMessage = body['idMessage']
-   eventDate = datetime.fromtimestamp(body['timestamp'])
-   fromWho = body['from']
-   print(idMessage + ': ' 
-      + 'Call from ' + fromWho 
-      + ' at ' + str(eventDate))
-
-def onDeviceInfo(body):
-   eventDate = datetime.fromtimestamp(body['timestamp'])
-   deviceData = body['deviceData']
-   print('At ' + str(eventDate) + ': ' \
-      + json.dumps(deviceData, ensure_ascii=False))
-
-def onOutgoingMessageReceived(body):
-   idMessage = body['idMessage']
-   eventDate = datetime.fromtimestamp(body['timestamp'])
-   senderData = body['senderData']
-   messageData = body['messageData']
-   print(idMessage + ': ' 
-      + 'At ' + str(eventDate) + ' Outgoing from ' \
-      + json.dumps(senderData, ensure_ascii=False) \
-      + ' message = ' + json.dumps(messageData, ensure_ascii=False))
-
-def onOutgoingAPIMessageReceived(body):
-   idMessage = body['idMessage']
-   eventDate = datetime.fromtimestamp(body['timestamp'])
-   senderData = body['senderData']
-   messageData = body['messageData']
-   print(idMessage + ': ' 
-      + 'At ' + str(eventDate) + ' API outgoing from ' \
-      + json.dumps(senderData, ensure_ascii=False) + \
-      ' message = ' + json.dumps(messageData, ensure_ascii=False))
-
-def onOutgoingMessageStatus(body):
-   idMessage = body['idMessage']
-   status = body['status']
-   eventDate = datetime.fromtimestamp(body['timestamp'])
-   print(idMessage + ': ' 
-      + 'At ' + str(eventDate) + ' status = ' + status)
-
-def onStateInstanceChanged(body):
-   eventDate = datetime.fromtimestamp(body['timestamp'])
-   stateInstance = body['stateInstance']
-   print('At ' + str(eventDate) + ' state instance = ' \
-      + json.dumps(stateInstance, ensure_ascii=False))
-
-def onStatusInstanceChanged(body):
-   eventDate = datetime.fromtimestamp(body['timestamp'])
-   statusInstance = body['statusInstance']
-   print('At ' + str(eventDate) + ' status instance = ' \
-      + json.dumps(statusInstance, ensure_ascii=False))
+    greenAPI.webhooks.startReceivingNotifications(handler)
 
 
-if __name__ == "__main__":
+def handler(type_webhook: str, body: dict) -> None:
+    if type_webhook == "incomingMessageReceived":
+        incoming_message_received(body)
+    elif type_webhook == "outgoingMessageReceived":
+        outgoing_message_received(body)
+    elif type_webhook == "outgoingAPIMessageReceived":
+        outgoing_api_message_received(body)
+    elif type_webhook == "outgoingMessageStatus":
+        outgoing_message_status(body)
+    elif type_webhook == "stateInstanceChanged":
+        state_instance_changed(body)
+    elif type_webhook == "deviceInfo":
+        device_info(body)
+    elif type_webhook == "incomingCall":
+        incoming_call(body)
+    elif type_webhook == "statusInstanceChanged":
+        status_instance_changed(body)
+
+
+def get_notification_time(timestamp: int) -> str:
+    return str(datetime.fromtimestamp(timestamp))
+
+
+def incoming_message_received(body: dict) -> None:
+    timestamp = body["timestamp"]
+    time = get_notification_time(timestamp)
+
+    data = dumps(body, ensure_ascii=False, indent=4)
+
+    print(f"New incoming message at {time} with data: {data}", end="\n\n")
+
+
+def outgoing_message_received(body: dict) -> None:
+    timestamp = body["timestamp"]
+    time = get_notification_time(timestamp)
+
+    data = dumps(body, ensure_ascii=False, indent=4)
+
+    print(f"New outgoing message at {time} with data: {data}", end="\n\n")
+
+
+def outgoing_api_message_received(body: dict) -> None:
+    timestamp = body["timestamp"]
+    time = get_notification_time(timestamp)
+
+    data = dumps(body, ensure_ascii=False, indent=4)
+
+    print(f"New outgoing API message at {time} with data: {data}", end="\n\n")
+
+
+def outgoing_message_status(body: dict) -> None:
+    timestamp = body["timestamp"]
+    time = get_notification_time(timestamp)
+
+    data = dumps(body, ensure_ascii=False, indent=4)
+
+    response = (
+        f"Status of sent message has been updated at {time} with data: {data}"
+    )
+    print(response, end="\n\n")
+
+
+def state_instance_changed(body: dict) -> None:
+    timestamp = body["timestamp"]
+    time = get_notification_time(timestamp)
+
+    data = dumps(body, ensure_ascii=False, indent=4)
+
+    print(f"Current instance state at {time} with data: {data}", end="\n\n")
+
+
+def device_info(body: dict) -> None:
+    timestamp = body["timestamp"]
+    time = get_notification_time(timestamp)
+
+    data = dumps(body, ensure_ascii=False, indent=4)
+
+    response = (
+        f"Current device information at {time} with data: {data}"
+    )
+    print(response, end="\n\n")
+
+
+def incoming_call(body: dict) -> None:
+    timestamp = body["timestamp"]
+    time = get_notification_time(timestamp)
+
+    data = dumps(body, ensure_ascii=False, indent=4)
+
+    print(f"New incoming call at {time} with data: {data}", end="\n\n")
+
+
+def status_instance_changed(body: dict) -> None:
+    timestamp = body["timestamp"]
+    time = get_notification_time(timestamp)
+
+    data = dumps(body, ensure_ascii=False, indent=4)
+
+    print(f"Current instance status at {time} with data: {data}", end="\n\n")
+
+
+if __name__ == '__main__':
     main()

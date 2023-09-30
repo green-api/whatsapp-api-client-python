@@ -4,9 +4,6 @@ from typing import Any, Callable, Optional, TYPE_CHECKING
 if TYPE_CHECKING:
     from ..API import GreenApi
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("whatsapp-api-client-python")
-
 
 class Webhooks:
     _running: Optional[bool] = None
@@ -16,10 +13,14 @@ class Webhooks:
 
     @property
     def started(self) -> Optional[bool]:
+        """Deprecated"""
+
         return self._running
 
     @started.setter
     def started(self, value: bool) -> None:
+        """Deprecated"""
+
         self._running = value
 
     def startReceivingNotifications(
@@ -35,7 +36,7 @@ class Webhooks:
     def job(self, onEvent: Callable[[str, dict], Any]) -> None:
         """Deprecated"""
 
-        logger.log(logging.WARNING, "This function is deprecated.")
+        self.api.logger.log(logging.WARNING, "This function is deprecated.")
 
         print((
             "Started receiving incoming notifications."
@@ -64,7 +65,11 @@ class Webhooks:
         print("Stopped receiving incoming notifications.")
 
     def _start_polling(self, handler: Callable[[str, dict], Any]) -> None:
-        logger.log(logging.INFO, "Started receiving incoming notifications.")
+        self.api.session.headers["Connection"] = "keep-alive"
+
+        self.api.logger.log(
+            logging.INFO, "Started receiving incoming notifications."
+        )
 
         while self._running:
             try:
@@ -85,4 +90,8 @@ class Webhooks:
             except KeyboardInterrupt:
                 break
 
-        logger.log(logging.INFO, "Stopped receiving incoming notifications.")
+        self.api.session.headers["Connection"] = "close"
+
+        self.api.logger.log(
+            logging.INFO, "Stopped receiving incoming notifications."
+        )
