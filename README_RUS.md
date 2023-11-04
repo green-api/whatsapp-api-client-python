@@ -100,6 +100,24 @@ if create_group_response.code == 200:
     )
 ```
 
+### Отправка сообщения с опросом
+
+Ссылка на пример: [sendPoll.py](examples/sendPoll.py).
+
+```
+response = greenAPI.sending.sendPoll(
+    "11001234567@c.us",
+    "Please choose the color:",
+    [
+        {"optionName": "green"},
+        {"optionName": "red"},
+        {"optionName": "blue"}
+    ]
+)
+
+print(response.data)
+```
+
 ### Получение входящих уведомлений через HTTP API
 
 Ссылка на пример: [receiveNotification.py](examples/receiveNotification.py).
@@ -131,6 +149,7 @@ onEvent - ваша функция, которая должен содержат�
 | Пример отправки картинки по URL                      | [sendPictureByLink.py](examples/sendPictureByLink.py)                 |
 | Пример отправки картинки загрузкой с диска           | [sendPictureByUpload.py](examples/sendPictureByUpload.py)             |
 | Пример создание группы и отправка сообщения в группу | [createGroupAndSendMessage.py](examples/createGroupAndSendMessage.py) |
+| Пример отправки сообщения с опросом                  | [sendPoll.py](examples/sendPoll.py)                                   |
 | Пример получения входящих уведомлений                | [receiveNotification.py](examples/receiveNotification.py)             |
 
 ## Полный список методов библиотеки
@@ -176,6 +195,7 @@ onEvent - ваша функция, которая должен содержат�
 | `sending.sendContact`                  | Метод предназначен для отправки сообщения с контактом                                                                     | [SendContact](https://green-api.com/docs/api/sending/SendContact/)                                       |
 | `sending.sendLink`                     | Метод предназначен для отправки сообщения со ссылкой, по которой будут добавлены превью изображения, заголовок и описание | [SendLink](https://green-api.com/docs/api/sending/SendLink/)                                             |
 | `sending.forwardMessages`              | Метод предназначен для пересылки сообщений в личный или групповой чат                                                     | [ForwardMessages](https://green-api.com/docs/api/sending/ForwardMessages/)                               |
+| `sending.sendPoll`                     | Метод предназначен для отправки сообщения с опросом в личный или групповой чат                                            | [SendPoll](https://green-api.com/docs/api/sending/SendPoll/)                                             |
 | `serviceMethods.checkWhatsapp`         | Метод проверяет наличие аккаунта WhatsApp на номере телефона                                                              | [CheckWhatsapp](https://green-api.com/docs/api/service/CheckWhatsapp/)                                   |
 | `serviceMethods.getAvatar`             | Метод возвращает аватар корреспондента или группового чата                                                                | [GetAvatar](https://green-api.com/docs/api/service/GetAvatar/)                                           |
 | `serviceMethods.getContacts`           | Метод предназначен для получения списка контактов текущего аккаунта                                                       | [GetContacts](https://green-api.com/docs/api/service/GetContacts/)                                       |
