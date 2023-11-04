@@ -269,7 +269,7 @@ class Sending:
             quotedMessageId: Optional[str] = None
     ) -> Response:
         """
-        The method is intended for sending messages with a poll to a 
+        The method is intended for sending messages with a poll to a
         private or group chat
         """
 
