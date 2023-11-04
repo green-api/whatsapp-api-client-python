@@ -109,6 +109,26 @@ if create_group_response.code == 200:
     )
 ```
 
+### Sending a message with poll
+
+Link to example: [sendPoll.py](
+https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPoll.py
+).
+
+```
+response = greenAPI.sending.sendPoll(
+    "11001234567@c.us",
+    "Please choose the color:",
+    [
+        {"optionName": "green"},
+        {"optionName": "red"},
+        {"optionName": "blue"}
+    ]
+)
+
+print(response.data)
+```
+
 ### Receive incoming messages by HTTP API
 
 Link to example: [receiveNotification.py](
@@ -145,6 +165,7 @@ business logic of your system.
 | Example of sending a picture by URL                            | [sendPictureByLink.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPictureByLink.py)                 |
 | Example of sending a picture by uploading from the disk        | [sendPictureByUpload.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPictureByUpload.py)             |
 | Example of a group creation and sending a message to the group | [createGroupAndSendMessage.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/createGroupAndSendMessage.py) |
+| Example of sending a message with a poll                       | [sendPoll.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPoll.py)                                   |
 | Example of incoming webhooks receiving                         | [receiveNotification.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/receiveNotification.py)             |
 
 ## The full list of the library methods
@@ -190,6 +211,8 @@ business logic of your system.
 | `sending.sendContact`                  | The method is for sending a message with a contact                                                                       | [SendContact](https://green-api.com/en/docs/api/sending/SendContact/)                                       |
 | `sending.sendLink`                     | The method is designed to send a message with a link that will add an image preview, title and description               | [SendLink](https://green-api.com/en/docs/api/sending/SendLink/)                                             |
 | `sending.forwardMessages`              | The method is designed for forwarding messages to a personal or group chat                                               | [ForwardMessages](https://green-api.com/en/docs/api/sending/ForwardMessages/)                               |
+| `sending.sendPoll`                     | The method is designed for sending messages with a poll to a personal or group chat                                      | [SendPoll](https://green-api.com/en/docs/api/sending/SendPoll/)                                        
+     |
 | `serviceMethods.checkWhatsapp`         | The method checks if there is a WhatsApp account on the phone number                                                     | [CheckWhatsapp](https://green-api.com/en/docs/api/service/CheckWhatsapp/)                                   |
 | `serviceMethods.getAvatar`             | The method returns the avatar of the correspondent or group chat                                                         | [GetAvatar](https://green-api.com/en/docs/api/service/GetAvatar/)                                           |
 | `serviceMethods.getContacts`           | The method is designed to get a list of contacts of the current account                                                  | [GetContacts](https://green-api.com/en/docs/api/service/GetContacts/)                                       |
