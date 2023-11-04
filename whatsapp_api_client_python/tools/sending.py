@@ -259,6 +259,25 @@ class Sending:
                 "forwardMessages/{{apiTokenInstance}}"
             ), request_body
         )
+    
+    def sendPoll(
+            self,
+            chatId: str,
+            message: str,
+            options: List[Dict[str, str]],
+            multipleAnswers: Optional[str] = False,
+            quotedMessageId: Optional[str] = None
+    ) -> Response:
+        """The method is aimed for sending a poll."""
+
+        request_body = self.__handle_parameters(locals())
+
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "sendPoll/{{apiTokenInstance}}"
+            ), request_body
+        )
 
     @classmethod
     def __handle_parameters(cls, parameters: dict) -> dict:
