@@ -107,7 +107,8 @@ class MethodsTestCase(unittest.TestCase):
             api.sending.sendLocation("", 0.0, 0.0),
             api.sending.sendContact("", {}),
             api.sending.sendLink("", ""),
-            api.sending.forwardMessages("", "", [])
+            api.sending.forwardMessages("", "", []),
+            api.sending.sendPoll("", "", [])
         ]
 
     @property

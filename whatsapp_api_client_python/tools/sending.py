@@ -260,6 +260,28 @@ class Sending:
             ), request_body
         )
 
+    def sendPoll(
+            self,
+            chatId: str,
+            message: str,
+            options: List[Dict[str, str]],
+            multipleAnswers: Optional[bool] = None,
+            quotedMessageId: Optional[str] = None
+    ) -> Response:
+        """
+        The method is intended for sending messages with a poll to a
+        private or group chat
+        """
+
+        request_body = self.__handle_parameters(locals())
+
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "sendPoll/{{apiTokenInstance}}"
+            ), request_body
+        )
+
     @classmethod
     def __handle_parameters(cls, parameters: dict) -> dict:
         handled_parameters = parameters.copy()
