@@ -259,16 +259,19 @@ class Sending:
                 "forwardMessages/{{apiTokenInstance}}"
             ), request_body
         )
-    
+
     def sendPoll(
             self,
             chatId: str,
             message: str,
             options: List[Dict[str, str]],
-            multipleAnswers: Optional[str] = False,
+            multipleAnswers: Optional[bool] = None,
             quotedMessageId: Optional[str] = None
     ) -> Response:
-        """The method is aimed for sending a poll."""
+        """
+        The method is intended for sending messages with a poll to a 
+        private or group chat
+        """
 
         request_body = self.__handle_parameters(locals())
 

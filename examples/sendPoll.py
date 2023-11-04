@@ -6,7 +6,15 @@ greenAPI = API.GreenApi(
 
 
 def main():
-    response = greenAPI.sending.sendPoll("11001234567@c.us", "Please choose the color:", [{"optionName": "green"}, {"optionName": "red"}, {"optionName": "blue"}])
+    response = greenAPI.sending.sendPoll(
+        "11001234567@c.us", 
+        "Please choose the color:", 
+        [
+            {"optionName": "green"}, 
+            {"optionName": "red"}, 
+            {"optionName": "blue"}
+        ]
+    )
 
     print(response.data)
 
