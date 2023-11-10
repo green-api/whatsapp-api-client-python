@@ -22,6 +22,18 @@ class Account:
                 "getSettings/{{apiTokenInstance}}"
             )
         )
+    
+    def getWaSettings(self) -> Response:
+        """
+        The method is aimed for getting the current account settings.
+        """
+
+        return self.api.request(
+            "GET", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "getWaSettings/{{apiTokenInstance}}"
+            )
+        )
 
     def setSettings(self, requestBody: Dict[str, Union[int, str]]) -> Response:
         """The method is aimed for setting account settings."""
