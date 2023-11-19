@@ -3,11 +3,11 @@ from typing import TYPE_CHECKING
 from ..response import Response
 
 if TYPE_CHECKING:
-    from ..API import GreenApi
+    from ..API import GreenAPI
 
 
 class Device:
-    def __init__(self, api: "GreenApi"):
+    def __init__(self, api: "GreenAPI"):
         self.api = api
 
     def getDeviceInfo(self) -> Response:

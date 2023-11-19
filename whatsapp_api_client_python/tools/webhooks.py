@@ -2,13 +2,13 @@ import logging
 from typing import Any, Callable, Optional, TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from ..API import GreenApi
+    from ..API import GreenAPI
 
 
 class Webhooks:
     _running: Optional[bool] = None
 
-    def __init__(self, api: "GreenApi"):
+    def __init__(self, api: "GreenAPI"):
         self.api = api
 
     @property

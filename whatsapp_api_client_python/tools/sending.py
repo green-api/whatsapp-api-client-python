@@ -2,16 +2,14 @@ import mimetypes
 import pathlib
 from typing import Dict, List, Optional, TYPE_CHECKING, Union
 
-from requests import Session
-
 from ..response import Response
 
 if TYPE_CHECKING:
-    from ..API import GreenApi
+    from ..API import GreenAPI
 
 
 class Sending:
-    def __init__(self, api: "GreenApi"):
+    def __init__(self, api: "GreenAPI"):
         self.api = api
 
     def sendMessage(
@@ -165,21 +163,16 @@ class Sending:
         file_name = pathlib.Path(path).name
         content_type = mimetypes.guess_type(file_name)[0]
 
-        try:
-            with open(path, "rb") as file:
-                with Session() as session:
-                    response = session.request(
-                        method="POST",
-                        url=(
-                            f"{self.api.media}/waInstance{self.api.idInstance}/"
-                            f"uploadFile/{self.api.apiTokenInstance}"
-                        ),
-                        data=file.read(),
-                        headers={"Content-Type": content_type}
-                    )
-        except Exception as error:
-            return Response(None, f"Other error occurred: {error}.")
-        return Response(response.status_code, response.text)
+        with open(path, "rb") as file:
+            return self.api.raw_request(
+                method="POST",
+                url=(
+                    f"{self.api.media}/waInstance{self.api.idInstance}/"
+                    f"uploadFile/{self.api.apiTokenInstance}"
+                ),
+                data=file.read(),
+                headers={"Content-Type": content_type}
+            )
 
     def sendLocation(
             self,

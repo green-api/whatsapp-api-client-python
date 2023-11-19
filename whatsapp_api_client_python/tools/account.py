@@ -4,11 +4,11 @@ from typing import Dict, TYPE_CHECKING, Union
 from ..response import Response
 
 if TYPE_CHECKING:
-    from ..API import GreenApi
+    from ..API import GreenAPI
 
 
 class Account:
-    def __init__(self, api: "GreenApi"):
+    def __init__(self, api: "GreenAPI"):
         self.api = api
 
     def getSettings(self) -> Response:
