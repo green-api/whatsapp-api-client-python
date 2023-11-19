@@ -3,11 +3,11 @@ from typing import TYPE_CHECKING
 from ..response import Response
 
 if TYPE_CHECKING:
-    from ..API import GreenAPI
+    from ..API import GreenApi
 
 
 class Queues:
-    def __init__(self, api: "GreenAPI"):
+    def __init__(self, api: "GreenApi"):
         self.api = api
 
     def showMessagesQueue(self) -> Response:

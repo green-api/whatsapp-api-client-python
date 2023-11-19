@@ -5,11 +5,11 @@ from typing import Dict, List, Optional, TYPE_CHECKING, Union
 from ..response import Response
 
 if TYPE_CHECKING:
-    from ..API import GreenAPI
+    from ..API import GreenApi
 
 
 class Sending:
-    def __init__(self, api: "GreenAPI"):
+    def __init__(self, api: "GreenApi"):
         self.api = api
 
     def sendMessage(

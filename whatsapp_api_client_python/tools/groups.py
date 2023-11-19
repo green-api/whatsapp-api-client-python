@@ -4,11 +4,11 @@ from typing import List, TYPE_CHECKING
 from ..response import Response
 
 if TYPE_CHECKING:
-    from ..API import GreenAPI
+    from ..API import GreenApi
 
 
 class Groups:
-    def __init__(self, api: "GreenAPI"):
+    def __init__(self, api: "GreenApi"):
         self.api = api
 
     def createGroup(self, groupName: str, chatIds: List[str]) -> Response:
