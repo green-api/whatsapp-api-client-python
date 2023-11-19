@@ -25,7 +25,8 @@ class Account:
 
     def getWaSettings(self) -> Response:
         """
-        The method is aimed to get information about the WhatsApp account
+        The method is aimed to get information about the WhatsApp
+        account.
         """
 
         return self.api.request(
