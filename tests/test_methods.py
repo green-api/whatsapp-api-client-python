@@ -2,12 +2,12 @@ import typing
 import unittest
 from unittest.mock import Mock, patch
 
-from whatsapp_api_client_python.API import GreenApi
+from whatsapp_api_client_python.API import GreenAPI
 from whatsapp_api_client_python.response import Response
 
-api = GreenApi("", "")
+api = GreenAPI("", "")
 
-path = "examples/data/green-api-logo_2.png"
+path = "examples/data/rates.png"
 
 
 class MethodsTestCase(unittest.TestCase):
