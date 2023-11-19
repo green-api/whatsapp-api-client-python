@@ -6,7 +6,7 @@
 ![](https://img.shields.io/github/actions/workflow/status/green-api/whatsapp-api-client-python/python-package.yml)
 ![](https://img.shields.io/pypi/dm/whatsapp-api-client-python)
 
-- [Документация на русском языке](https://github.com/green-api/whatsapp-api-client-python/blob/master/README_RUS.md).
+- [Документация на русском языке](https://github.com/green-api/whatsapp-api-client-python/blob/master/docs/README.md).
 
 whatsapp-api-client-python is a library for integration with WhatsApp messenger using the API
 service [green-api.com](https://green-api.com/en/). You should get a registration token and an account ID in
@@ -39,7 +39,7 @@ from whatsapp_api_client_python import API
 ### How to initialize an object
 
 ```
-greenAPI = API.GreenApi(
+greenAPI = API.GreenAPI(
     "1101000001", "d75b3a66374942c5b3c019c698abc2067e151558acbd412345"
 )
 ```
@@ -65,9 +65,9 @@ https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sen
 ```
 response = greenAPI.sending.sendFileByUrl(
     "11001234567@c.us",
-    "https://green-api.com/green-api-logo_2.png",
-    "green-api-logo_2.png",
-    "GREEN API logo"
+    "https://download.samplelib.com/png/sample-clouds2-400x300.png",
+    "sample-clouds2-400x300.png",
+    "Sample PNG"
 )
 
 print(response.data)
@@ -82,9 +82,9 @@ https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sen
 ```
 response = greenAPI.sending.sendFileByUpload(
     "11001234567@c.us",
-    "data/green-api-logo_2.png",
-    "green-api-logo_2.png",
-    "GREEN API logo"
+    "data/rates.png",
+    "rates.png",
+    "Available rates"
 )
 
 print(response.data)
@@ -107,26 +107,6 @@ if create_group_response.code == 200:
     send_message_response = greenAPI.sending.sendMessage(
         create_group_response.data["chatId"], "Message text"
     )
-```
-
-### Sending a message with poll
-
-Link to example: [sendPoll.py](
-https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPoll.py
-).
-
-```
-response = greenAPI.sending.sendPoll(
-    "11001234567@c.us",
-    "Please choose the color:",
-    [
-        {"optionName": "green"},
-        {"optionName": "red"},
-        {"optionName": "blue"}
-    ]
-)
-
-print(response.data)
 ```
 
 ### Receive incoming messages by HTTP API
@@ -157,6 +137,26 @@ https://green-api.com/en/docs/api/receiving/notifications-format/
 This method will be called when an incoming notification is received. Next, process notifications according to the
 business logic of your system.
 
+### Sending a polling message
+
+Link to example: [sendPoll.py](
+https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPoll.py
+).
+
+```
+response = greenAPI.sending.sendPoll(
+    "11001234567@c.us",
+    "Please choose a color:",
+    [
+        {"optionName": "Red"},
+        {"optionName": "Green"},
+        {"optionName": "Blue"}
+    ]
+)
+
+print(response.data)
+```
+
 ## Examples list
 
 | Description                                                    | Module                                                                                                                                    |
@@ -165,8 +165,8 @@ business logic of your system.
 | Example of sending a picture by URL                            | [sendPictureByLink.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPictureByLink.py)                 |
 | Example of sending a picture by uploading from the disk        | [sendPictureByUpload.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPictureByUpload.py)             |
 | Example of a group creation and sending a message to the group | [createGroupAndSendMessage.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/createGroupAndSendMessage.py) |
-| Example of sending a message with a poll                       | [sendPoll.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPoll.py)                                   |
 | Example of incoming webhooks receiving                         | [receiveNotification.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/receiveNotification.py)             |
+| Example of sending a polling message                           | [sendPoll.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPoll.py)                                   |
 
 ## The full list of the library methods
 
@@ -211,7 +211,7 @@ business logic of your system.
 | `sending.sendContact`                  | The method is for sending a message with a contact                                                                       | [SendContact](https://green-api.com/en/docs/api/sending/SendContact/)                                       |
 | `sending.sendLink`                     | The method is designed to send a message with a link that will add an image preview, title and description               | [SendLink](https://green-api.com/en/docs/api/sending/SendLink/)                                             |
 | `sending.forwardMessages`              | The method is designed for forwarding messages to a personal or group chat                                               | [ForwardMessages](https://green-api.com/en/docs/api/sending/ForwardMessages/)                               |
-| `sending.sendPoll`                     | The method is designed for sending messages with a poll to a personal or group chat                                      | [SendPoll](https://green-api.com/en/docs/api/sending/SendPoll/)                                             |
+| `sending.sendPoll`                     | The method is designed for sending messages with a poll to a private or group chat                                       | [SendPoll](https://green-api.com/en/docs/api/sending/SendPoll/)                                             |
 | `serviceMethods.checkWhatsapp`         | The method checks if there is a WhatsApp account on the phone number                                                     | [CheckWhatsapp](https://green-api.com/en/docs/api/service/CheckWhatsapp/)                                   |
 | `serviceMethods.getAvatar`             | The method returns the avatar of the correspondent or group chat                                                         | [GetAvatar](https://green-api.com/en/docs/api/service/GetAvatar/)                                           |
 | `serviceMethods.getContacts`           | The method is designed to get a list of contacts of the current account                                                  | [GetContacts](https://green-api.com/en/docs/api/service/GetContacts/)                                       |

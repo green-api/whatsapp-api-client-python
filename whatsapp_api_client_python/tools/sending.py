@@ -269,8 +269,8 @@ class Sending:
             quotedMessageId: Optional[str] = None
     ) -> Response:
         """
-        The method is intended for sending messages with a poll to a
-        private or group chat
+        This method is intended for sending messages with a poll to a
+        private or group chat.
         """
 
         request_body = self.__handle_parameters(locals())
