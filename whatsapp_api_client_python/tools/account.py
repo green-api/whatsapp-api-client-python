@@ -106,3 +106,19 @@ class Account:
                 "setProfilePicture/{{apiTokenInstance}}"
             ), files=files
         )
+
+    def getAuthorizationCode(self, phoneNumber: int) -> Response:
+        """
+        The method is designed to authorize instance by phone
+        number.
+        """
+
+        request_body = locals()
+        request_body.pop("self")
+
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "GetAuthorizationCode/{{apiTokenInstance}}"
+            ), request_body
+        )

@@ -46,7 +46,8 @@ class MethodsTestCase(unittest.TestCase):
             api.account.reboot(),
             api.account.logout(),
             api.account.qr(),
-            api.account.setProfilePicture(path)
+            api.account.setProfilePicture(path),
+            api.account.getAuthorizationCode(0)
         ]
 
     @property
