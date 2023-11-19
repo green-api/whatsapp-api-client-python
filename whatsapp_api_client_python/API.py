@@ -1,6 +1,6 @@
 import json
 import logging
-from typing import NoReturn, Optional
+from typing import Any, NoReturn, Optional
 
 from requests import Response, Session
 from requests.adapters import HTTPAdapter, Retry
@@ -81,6 +81,22 @@ class GreenApi:
                 response = self.session.request(
                     method=method, url=url, data=payload, files=files
                 )
+        except Exception as error:
+            error_message = f"Request was failed with error: {error}."
+
+            if self.raise_errors:
+                raise GreenAPIError(error_message)
+            self.logger.log(logging.CRITICAL, error_message)
+
+            return GreenAPIResponse(None, error_message)
+
+        self.__handle_response(response)
+
+        return GreenAPIResponse(response.status_code, response.text)
+
+    def raw_request(self, **arguments: Any) -> GreenAPIResponse:
+        try:
+            response = self.session.request(**arguments)
         except Exception as error:
             error_message = f"Request was failed with error: {error}."
 

@@ -1,4 +1,4 @@
-﻿# whatsapp-api-client-python
+# whatsapp-api-client-python
 
 ![](https://img.shields.io/badge/license-CC%20BY--ND%204.0-green)
 ![](https://img.shields.io/pypi/status/whatsapp-api-client-python)
@@ -38,14 +38,14 @@ from whatsapp_api_client_python import API
 ### Как инициализировать объект
 
 ```
-greenAPI = API.GreenApi(
+greenAPI = API.GreenAPI(
     "1101000001", "d75b3a66374942c5b3c019c698abc2067e151558acbd412345"
 )
 ```
 
 ### Отправка текстового сообщения на номер WhatsApp
 
-Ссылка на пример: [sendTextMessage.py](examples/sendTextMessage.py).
+Ссылка на пример: [sendTextMessage.py](../examples/sendTextMessage.py).
 
 ```
 response = greenAPI.sending.sendMessage("11001234567@c.us", "Message text")
@@ -55,14 +55,14 @@ print(response.data)
 
 ### Отправка картинки по URL
 
-Ссылка на пример: [sendPictureByLink.py](examples/sendPictureByLink.py).
+Ссылка на пример: [sendPictureByLink.py](../examples/sendPictureByLink.py).
 
 ```
 response = greenAPI.sending.sendFileByUrl(
     "11001234567@c.us",
-    "https://green-api.com/green-api-logo_2.png",
-    "green-api-logo_2.png",
-    "GREEN API logo"
+    "https://download.samplelib.com/png/sample-clouds2-400x300.png",
+    "sample-clouds2-400x300.png",
+    "Sample PNG"
 )
 
 print(response.data)
@@ -70,14 +70,14 @@ print(response.data)
 
 ### Отправка картинки загрузкой с диска
 
-Ссылка на пример: [sendPictureByUpload.py](examples/sendPictureByUpload.py).
+Ссылка на пример: [sendPictureByUpload.py](../examples/sendPictureByUpload.py).
 
 ```
 response = greenAPI.sending.sendFileByUpload(
     "11001234567@c.us",
-    "data/green-api-logo_2.png",
-    "green-api-logo_2.png",
-    "GREEN API logo"
+    "data/rates.png",
+    "rates.png",
+    "Available rates"
 )
 
 print(response.data)
@@ -88,7 +88,7 @@ print(response.data)
 **Важно**. Если попытаться создать группу с несуществующим номером WhatsApp, то может заблокировать номер отправителя.
 Номер в примере не существует.
 
-Ссылка на пример: [createGroupAndSendMessage.py](examples/createGroupAndSendMessage.py).
+Ссылка на пример: [createGroupAndSendMessage.py](../examples/createGroupAndSendMessage.py).
 
 ```
 create_group_response = greenAPI.groups.createGroup(
@@ -100,27 +100,9 @@ if create_group_response.code == 200:
     )
 ```
 
-### Отправка сообщения с опросом
-
-Ссылка на пример: [sendPoll.py](examples/sendPoll.py).
-
-```
-response = greenAPI.sending.sendPoll(
-    "11001234567@c.us",
-    "Please choose the color:",
-    [
-        {"optionName": "green"},
-        {"optionName": "red"},
-        {"optionName": "blue"}
-    ]
-)
-
-print(response.data)
-```
-
 ### Получение входящих уведомлений через HTTP API
 
-Ссылка на пример: [receiveNotification.py](examples/receiveNotification.py).
+Ссылка на пример: [receiveNotification.py](../examples/receiveNotification.py).
 
 Общая концепция получения данных в GREEN API описана [здесь](https://green-api.com/docs/api/receiving/). Для старта
 получения уведомлений через HTTP API требуется выполнить метод библиотеки:
@@ -141,22 +123,41 @@ onEvent - ваша функция, которая должен содержат�
 Эта функция будет вызываться при получении входящего уведомления. Далее обрабатываете уведомления согласно бизнес-логике
 вашей системы.
 
+### Отправка сообщения с опросом
+
+Ссылка на пример: [sendPoll.py](../examples/sendPoll.py).
+
+```
+response = greenAPI.sending.sendPoll(
+    "11001234567@c.us",
+    "Please choose a color:",
+    [
+        {"optionName": "Red"},
+        {"optionName": "Green"},
+        {"optionName": "Blue"}
+    ]
+)
+
+print(response.data)
+```
+
 ## Список примеров
 
-| Описание                                             | Модуль                                                                |
-|------------------------------------------------------|-----------------------------------------------------------------------|
-| Пример отправки текста                               | [sendTextMessage.py](examples/sendTextMessage.py)                     |
-| Пример отправки картинки по URL                      | [sendPictureByLink.py](examples/sendPictureByLink.py)                 |
-| Пример отправки картинки загрузкой с диска           | [sendPictureByUpload.py](examples/sendPictureByUpload.py)             |
-| Пример создание группы и отправка сообщения в группу | [createGroupAndSendMessage.py](examples/createGroupAndSendMessage.py) |
-| Пример отправки сообщения с опросом                  | [sendPoll.py](examples/sendPoll.py)                                   |
-| Пример получения входящих уведомлений                | [receiveNotification.py](examples/receiveNotification.py)             |
+| Описание                                             | Модуль                                                                   |
+|------------------------------------------------------|--------------------------------------------------------------------------|
+| Пример отправки текста                               | [sendTextMessage.py](../examples/sendTextMessage.py)                     |
+| Пример отправки картинки по URL                      | [sendPictureByLink.py](../examples/sendPictureByLink.py)                 |
+| Пример отправки картинки загрузкой с диска           | [sendPictureByUpload.py](../examples/sendPictureByUpload.py)             |
+| Пример создание группы и отправка сообщения в группу | [createGroupAndSendMessage.py](../examples/createGroupAndSendMessage.py) |
+| Пример получения входящих уведомлений                | [receiveNotification.py](../examples/receiveNotification.py)             |
+| Пример отправки сообщения с опросом                  | [sendPoll.py](../examples/sendPoll.py)                                   |
 
 ## Полный список методов библиотеки
 
 | Метод API                              | Описание                                                                                                                  | Documentation link                                                                                       |
 |----------------------------------------|---------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------|
 | `account.getSettings`                  | Метод предназначен для получения текущих настроек аккаунта                                                                | [GetSettings](https://green-api.com/docs/api/account/GetSettings/)                                       |
+| `account.getWaSettings`                | Метод предназначен для получения информации о аккаунте WhatsApp                                                           | [GetWaSettings](https://green-api.com/docs/api/account/GetWaSettings/)                                   |
 | `account.setSettings`                  | Метод предназначен для установки настроек аккаунта                                                                        | [SetSettings](https://green-api.com/docs/api/account/SetSettings/)                                       |
 | `account.getStateInstance`             | Метод предназначен для получения состояния аккаунта                                                                       | [GetStateInstance](https://green-api.com/docs/api/account/GetStateInstance/)                             |
 | `account.getStatusInstance`            | Метод предназначен для получения состояния сокета соединения инстанса аккаунта с WhatsApp                                 | [GetStatusInstance](https://green-api.com/docs/api/account/GetStatusInstance/)                           |
@@ -220,4 +221,4 @@ onEvent - ваша функция, которая должен содержат�
 Лицензировано на условиях [
 Creative Commons Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)
 ](https://creativecommons.org/licenses/by-nd/4.0/).
-[LICENSE](LICENSE).
+[LICENSE](../LICENSE).
