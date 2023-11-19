@@ -3,14 +3,14 @@ from urllib.parse import urlparse
 
 from whatsapp_api_client_python import API
 
-greenAPI = API.GreenApi(
+greenAPI = API.GreenAPI(
     "1101000001", "d75b3a66374942c5b3c019c698abc2067e151558acbd412345"
 )
 
 
 def main():
     upload_file_response = greenAPI.sending.uploadFile(
-        "data/green-api-logo_2.png"
+        "data/rates.png"
     )
     if upload_file_response.code == 200:
         print(upload_file_response.data)

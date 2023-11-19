@@ -1,6 +1,6 @@
 from whatsapp_api_client_python import API
 
-greenAPI = API.GreenApi(
+greenAPI = API.GreenAPI(
     "1101000001", "d75b3a66374942c5b3c019c698abc2067e151558acbd412345"
 )
 
@@ -8,9 +8,9 @@ greenAPI = API.GreenApi(
 def main():
     response = greenAPI.sending.sendFileByUrl(
         "11001234567@c.us",
-        "https://green-api.com/green-api-logo_2.png",
-        "green-api-logo_2.png",
-        "GREEN API logo"
+        "https://download.samplelib.com/png/sample-clouds2-400x300.png",
+        "sample-clouds2-400x300.png",
+        "Sample PNG"
     )
 
     print(response.data)

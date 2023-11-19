@@ -1,6 +1,6 @@
 from whatsapp_api_client_python import API
 
-greenAPI = API.GreenApi(
+greenAPI = API.GreenAPI(
     "1101000001", "d75b3a66374942c5b3c019c698abc2067e151558acbd412345"
 )
 
@@ -8,11 +8,11 @@ greenAPI = API.GreenApi(
 def main():
     response = greenAPI.sending.sendPoll(
         "11001234567@c.us",
-        "Please choose the color:",
+        "Please choose a color:",
         [
-            {"optionName": "green"},
-            {"optionName": "red"},
-            {"optionName": "blue"}
+            {"optionName": "Red"},
+            {"optionName": "Green"},
+            {"optionName": "Blue"}
         ]
     )
 
