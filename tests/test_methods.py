@@ -39,6 +39,7 @@ class MethodsTestCase(unittest.TestCase):
     def account_methods(self) -> typing.List[Response]:
         return [
             api.account.getSettings(),
+            api.account.getWaSettings(),
             api.account.setSettings({}),
             api.account.getStateInstance(),
             api.account.getStatusInstance(),

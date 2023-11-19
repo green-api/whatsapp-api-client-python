@@ -23,6 +23,19 @@ class Account:
             )
         )
 
+    def getWaSettings(self) -> Response:
+        """
+        The method is aimed to get information about the WhatsApp
+        account.
+        """
+
+        return self.api.request(
+            "GET", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "getWaSettings/{{apiTokenInstance}}"
+            )
+        )
+
     def setSettings(self, requestBody: Dict[str, Union[int, str]]) -> Response:
         """The method is aimed for setting account settings."""
 
