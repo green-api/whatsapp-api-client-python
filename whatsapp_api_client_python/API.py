@@ -57,8 +57,8 @@ class GreenApi:
         self.serviceMethods = serviceMethods.ServiceMethods(self)
         self.webhooks = webhooks.Webhooks(self)
 
-        self.__prepare_logger()
         self.logger = logging.getLogger("whatsapp-api-client-python")
+        self.__prepare_logger()
 
     def request(
             self,
@@ -118,10 +118,6 @@ class GreenApi:
             )
 
             if status_code != 200:
-                data = json.dumps(
-                    json.loads(response.text), ensure_ascii=False, indent=4
-                )
-
                 error_message = (
                     f"Request was failed with status code: {status_code}."
                     f" Data: {data}"
@@ -138,10 +134,17 @@ class GreenApi:
             )
 
     def __prepare_logger(self) -> None:
-        if self.debug_mode:
-            logging.basicConfig(level=logging.DEBUG)
+        handler = logging.StreamHandler()
+        handler.setFormatter(logging.Formatter(
+            "%(name)s:%(levelname)s:%(message)s"
+        ))
+
+        self.logger.addHandler(handler)
+
+        if not self.debug_mode:
+            self.logger.setLevel(logging.INFO)
         else:
-            logging.basicConfig(level=logging.INFO)
+            self.logger.setLevel(logging.DEBUG)
 
     def __prepare_session(self) -> None:
         self.session.headers["Connection"] = "close"
