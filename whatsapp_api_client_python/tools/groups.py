@@ -12,7 +12,11 @@ class Groups:
         self.api = api
 
     def createGroup(self, groupName: str, chatIds: List[str]) -> Response:
-        """The method is aimed for creating a group chat."""
+        """
+        The method is aimed for creating a group chat.
+
+        https://green-api.com/en/docs/api/groups/CreateGroup/
+        """
 
         request_body = self.__handle_parameters(locals())
 
@@ -24,7 +28,11 @@ class Groups:
         )
 
     def updateGroupName(self, groupId: str, groupName: str) -> Response:
-        """The method changes a group chat name."""
+        """
+        The method changes a group chat name.
+
+        https://green-api.com/en/docs/api/groups/UpdateGroupName/
+        """
 
         request_body = self.__handle_parameters(locals())
 
@@ -36,7 +44,11 @@ class Groups:
         )
 
     def getGroupData(self, groupId: str) -> Response:
-        """The method gets group chat data."""
+        """
+        The method gets group chat data.
+
+        https://green-api.com/en/docs/api/groups/GetGroupData/
+        """
 
         request_body = self.__handle_parameters(locals())
 
@@ -50,7 +62,11 @@ class Groups:
     def addGroupParticipant(
             self, groupId: str, participantChatId: str
     ) -> Response:
-        """The method adds a participant to a group chat."""
+        """
+        The method adds a participant to a group chat.
+
+        https://green-api.com/en/docs/api/groups/AddGroupParticipant/
+        """
 
         request_body = self.__handle_parameters(locals())
 
@@ -64,7 +80,11 @@ class Groups:
     def removeGroupParticipant(
             self, groupId: str, participantChatId: str
     ) -> Response:
-        """The method removes a participant from a group chat."""
+        """
+        The method removes a participant from a group chat.
+
+        https://green-api.com/en/docs/api/groups/RemoveGroupParticipant/
+        """
 
         request_body = self.__handle_parameters(locals())
 
@@ -78,6 +98,8 @@ class Groups:
     def setGroupAdmin(self, groupId: str, participantChatId: str) -> Response:
         """
         The method sets a group chat participant as an administrator.
+
+        https://green-api.com/en/docs/api/groups/SetGroupAdmin/
         """
 
         request_body = self.__handle_parameters(locals())
@@ -93,6 +115,8 @@ class Groups:
         """
         The method removes a participant from group chat administration
         rights.
+
+        https://green-api.com/en/docs/api/groups/RemoveAdmin/
         """
 
         request_body = self.__handle_parameters(locals())
@@ -105,7 +129,11 @@ class Groups:
         )
 
     def setGroupPicture(self, groupId: str, path: str) -> Response:
-        """The method sets a group picture."""
+        """
+        The method sets a group picture.
+
+        https://green-api.com/en/docs/api/groups/SetGroupPicture/
+        """
 
         request_body = self.__handle_parameters(locals())
 
@@ -124,6 +152,8 @@ class Groups:
     def leaveGroup(self, groupId: str) -> Response:
         """
         The method makes the current account user leave the group chat.
+
+        https://green-api.com/en/docs/api/groups/LeaveGroup/
         """
 
         request_body = self.__handle_parameters(locals())

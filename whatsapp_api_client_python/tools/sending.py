@@ -23,6 +23,8 @@ class Sending:
         """
         The method is aimed for sending a text message to a personal or
         a group chat.
+
+        https://green-api.com/en/docs/api/sending/SendMessage/
         """
 
         request_body = self.__handle_parameters(locals())
@@ -46,6 +48,8 @@ class Sending:
         """
         The method is aimed for sending a button message to a personal
         or a group chat.
+
+        https://green-api.com/en/docs/api/sending/SendButtons/
         """
 
         request_body = self.__handle_parameters(locals())
@@ -69,6 +73,8 @@ class Sending:
         """
         The method is aimed for sending a message with template list
         interactive buttons to a personal or a group chat.
+
+        https://green-api.com/en/docs/api/sending/SendTemplateButtons/
         """
 
         request_body = self.__handle_parameters(locals())
@@ -94,6 +100,8 @@ class Sending:
         """
         The method is aimed for sending a message with a select button
         from a list of values to a personal or a group chat.
+
+        https://green-api.com/en/docs/api/sending/SendListMessage/
         """
 
         request_body = self.__handle_parameters(locals())
@@ -116,6 +124,8 @@ class Sending:
         """
         The method is aimed for sending a file uploaded by form
         (form-data).
+
+        https://green-api.com/en/docs/api/sending/SendFileByUpload/
         """
 
         request_body = self.__handle_parameters(locals())
@@ -143,7 +153,11 @@ class Sending:
             quotedMessageId: Optional[str] = None,
             archiveChat: Optional[bool] = None
     ) -> Response:
-        """The method is aimed for sending a file uploaded by URL."""
+        """
+        The method is aimed for sending a file uploaded by URL.
+
+        https://green-api.com/en/docs/api/sending/SendFileByUrl/
+        """
 
         request_body = self.__handle_parameters(locals())
 
@@ -158,6 +172,8 @@ class Sending:
         """
         The method is designed to upload a file to the cloud storage,
         which can be sent using the sendFileByUrl method.
+
+        https://green-api.com/en/docs/api/sending/UploadFile/
         """
 
         file_name = pathlib.Path(path).name
@@ -183,7 +199,11 @@ class Sending:
             address: Optional[str] = None,
             quotedMessageId: Optional[str] = None
     ) -> Response:
-        """The method is aimed for sending location message."""
+        """
+        The method is aimed for sending location message.
+
+        https://green-api.com/en/docs/api/sending/SendLocation/
+        """
 
         request_body = self.__handle_parameters(locals())
 
@@ -200,7 +220,11 @@ class Sending:
             contact: Dict[str, Union[int, str]],
             quotedMessageId: Optional[str] = None
     ) -> Response:
-        """The method is aimed for sending a contact message."""
+        """
+        The method is aimed for sending a contact message.
+
+        https://green-api.com/en/docs/api/sending/SendContact/
+        """
 
         request_body = self.__handle_parameters(locals())
 
@@ -222,6 +246,8 @@ class Sending:
 
         The method is aimed for sending a message with a link, by which
         an image preview, title and description will be added.
+
+        https://green-api.com/en/docs/api/sending/SendLink/
         """
 
         request_body = self.__handle_parameters(locals())
@@ -242,6 +268,8 @@ class Sending:
         """
         The method is intended for forwarding messages to a personal or
         group chat.
+
+        https://green-api.com/en/docs/api/sending/ForwardMessages/
         """
 
         request_body = self.__handle_parameters(locals())
@@ -264,6 +292,8 @@ class Sending:
         """
         This method is intended for sending messages with a poll to a
         private or group chat.
+
+        https://green-api.com/en/docs/api/sending/SendPoll/
         """
 
         request_body = self.__handle_parameters(locals())

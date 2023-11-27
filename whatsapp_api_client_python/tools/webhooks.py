@@ -15,11 +15,15 @@ class Webhooks:
     def started(self) -> Optional[bool]:
         """Deprecated"""
 
+        self.api.logger.log(logging.WARNING, "This property is deprecated.")
+
         return self._running
 
     @started.setter
     def started(self, value: bool) -> None:
         """Deprecated"""
+
+        self.api.logger.log(logging.WARNING, "This property is deprecated.")
 
         self._running = value
 

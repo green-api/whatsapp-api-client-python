@@ -14,6 +14,8 @@ class Device:
         """
         The method is aimed for getting information about the device
         (phone) running WhatsApp Business application.
+
+        https://green-api.com/en/docs/api/phone/GetDeviceInfo/
         """
 
         return self.api.request(
