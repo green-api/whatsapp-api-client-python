@@ -15,6 +15,8 @@ class Marking:
     ) -> Response:
         """
         The method is aimed for marking messages in a chat as read.
+
+        https://green-api.com/en/docs/api/marks/ReadChat/
         """
 
         request_body = locals()

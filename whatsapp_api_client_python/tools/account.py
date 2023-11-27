@@ -14,6 +14,8 @@ class Account:
     def getSettings(self) -> Response:
         """
         The method is aimed for getting the current account settings.
+
+        https://green-api.com/en/docs/api/account/GetSettings/
         """
 
         return self.api.request(
@@ -27,6 +29,8 @@ class Account:
         """
         The method is aimed to get information about the WhatsApp
         account.
+
+        https://green-api.com/en/docs/api/account/GetWaSettings/
         """
 
         return self.api.request(
@@ -37,7 +41,11 @@ class Account:
         )
 
     def setSettings(self, requestBody: Dict[str, Union[int, str]]) -> Response:
-        """The method is aimed for setting account settings."""
+        """
+        The method is aimed for setting account settings.
+
+        https://green-api.com/en/docs/api/account/SetSettings/
+        """
 
         return self.api.request(
             "POST", (
@@ -47,7 +55,11 @@ class Account:
         )
 
     def getStateInstance(self) -> Response:
-        """The method is aimed for getting the account state."""
+        """
+        The method is aimed for getting the account state.
+
+        https://green-api.com/en/docs/api/account/GetStateInstance/
+        """
 
         return self.api.request(
             "GET", (
@@ -60,6 +72,8 @@ class Account:
         """
         The method is aimed for getting the status of the account
         instance socket connection with WhatsApp.
+
+        https://green-api.com/en/docs/api/account/GetStatusInstance/
         """
 
         return self.api.request(
@@ -70,7 +84,11 @@ class Account:
         )
 
     def reboot(self) -> Response:
-        """The method is aimed for rebooting an account."""
+        """
+        The method is aimed for rebooting an account.
+
+        https://green-api.com/en/docs/api/account/Reboot/
+        """
 
         return self.api.request(
             "GET", (
@@ -79,7 +97,11 @@ class Account:
         )
 
     def logout(self) -> Response:
-        """The method is aimed for logging out an account."""
+        """
+        The method is aimed for logging out an account.
+
+        https://green-api.com/en/docs/api/account/Logout/
+        """
 
         return self.api.request(
             "GET", (
@@ -88,14 +110,22 @@ class Account:
         )
 
     def qr(self) -> Response:
-        """The method is aimed for getting QR code."""
+        """
+        The method is aimed for getting QR code.
+
+        https://green-api.com/en/docs/api/account/QR/
+        """
 
         return self.api.request(
             "GET", "{{host}}/waInstance{{idInstance}}/qr/{{apiTokenInstance}}"
         )
 
     def setProfilePicture(self, path: str) -> Response:
-        """The method is aimed for setting an account picture."""
+        """
+        The method is aimed for setting an account picture.
+
+        https://green-api.com/en/docs/api/account/SetProfilePicture/
+        """
 
         file_name = Path(path).name
         files = {"file": (file_name, open(path, "rb"), "image/jpeg")}

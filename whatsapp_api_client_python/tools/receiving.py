@@ -14,6 +14,8 @@ class Receiving:
         """
         The method is aimed for receiving one incoming notification
         from the notifications queue.
+
+        https://green-api.com/en/docs/api/receiving/technology-http-api/ReceiveNotification/
         """
 
         return self.api.request(
@@ -27,6 +29,8 @@ class Receiving:
         """
         The method is aimed for deleting an incoming notification from
         the notification queue.
+
+        https://green-api.com/en/docs/api/receiving/technology-http-api/DeleteNotification/
         """
 
         url = (
@@ -39,6 +43,8 @@ class Receiving:
     def downloadFile(self, chatId: str, idMessage: str) -> Response:
         """
         The method is aimed for downloading incoming and outgoing files.
+
+        https://green-api.com/en/docs/api/receiving/files/DownloadFile/
         """
 
         request_body = locals()

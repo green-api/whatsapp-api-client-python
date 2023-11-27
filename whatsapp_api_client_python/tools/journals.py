@@ -13,7 +13,11 @@ class Journals:
     def getChatHistory(
             self, chatId: str, count: Optional[int] = None
     ) -> Response:
-        """The method returns the chat message history."""
+        """
+        The method returns the chat message history.
+
+        https://green-api.com/en/docs/api/journals/GetChatHistory/
+        """
 
         request_body = locals()
         if count is None:
@@ -28,7 +32,11 @@ class Journals:
         )
 
     def getMessage(self, chatId: str, idMessage: str) -> Response:
-        """The method returns the chat message."""
+        """
+        The method returns the chat message.
+
+        https://green-api.com/en/docs/api/journals/GetMessage/
+        """
 
         request_body = locals()
         request_body.pop("self")
@@ -43,6 +51,8 @@ class Journals:
     def lastIncomingMessages(self, minutes: Optional[int] = None) -> Response:
         """
         The method returns the last incoming messages of the account.
+
+        https://green-api.com/en/docs/api/journals/LastIncomingMessages/
         """
 
         request_body = None
@@ -59,6 +69,8 @@ class Journals:
     def lastOutgoingMessages(self, minutes: Optional[int] = None) -> Response:
         """
         The method returns the last outgoing messages of the account.
+
+        https://green-api.com/en/docs/api/journals/LastOutgoingMessages/
         """
 
         request_body = None

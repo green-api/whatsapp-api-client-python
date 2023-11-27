@@ -14,6 +14,8 @@ class Queues:
         """
         The method is aimed for getting a list of messages in the queue
         to be sent.
+
+        https://green-api.com/en/docs/api/queues/ShowMessagesQueue/
         """
 
         return self.api.request(
@@ -27,6 +29,8 @@ class Queues:
         """
         The method is aimed for clearing the queue of messages to be
         sent.
+
+        https://green-api.com/en/docs/api/queues/ClearMessagesQueue/
         """
 
         return self.api.request(
