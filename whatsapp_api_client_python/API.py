@@ -136,7 +136,10 @@ class GreenApi:
     def __prepare_logger(self) -> None:
         handler = logging.StreamHandler()
         handler.setFormatter(logging.Formatter(
-            "%(name)s:%(levelname)s:%(message)s"
+            (
+                "%(asctime)s:%(name)s:"
+                "%(levelname)s:%(message)s"
+            ), datefmt="%Y-%m-%d %H:%M:%S"
         ))
 
         self.logger.addHandler(handler)
