@@ -109,8 +109,9 @@ class Account:
 
     def getAuthorizationCode(self, phoneNumber: int) -> Response:
         """
-        The method is designed to authorize instance by phone
-        number.
+        The method is designed to authorize an instance by phone number.
+
+        https://green-api.com/en/docs/api/account/GetAuthorizationCode/
         """
 
         request_body = locals()
@@ -119,6 +120,6 @@ class Account:
         return self.api.request(
             "POST", (
                 "{{host}}/waInstance{{idInstance}}/"
-                "GetAuthorizationCode/{{apiTokenInstance}}"
+                "getAuthorizationCode/{{apiTokenInstance}}"
             ), request_body
         )
