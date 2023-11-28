@@ -136,3 +136,20 @@ class Account:
                 "setProfilePicture/{{apiTokenInstance}}"
             ), files=files
         )
+
+    def getAuthorizationCode(self, phoneNumber: int) -> Response:
+        """
+        The method is designed to authorize an instance by phone number.
+
+        https://green-api.com/en/docs/api/account/GetAuthorizationCode/
+        """
+
+        request_body = locals()
+        request_body.pop("self")
+
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "getAuthorizationCode/{{apiTokenInstance}}"
+            ), request_body
+        )
