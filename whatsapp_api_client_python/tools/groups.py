@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import List
 
-from base import BaseCategory
+from .base import BaseCategory
 from ..response import Response
 
 
@@ -13,7 +13,7 @@ class Groups(BaseCategory):
         https://green-api.com/en/docs/api/groups/CreateGroup/
         """
 
-        request_body = self.__handle_parameters(locals())
+        request_body = self._handle_parameters(locals())
 
         return self.api.request(
             "POST", (
@@ -29,7 +29,7 @@ class Groups(BaseCategory):
         https://green-api.com/en/docs/api/groups/UpdateGroupName/
         """
 
-        request_body = self.__handle_parameters(locals())
+        request_body = self._handle_parameters(locals())
 
         return self.api.request(
             "POST", (
@@ -45,7 +45,7 @@ class Groups(BaseCategory):
         https://green-api.com/en/docs/api/groups/GetGroupData/
         """
 
-        request_body = self.__handle_parameters(locals())
+        request_body = self._handle_parameters(locals())
 
         return self.api.request(
             "POST", (
@@ -63,7 +63,7 @@ class Groups(BaseCategory):
         https://green-api.com/en/docs/api/groups/AddGroupParticipant/
         """
 
-        request_body = self.__handle_parameters(locals())
+        request_body = self._handle_parameters(locals())
 
         return self.api.request(
             "POST", (
@@ -81,7 +81,7 @@ class Groups(BaseCategory):
         https://green-api.com/en/docs/api/groups/RemoveGroupParticipant/
         """
 
-        request_body = self.__handle_parameters(locals())
+        request_body = self._handle_parameters(locals())
 
         return self.api.request(
             "POST", (
@@ -97,7 +97,7 @@ class Groups(BaseCategory):
         https://green-api.com/en/docs/api/groups/SetGroupAdmin/
         """
 
-        request_body = self.__handle_parameters(locals())
+        request_body = self._handle_parameters(locals())
 
         return self.api.request(
             "POST", (
@@ -114,7 +114,7 @@ class Groups(BaseCategory):
         https://green-api.com/en/docs/api/groups/RemoveAdmin/
         """
 
-        request_body = self.__handle_parameters(locals())
+        request_body = self._handle_parameters(locals())
 
         return self.api.request(
             "POST", (
@@ -130,7 +130,7 @@ class Groups(BaseCategory):
         https://green-api.com/en/docs/api/groups/SetGroupPicture/
         """
 
-        request_body = self.__handle_parameters(locals())
+        request_body = self._handle_parameters(locals())
 
         file_name = Path(path).name
         files = {"file": (file_name, open(path, "rb"), "image/jpeg")}
@@ -151,7 +151,7 @@ class Groups(BaseCategory):
         https://green-api.com/en/docs/api/groups/LeaveGroup/
         """
 
-        request_body = self.__handle_parameters(locals())
+        request_body = self._handle_parameters(locals())
 
         return self.api.request(
             "POST", (

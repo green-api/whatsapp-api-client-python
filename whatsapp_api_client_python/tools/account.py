@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Dict, Union
 
-from base import BaseCategory
+from .base import BaseCategory
 from ..response import Response
 
 

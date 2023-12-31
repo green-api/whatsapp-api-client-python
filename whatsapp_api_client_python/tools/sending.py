@@ -2,7 +2,7 @@ import mimetypes
 import pathlib
 from typing import Dict, List, Optional, Union
 
-from base import BaseCategory
+from .base import BaseCategory
 from ..response import Response
 
 
@@ -22,7 +22,7 @@ class Sending(BaseCategory):
         https://green-api.com/en/docs/api/sending/SendMessage/
         """
 
-        request_body = self.__handle_parameters(locals())
+        request_body = self._handle_parameters(locals())
 
         return self.api.request(
             "POST", (
@@ -47,7 +47,7 @@ class Sending(BaseCategory):
         https://green-api.com/en/docs/api/sending/SendButtons/
         """
 
-        request_body = self.__handle_parameters(locals())
+        request_body = self._handle_parameters(locals())
 
         return self.api.request(
             "POST", (
@@ -72,7 +72,7 @@ class Sending(BaseCategory):
         https://green-api.com/en/docs/api/sending/SendTemplateButtons/
         """
 
-        request_body = self.__handle_parameters(locals())
+        request_body = self._handle_parameters(locals())
 
         return self.api.request(
             "POST", (
@@ -99,7 +99,7 @@ class Sending(BaseCategory):
         https://green-api.com/en/docs/api/sending/SendListMessage/
         """
 
-        request_body = self.__handle_parameters(locals())
+        request_body = self._handle_parameters(locals())
 
         return self.api.request(
             "POST", (
@@ -123,7 +123,7 @@ class Sending(BaseCategory):
         https://green-api.com/en/docs/api/sending/SendFileByUpload/
         """
 
-        request_body = self.__handle_parameters(locals())
+        request_body = self._handle_parameters(locals())
 
         file_name = pathlib.Path(path).name
         content_type = mimetypes.guess_type(file_name)[0]
@@ -154,7 +154,7 @@ class Sending(BaseCategory):
         https://green-api.com/en/docs/api/sending/SendFileByUrl/
         """
 
-        request_body = self.__handle_parameters(locals())
+        request_body = self._handle_parameters(locals())
 
         return self.api.request(
             "POST", (
@@ -200,7 +200,7 @@ class Sending(BaseCategory):
         https://green-api.com/en/docs/api/sending/SendLocation/
         """
 
-        request_body = self.__handle_parameters(locals())
+        request_body = self._handle_parameters(locals())
 
         return self.api.request(
             "POST", (
@@ -221,7 +221,7 @@ class Sending(BaseCategory):
         https://green-api.com/en/docs/api/sending/SendContact/
         """
 
-        request_body = self.__handle_parameters(locals())
+        request_body = self._handle_parameters(locals())
 
         return self.api.request(
             "POST", (
@@ -245,7 +245,7 @@ class Sending(BaseCategory):
         https://green-api.com/en/docs/api/sending/SendLink/
         """
 
-        request_body = self.__handle_parameters(locals())
+        request_body = self._handle_parameters(locals())
 
         return self.api.request(
             "POST", (
@@ -267,7 +267,7 @@ class Sending(BaseCategory):
         https://green-api.com/en/docs/api/sending/ForwardMessages/
         """
 
-        request_body = self.__handle_parameters(locals())
+        request_body = self._handle_parameters(locals())
 
         return self.api.request(
             "POST", (
@@ -291,7 +291,7 @@ class Sending(BaseCategory):
         https://green-api.com/en/docs/api/sending/SendPoll/
         """
 
-        request_body = self.__handle_parameters(locals())
+        request_body = self._handle_parameters(locals())
 
         return self.api.request(
             "POST", (

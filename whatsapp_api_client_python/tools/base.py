@@ -9,7 +9,7 @@ class BaseCategory:
         self.api = api
 
     @classmethod
-    def __handle_parameters(cls, parameters: dict) -> dict:
+    def _handle_parameters(cls, parameters: dict) -> dict:
         handled_parameters = parameters.copy()
 
         handled_parameters.pop("self")

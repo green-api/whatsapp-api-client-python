@@ -1,6 +1,6 @@
 from typing import Optional
 
-from base import BaseCategory
+from .base import BaseCategory
 from ..response import Response
 
 
