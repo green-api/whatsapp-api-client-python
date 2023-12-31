@@ -1,15 +1,8 @@
-from typing import TYPE_CHECKING
-
+from base import BaseCategory
 from ..response import Response
 
-if TYPE_CHECKING:
-    from ..API import GreenApi
 
-
-class Queues:
-    def __init__(self, api: "GreenApi"):
-        self.api = api
-
+class Queues(BaseCategory):
     def showMessagesQueue(self) -> Response:
         """
         The method is aimed for getting a list of messages in the queue
@@ -39,3 +32,6 @@ class Queues:
                 "clearMessagesQueue/{{apiTokenInstance}}"
             )
         )
+
+
+__all__ = ["Queues"]

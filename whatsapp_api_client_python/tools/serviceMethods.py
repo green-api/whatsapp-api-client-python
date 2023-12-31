@@ -1,15 +1,10 @@
-from typing import Optional, TYPE_CHECKING
+from typing import Optional
 
+from base import BaseCategory
 from ..response import Response
 
-if TYPE_CHECKING:
-    from ..API import GreenApi
 
-
-class ServiceMethods:
-    def __init__(self, api: "GreenApi"):
-        self.api = api
-
+class ServiceMethods(BaseCategory):
     def checkWhatsapp(self, phoneNumber: int) -> Response:
         """
         The method checks WhatsApp account availability on a phone
@@ -149,3 +144,6 @@ class ServiceMethods:
                 "setDisappearingChat/{{apiTokenInstance}}"
             ), request_body
         )
+
+
+__all__ = ["ServiceMethods"]

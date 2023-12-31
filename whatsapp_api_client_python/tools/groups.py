@@ -1,16 +1,11 @@
 from pathlib import Path
-from typing import List, TYPE_CHECKING
+from typing import List
 
+from base import BaseCategory
 from ..response import Response
 
-if TYPE_CHECKING:
-    from ..API import GreenApi
 
-
-class Groups:
-    def __init__(self, api: "GreenApi"):
-        self.api = api
-
+class Groups(BaseCategory):
     def createGroup(self, groupName: str, chatIds: List[str]) -> Response:
         """
         The method is aimed for creating a group chat.
@@ -165,14 +160,5 @@ class Groups:
             ), request_body
         )
 
-    @classmethod
-    def __handle_parameters(cls, parameters: dict) -> dict:
-        handled_parameters = parameters.copy()
 
-        handled_parameters.pop("self")
-
-        for key, value in parameters.items():
-            if value is None:
-                handled_parameters.pop(key)
-
-        return handled_parameters
+__all__ = ["Groups"]

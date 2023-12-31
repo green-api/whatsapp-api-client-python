@@ -1,15 +1,8 @@
-from typing import TYPE_CHECKING
-
+from base import BaseCategory
 from ..response import Response
 
-if TYPE_CHECKING:
-    from ..API import GreenApi
 
-
-class Device:
-    def __init__(self, api: "GreenApi"):
-        self.api = api
-
+class Device(BaseCategory):
     def getDeviceInfo(self) -> Response:
         """
         The method is aimed for getting information about the device
@@ -24,3 +17,6 @@ class Device:
                 "getDeviceInfo/{{apiTokenInstance}}"
             )
         )
+
+
+__all__ = ["Device"]

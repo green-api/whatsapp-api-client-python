@@ -1,17 +1,12 @@
 import mimetypes
 import pathlib
-from typing import Dict, List, Optional, TYPE_CHECKING, Union
+from typing import Dict, List, Optional, Union
 
+from base import BaseCategory
 from ..response import Response
 
-if TYPE_CHECKING:
-    from ..API import GreenApi
 
-
-class Sending:
-    def __init__(self, api: "GreenApi"):
-        self.api = api
-
+class Sending(BaseCategory):
     def sendMessage(
             self,
             chatId: str,
@@ -305,14 +300,5 @@ class Sending:
             ), request_body
         )
 
-    @classmethod
-    def __handle_parameters(cls, parameters: dict) -> dict:
-        handled_parameters = parameters.copy()
 
-        handled_parameters.pop("self")
-
-        for key, value in parameters.items():
-            if value is None:
-                handled_parameters.pop(key)
-
-        return handled_parameters
+__all__ = ["Sending"]

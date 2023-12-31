@@ -1,15 +1,10 @@
-from typing import Optional, TYPE_CHECKING
+from typing import Optional
 
+from base import BaseCategory
 from ..response import Response
 
-if TYPE_CHECKING:
-    from ..API import GreenApi
 
-
-class Marking:
-    def __init__(self, api: "GreenApi"):
-        self.api = api
-
+class Marking(BaseCategory):
     def readChat(
             self, chatId: str, idMessage: Optional[str] = None
     ) -> Response:
@@ -30,3 +25,6 @@ class Marking:
                 "readChat/{{apiTokenInstance}}"
             ), request_body
         )
+
+
+__all__ = ["Marking"]

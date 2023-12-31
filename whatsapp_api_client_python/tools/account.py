@@ -1,16 +1,11 @@
 from pathlib import Path
-from typing import Dict, TYPE_CHECKING, Union
+from typing import Dict, Union
 
+from base import BaseCategory
 from ..response import Response
 
-if TYPE_CHECKING:
-    from ..API import GreenApi
 
-
-class Account:
-    def __init__(self, api: "GreenApi"):
-        self.api = api
-
+class Account(BaseCategory):
     def getSettings(self) -> Response:
         """
         The method is aimed for getting the current account settings.
@@ -153,3 +148,6 @@ class Account:
                 "getAuthorizationCode/{{apiTokenInstance}}"
             ), request_body
         )
+
+
+__all__ = ["Account"]

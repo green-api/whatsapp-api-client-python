@@ -1,15 +1,8 @@
-from typing import TYPE_CHECKING
-
+from base import BaseCategory
 from ..response import Response
 
-if TYPE_CHECKING:
-    from ..API import GreenApi
 
-
-class Receiving:
-    def __init__(self, api: "GreenApi"):
-        self.api = api
-
+class Receiving(BaseCategory):
     def receiveNotification(self) -> Response:
         """
         The method is aimed for receiving one incoming notification
@@ -56,3 +49,6 @@ class Receiving:
                 "downloadFile/{{apiTokenInstance}}"
             ), request_body
         )
+
+
+__all__ = ["Receiving"]

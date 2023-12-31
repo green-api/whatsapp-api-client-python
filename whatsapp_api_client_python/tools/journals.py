@@ -1,15 +1,10 @@
-from typing import Optional, TYPE_CHECKING
+from typing import Optional
 
+from base import BaseCategory
 from ..response import Response
 
-if TYPE_CHECKING:
-    from ..API import GreenApi
 
-
-class Journals:
-    def __init__(self, api: "GreenApi"):
-        self.api = api
-
+class Journals(BaseCategory):
     def getChatHistory(
             self, chatId: str, count: Optional[int] = None
     ) -> Response:
@@ -83,3 +78,6 @@ class Journals:
                 "lastOutgoingMessages/{{apiTokenInstance}}"
             ), request_body
         )
+
+
+__all__ = ["Journals"]
