@@ -32,6 +32,7 @@ class GreenApi:
             apiTokenInstance: str,
             debug_mode: bool = False,
             raise_errors: bool = False,
+            create_models: bool = False,
             host: str = "https://api.green-api.com",
             media: str = "https://media.green-api.com"
     ):
@@ -39,6 +40,7 @@ class GreenApi:
         self.media = media
         self.debug_mode = debug_mode
         self.raise_errors = raise_errors
+        self.create_models = create_models
 
         self.idInstance = idInstance
         self.apiTokenInstance = apiTokenInstance
@@ -88,11 +90,13 @@ class GreenApi:
                 raise GreenAPIError(error_message)
             self.logger.log(logging.CRITICAL, error_message)
 
-            return GreenAPIResponse(None, error_message)
+            return GreenAPIResponse(None, error_message, self.create_models)
 
         self.__handle_response(response)
 
-        return GreenAPIResponse(response.status_code, response.text)
+        return GreenAPIResponse(
+            response.status_code, response.text, self.create_models
+        )
 
     def raw_request(self, **arguments: Any) -> GreenAPIResponse:
         try:
@@ -104,11 +108,13 @@ class GreenApi:
                 raise GreenAPIError(error_message)
             self.logger.log(logging.CRITICAL, error_message)
 
-            return GreenAPIResponse(None, error_message)
+            return GreenAPIResponse(None, error_message, self.create_models)
 
         self.__handle_response(response)
 
-        return GreenAPIResponse(response.status_code, response.text)
+        return GreenAPIResponse(
+            response.status_code, response.text, self.create_models
+        )
 
     def __handle_response(self, response: Response) -> Optional[NoReturn]:
         status_code = response.status_code
