@@ -119,9 +119,12 @@ class GreenApi:
     def __handle_response(self, response: Response) -> Optional[NoReturn]:
         status_code = response.status_code
         if status_code != 200 or self.debug_mode:
-            data = json.dumps(
-                json.loads(response.text), ensure_ascii=False, indent=4
-            )
+            try:
+                data = json.dumps(
+                    json.loads(response.text), ensure_ascii=False, indent=4
+                )
+            except json.JSONDecodeError:
+                data = response.text
 
             if status_code != 200:
                 error_message = (
