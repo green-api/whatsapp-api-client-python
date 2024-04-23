@@ -16,7 +16,8 @@ from .tools import (
     receiving,
     sending,
     serviceMethods,
-    webhooks
+    webhooks,
+    statuses
 )
 
 
@@ -56,6 +57,7 @@ class GreenApi:
         self.sending = sending.Sending(self)
         self.serviceMethods = serviceMethods.ServiceMethods(self)
         self.webhooks = webhooks.Webhooks(self)
+        self.statuses = statuses.Statuses(self)
 
         self.logger = logging.getLogger("whatsapp-api-client-python")
         self.__prepare_logger()
