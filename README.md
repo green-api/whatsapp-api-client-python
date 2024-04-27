@@ -176,9 +176,11 @@ https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sen
 ).
 
 ```
-response = greenAPI.statuses.sendTextStatus("I sent this status using Green Api Python SDK!", 
-                                            "#54c774", 
-                                            "NORICAN_REGULAR")
+response = greenAPI.statuses.sendTextStatus(
+    "I sent this status using Green Api Python SDK!", 
+    "#54c774", 
+    "NORICAN_REGULAR"
+)
 
 print(response.data)
 ```

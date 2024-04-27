@@ -9,11 +9,13 @@ class Statuses:
     def __init__(self, api: "GreenApi"):
         self.api = api
 
-    def sendTextStatus(self,
+    def sendTextStatus(
+            self,
             message: str,
             backgroundColor: Optional[str] = None,
             font: Optional[str] = None,
-            participants: Optional[List[str]] = None) -> Response:
+            participants: Optional[List[str]] = None
+    ) -> Response:
         """
         The method is aimed for sending a text status.
 
@@ -29,11 +31,13 @@ class Statuses:
             ), request_body
         )
     
-    def sendVoiceStatus(self,
+    def sendVoiceStatus(
+            self,
             urlFile: str,
             fileName: str,
             backgroundColor: Optional[str],
-            participants: Optional[List[str]]) -> Response:
+            participants: Optional[List[str]]
+    ) -> Response:
         """
         The method is aimed for sending a voice status.
 
@@ -49,11 +53,13 @@ class Statuses:
             ), request_body
         )
     
-    def sendMediaStatus(self,
+    def sendMediaStatus(
+            self,
             urlFile: str,
             fileName: str,
             caption: Optional[str],
-            participants: Optional[List[str]]) -> Response: 
+            participants: Optional[List[str]]
+    ) -> Response: 
         """
         The method is aimed for sending a pictures or video status.
 
@@ -69,8 +75,10 @@ class Statuses:
             ), request_body
         )
     
-    def deleteStatus(self,
-            idMessage: str) -> Response:
+    def deleteStatus(
+            self,
+            idMessage: str
+    ) -> Response:
         """
         The method is aimed for deleting a certain status.
 
@@ -86,8 +94,10 @@ class Statuses:
             ), request_body
         )
     
-    def getStatusStatistic(self,
-            idMessage: str) -> Response:
+    def getStatusStatistic(
+            self,
+            idMessage: str
+    ) -> Response:
         """
         The method returns an array of recipients marked sent/delivered/read for a given status.
 
@@ -100,8 +110,10 @@ class Statuses:
 
         return self.api.request("GET", f"{url}?idMessage={idMessage}")
     
-    def getIncomingStatuses(self,
-            minutes: Optional[int]=None) -> Response:
+    def getIncomingStatuses(
+            self,
+            minutes: Optional[int]=None
+    ) -> Response:
         """
         The method returns the incoming statuses of the account
         If no argument passed, the incoming statuses for the past 24 hours are returned.
@@ -118,8 +130,10 @@ class Statuses:
         else:
             return self.api.request("GET", f"{url}")
         
-    def getOutgoingStatuses(self,
-            minutes: Optional[int]=None) -> Response:
+    def getOutgoingStatuses(
+            self,
+            minutes: Optional[int]=None
+    ) -> Response:
         """
         The method returns the outgoing statuses of the account
         If no argument passed, the outgoing statuses for the past 24 hours are returned.
