@@ -35,8 +35,8 @@ class Statuses:
             self,
             urlFile: str,
             fileName: str,
-            backgroundColor: Optional[str],
-            participants: Optional[List[str]]
+            backgroundColor: Optional[str] = None,
+            participants: Optional[List[str]] = None
     ) -> Response:
         """
         The method is aimed for sending a voice status.
@@ -57,8 +57,8 @@ class Statuses:
             self,
             urlFile: str,
             fileName: str,
-            caption: Optional[str],
-            participants: Optional[List[str]]
+            caption: Optional[str] = None,
+            participants: Optional[List[str]] = None
     ) -> Response: 
         """
         The method is aimed for sending a pictures or video status.
@@ -112,7 +112,7 @@ class Statuses:
     
     def getIncomingStatuses(
             self,
-            minutes: Optional[int]=None
+            minutes: Optional[int] = None
     ) -> Response:
         """
         The method returns the incoming statuses of the account
@@ -132,7 +132,7 @@ class Statuses:
         
     def getOutgoingStatuses(
             self,
-            minutes: Optional[int]=None
+            minutes: Optional[int] = None
     ) -> Response:
         """
         The method returns the outgoing statuses of the account
