@@ -5,7 +5,7 @@ with open("README.md", encoding="UTF-8") as file:
 
 setup(
     name="whatsapp-api-client-python",
-    version="0.0.45",
+    version="0.0.46",
     description=(
         "This library helps you easily create"
         " a Python application with WhatsApp API."
