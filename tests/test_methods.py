@@ -21,6 +21,7 @@ class MethodsTestCase(unittest.TestCase):
             *self.account_methods,
             *self.device_methods,
             *self.group_methods,
+            *self.status_methods,
             *self.log_methods,
             *self.queue_methods,
             *self.read_mark_methods,
@@ -66,6 +67,18 @@ class MethodsTestCase(unittest.TestCase):
             api.groups.removeAdmin("", ""),
             api.groups.setGroupPicture("", path),
             api.groups.leaveGroup("")
+        ]
+
+    @property
+    def status_methods(self) -> typing.List[Response]:
+        return [
+            api.statuses.sendTextStatus(""),
+            api.statuses.sendVoiceStatus("", ""),
+            api.statuses.sendMediaStatus("", ""),
+            api.statuses.deleteStatus(""),
+            api.statuses.getStatusStatistic(""),
+            api.statuses.getIncomingStatuses(),
+            api.statuses.getOutgoingStatuses()
         ]
 
     @property
