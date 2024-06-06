@@ -6,7 +6,10 @@ greenAPI = API.GreenAPI(
 
 
 def main():
-    response = greenAPI.statuses.sendTextStatus("I sent this status using Green Api Python SDK!", "#54c774", "NORICAN_REGULAR")
+    response = greenAPI.statuses.sendTextStatus(
+    "I sent this status using Green Api Python SDK!", 
+    "#54c774", 
+    "NORICAN_REGULAR")
 
     print(response.data)
 

@@ -5,6 +5,7 @@ from ..response import Response
 if TYPE_CHECKING:
     from ..API import GreenApi
 
+
 class Statuses:
     def __init__(self, api: "GreenApi"):
         self.api = api
@@ -30,7 +31,7 @@ class Statuses:
                 "sendTextStatus/{{apiTokenInstance}}"
             ), request_body
         )
-    
+
     def sendVoiceStatus(
             self,
             urlFile: str,
@@ -52,14 +53,14 @@ class Statuses:
                 "sendVoiceStatus/{{apiTokenInstance}}"
             ), request_body
         )
-    
+
     def sendMediaStatus(
             self,
             urlFile: str,
             fileName: str,
             caption: Optional[str] = None,
             participants: Optional[List[str]] = None
-    ) -> Response: 
+    ) -> Response:
         """
         The method is aimed for sending a pictures or video status.
 
@@ -74,7 +75,7 @@ class Statuses:
                 "sendMediaStatus/{{apiTokenInstance}}"
             ), request_body
         )
-    
+
     def deleteStatus(
             self,
             idMessage: str
@@ -93,7 +94,7 @@ class Statuses:
                 "deleteStatus/{{apiTokenInstance}}"
             ), request_body
         )
-    
+
     def getStatusStatistic(
             self,
             idMessage: str
@@ -109,7 +110,7 @@ class Statuses:
         )
 
         return self.api.request("GET", f"{url}?idMessage={idMessage}")
-    
+
     def getIncomingStatuses(
             self,
             minutes: Optional[int] = None
@@ -129,7 +130,7 @@ class Statuses:
             return self.api.request("GET", f"{url}?minutes={minutes}")
         else:
             return self.api.request("GET", f"{url}")
-        
+
     def getOutgoingStatuses(
             self,
             minutes: Optional[int] = None
