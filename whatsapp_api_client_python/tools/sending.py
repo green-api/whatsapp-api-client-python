@@ -187,7 +187,8 @@ class Sending:
                     f"uploadFile/{self.api.apiTokenInstance}"
                 ),
                 data=file.read(),
-                headers={"Content-Type": content_type}
+                headers={"Content-Type": content_type,
+                         "GA-Filename": file_name}
             )
 
     def sendLocation(
