@@ -75,11 +75,11 @@ class GreenApi:
         try:
             if not files:
                 response = self.session.request(
-                    method=method, url=url, json=payload
+                    method=method, url=url, json=payload, timeout=180
                 )
             else:
                 response = self.session.request(
-                    method=method, url=url, data=payload, files=files
+                    method=method, url=url, data=payload, files=files, timeout=10800
                 )
         except Exception as error:
             error_message = f"Request was failed with error: {error}."
