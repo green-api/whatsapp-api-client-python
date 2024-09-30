@@ -33,12 +33,18 @@ class GreenApi:
             debug_mode: bool = False,
             raise_errors: bool = False,
             host: str = "https://api.green-api.com",
-            media: str = "https://media.green-api.com"
+            media: str = "https://media.green-api.com",
+            host_timeout: float = 180, # sec per retry
+            media_timeout: float = 10800, # sec per retry
     ):
         self.host = host
         self.media = media
         self.debug_mode = debug_mode
         self.raise_errors = raise_errors
+
+        # Change default values in init() if required
+        self.host_timeout = host_timeout
+        self.media_timeout = media_timeout
 
         self.idInstance = idInstance
         self.apiTokenInstance = apiTokenInstance
@@ -75,11 +81,11 @@ class GreenApi:
         try:
             if not files:
                 response = self.session.request(
-                    method=method, url=url, json=payload, timeout=180
+                    method=method, url=url, json=payload, timeout=self.host_timeout
                 )
             else:
                 response = self.session.request(
-                    method=method, url=url, data=payload, files=files, timeout=10800
+                    method=method, url=url, data=payload, files=files, timeout=self.media_timeout
                 )
         except Exception as error:
             error_message = f"Request was failed with error: {error}."
