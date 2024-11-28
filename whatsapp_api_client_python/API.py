@@ -78,14 +78,18 @@ class GreenApi:
         url = url.replace("{{idInstance}}", self.idInstance)
         url = url.replace("{{apiTokenInstance}}", self.apiTokenInstance)
 
+        headers = {
+            'User-Agent': 'GREEN-API_SDK_PY/1.0'
+        }
+
         try:
             if not files:
                 response = self.session.request(
-                    method=method, url=url, json=payload, timeout=self.host_timeout
+                    method=method, url=url, json=payload, timeout=self.host_timeout, headers=headers
                 )
             else:
                 response = self.session.request(
-                    method=method, url=url, data=payload, files=files, timeout=self.media_timeout
+                    method=method, url=url, data=payload, files=files, timeout=self.media_timeout, headers=headers
                 )
         except Exception as error:
             error_message = f"Request was failed with error: {error}."
