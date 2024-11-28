@@ -94,6 +94,23 @@ class ServiceMethods:
             ), request_body
         )
 
+    def editMessage(self, chatId: str, idMessage: str, message: str) -> Response:
+        """
+        The method edits a message in chat.
+
+        https://green-api.com/en/docs/api/service/editMessage/
+        """
+
+        request_body = locals()
+        request_body.pop("self")
+
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "editMessage/{{apiTokenInstance}}"
+            ), request_body
+        )
+
     def archiveChat(self, chatId: str) -> Response:
         """
         The method archives a chat.
