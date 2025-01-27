@@ -55,15 +55,15 @@ class Journals:
         https://green-api.com/en/docs/api/journals/LastIncomingMessages/
         """
 
-        request_body = None
+        append_minutes = ""
         if minutes is not None:
-            request_body = {"minutes": minutes}
+            append_minutes = f"?minutes={minutes}"
 
         return self.api.request(
             "GET", (
                 "{{host}}/waInstance{{idInstance}}/"
-                "lastIncomingMessages/{{apiTokenInstance}}"
-            ), request_body
+                "lastIncomingMessages/{{apiTokenInstance}}"+append_minutes
+            )
         )
 
     def lastOutgoingMessages(self, minutes: Optional[int] = None) -> Response:
@@ -73,13 +73,13 @@ class Journals:
         https://green-api.com/en/docs/api/journals/LastOutgoingMessages/
         """
 
-        request_body = None
+        append_minutes = ""
         if minutes is not None:
-            request_body = {"minutes": minutes}
+            append_minutes = f"?minutes={minutes}"
 
         return self.api.request(
             "GET", (
                 "{{host}}/waInstance{{idInstance}}/"
-                "lastOutgoingMessages/{{apiTokenInstance}}"
-            ), request_body
+                "lastOutgoingMessages/{{apiTokenInstance}}"+append_minutes
+            )
         )
