@@ -77,7 +77,7 @@ class ServiceMethods:
             ), request_body
         )
 
-    def deleteMessage(self, chatId: str, idMessage: str) -> Response:
+    def deleteMessage(self, chatId: str, idMessage: str, onlySenderDelete: Optional[bool] = None) -> Response:
         """
         The method deletes a message from a chat.
 
@@ -85,7 +85,10 @@ class ServiceMethods:
         """
 
         request_body = locals()
+        if onlySenderDelete is None:
+            request_body.pop("onlySenderDelete")
         request_body.pop("self")
+        print(request_body)
 
         return self.api.request(
             "POST", (

@@ -10,6 +10,9 @@ class Response:
     def __init__(self, code: Optional[int], text: str):
         self.code = code
         if self.code == 200:
-            self.data = loads(text)
+            try:
+                self.data = loads(text)
+            except:
+                self.data = "[]"
         else:
             self.error = text
