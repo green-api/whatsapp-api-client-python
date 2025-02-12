@@ -12,7 +12,7 @@ class Response:
         if self.code == 200:
             try:
                 self.data = loads(text)
-            except:
+            except Exception:
                 self.data = "[]"
         else:
             self.error = text
