@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional, TYPE_CHECKING, Union
+from typing import Optional, TYPE_CHECKING
 
 from ..response import Response
 
@@ -20,7 +20,7 @@ class Partner:
                 "{{host}}/partner/"
                 "getInstances/{{partnerToken}}"
             ), request_body
-        ) ### GOOD
+        )
     
     def createInstance(
             self,
@@ -51,7 +51,7 @@ class Partner:
                 "{{host}}/partner/"
                 "createInstance/{{partnerToken}}"
             ), request_body
-        )   ### NOT FINISHED!!!!
+        )
     
     def deleteInstanceAccount(
             self,
@@ -65,7 +65,7 @@ class Partner:
                 "{{host}}/partner/"
                 "deleteInstanceAccount/{{partnerToken}}"
             ), request_body
-        )        ###GOOD
+        )
 
     @classmethod
     def __handle_parameters(cls, parameters: dict) -> dict:
