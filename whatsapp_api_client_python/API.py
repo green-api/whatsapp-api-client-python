@@ -16,7 +16,8 @@ from .tools import (
     receiving,
     sending,
     serviceMethods,
-    webhooks
+    webhooks,
+    partner
 )
 
 
@@ -78,18 +79,14 @@ class GreenApi:
         url = url.replace("{{idInstance}}", self.idInstance)
         url = url.replace("{{apiTokenInstance}}", self.apiTokenInstance)
 
-        headers = {
-            'User-Agent': 'GREEN-API_SDK_PY/1.0'
-        }
-
         try:
             if not files:
                 response = self.session.request(
-                    method=method, url=url, json=payload, timeout=self.host_timeout, headers=headers
+                    method=method, url=url, json=payload, timeout=self.host_timeout
                 )
             else:
                 response = self.session.request(
-                    method=method, url=url, data=payload, files=files, timeout=self.media_timeout, headers=headers
+                    method=method, url=url, data=payload, files=files, timeout=self.media_timeout
                 )
         except Exception as error:
             error_message = f"Request was failed with error: {error}."
@@ -182,3 +179,43 @@ class GreenAPI(GreenApi):
 
 class GreenAPIError(Exception):
     pass
+
+class GreenApiPartner(GreenApi):
+    def __init__(
+            self,
+            partnerToken: str,
+            email: str = None,
+            debug_mode: bool = False,
+            raise_errors: bool = False,
+            host: str = "https://api.green-api.com",
+            media: str = "https://media.green-api.com",
+            host_timeout: float = 180,
+            media_timeout: float = 10800
+    ):
+
+        super().__init__(
+            idInstance="",
+            apiTokenInstance="",
+            debug_mode=debug_mode,
+            raise_errors=raise_errors,
+            host=host,
+            media=media,
+            host_timeout=host_timeout,
+            media_timeout=media_timeout
+        )
+        
+        self.partnerToken = partnerToken
+        self.email = email
+        self.partner = partner.Partner(self)
+
+    def request(
+            self,
+            method: str,
+            url: str,
+            payload: Optional[dict] = None,
+            files: Optional[dict] = None
+    ) -> GreenAPIResponse:
+
+        url = url.replace("{{partnerToken}}", self.partnerToken)
+
+        return super().request(method, url, payload, files)
