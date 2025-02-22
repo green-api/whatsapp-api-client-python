@@ -79,14 +79,18 @@ class GreenApi:
         url = url.replace("{{idInstance}}", self.idInstance)
         url = url.replace("{{apiTokenInstance}}", self.apiTokenInstance)
 
+        headers = {
+            'User-Agent': 'GREEN-API_SDK_PY/1.0'
+        }
+
         try:
             if not files:
                 response = self.session.request(
-                    method=method, url=url, json=payload, timeout=self.host_timeout
+                    method=method, url=url, json=payload, timeout=self.host_timeout, headers=headers
                 )
             else:
                 response = self.session.request(
-                    method=method, url=url, data=payload, files=files, timeout=self.media_timeout
+                    method=method, url=url, data=payload, files=files, timeout=self.media_timeout, headers=headers
                 )
         except Exception as error:
             error_message = f"Request was failed with error: {error}."
@@ -185,23 +189,13 @@ class GreenApiPartner(GreenApi):
             self,
             partnerToken: str,
             email: str = None,
-            debug_mode: bool = False,
-            raise_errors: bool = False,
-            host: str = "https://api.green-api.com",
-            media: str = "https://media.green-api.com",
-            host_timeout: float = 180,
-            media_timeout: float = 10800
+            host: str = "https://api.green-api.com"
     ):
 
         super().__init__(
             idInstance="",
             apiTokenInstance="",
-            debug_mode=debug_mode,
-            raise_errors=raise_errors,
-            host=host,
-            media=media,
-            host_timeout=host_timeout,
-            media_timeout=media_timeout
+            host=host
         )
         
         self.partnerToken = partnerToken
