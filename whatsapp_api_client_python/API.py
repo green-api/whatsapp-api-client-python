@@ -178,7 +178,6 @@ class GreenApi:
         self.session.mount("http://", HTTPAdapter(max_retries=retry))
         self.session.mount("https://", HTTPAdapter(max_retries=retry))
 
-
 class GreenAPI(GreenApi):
     pass
 

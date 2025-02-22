@@ -44,7 +44,7 @@ class Partner:
         https://green-api.com/en/docs/partners/deleteInstanceAccount/
         """
 
-        request_body = self.handle_parameters(locals())
+        request_body = self.__handle_parameters(locals())
 
         return self.api.request(
             "POST", (
@@ -52,10 +52,15 @@ class Partner:
                 "deleteInstanceAccount/{{partnerToken}}"
             ), request_body
         )
+    
+    @classmethod
+    def __handle_parameters(cls, parameters: dict) -> dict:
+        handled_parameters = parameters.copy()
 
-    def handle_parameters(self, parameters: dict) -> dict:
-        return {
-            key: value 
-            for key, value in parameters.items() 
-            if value is not None and key != "self"
-        }
+        handled_parameters.pop("self")
+
+        for key, value in parameters.items():
+            if value is None:
+                handled_parameters.pop(key)
+
+        return handled_parameters

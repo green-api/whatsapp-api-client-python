@@ -6,13 +6,8 @@ greenAPI = API.GreenAPI(
 
 
 def main():
-    response = greenAPI.statuses.sendTextStatus(
-    "I sent this status using Green Api Python SDK!", 
-    "#54c774", 
-    "NORICAN_REGULAR")
-
+    response = greenAPI.statuses.deleteStatus('BAE54F518532FCB1')
     print(response.data)
-
 
 if __name__ == '__main__':
     main()
