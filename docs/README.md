@@ -177,7 +177,8 @@ print(response.data)
 | Пример создание группы и отправка сообщения в группу | [createGroupAndSendMessage.py](../examples/createGroupAndSendMessage.py) |
 | Пример получения входящих уведомлений                | [receiveNotification.py](../examples/receiveNotification.py)             |
 | Пример отправки сообщения с опросом                  | [sendPoll.py](../examples/sendPoll.py)                                   |
-
+| Пример отправки текстового статуса                  | [sendTextStatus.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/statusMethods/sendTextStatus.py)                          |
+| Пример создания инстанса                            | [CreateInstance.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/partherMethods/CreateInstance.py)                          |
 ## Полный список методов библиотеки
 
 | Метод API                              | Описание                                                                                                                  | Documentation link                                                                                       |
