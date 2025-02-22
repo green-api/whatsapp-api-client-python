@@ -153,6 +153,20 @@ response = greenAPI.sending.sendPoll(
 print(response.data)
 ```
 
+## Отправка текстового статуса
+
+Ссылка на пример: [sendPoll.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/statusesMethods/sendTextStatus.py).
+
+```
+response = greenAPI.statuses.sendTextStatus(
+    "I sent this status using Green Api Python SDK!", 
+    "#54c774", 
+    "NORICAN_REGULAR"
+)
+
+print(response.data)
+```
+
 ## Список примеров
 
 | Описание                                             | Модуль                                                                   |

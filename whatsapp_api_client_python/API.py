@@ -17,7 +17,8 @@ from .tools import (
     sending,
     serviceMethods,
     webhooks,
-    partner
+    partner,
+    statuses
 )
 
 
@@ -63,6 +64,7 @@ class GreenApi:
         self.sending = sending.Sending(self)
         self.serviceMethods = serviceMethods.ServiceMethods(self)
         self.webhooks = webhooks.Webhooks(self)
+        self.statuses = statuses.Statuses(self)
 
         self.logger = logging.getLogger("whatsapp-api-client-python")
         self.__prepare_logger()
@@ -175,7 +177,6 @@ class GreenApi:
 
         self.session.mount("http://", HTTPAdapter(max_retries=retry))
         self.session.mount("https://", HTTPAdapter(max_retries=retry))
-
 
 class GreenAPI(GreenApi):
     pass

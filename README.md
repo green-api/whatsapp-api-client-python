@@ -169,6 +169,20 @@ response = greenAPI.sending.sendPoll(
 print(response.data)
 ```
 
+### Sending a text status
+
+Link to example: [sendTextStatus.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/statusesMethods/sendTextStatus.py).
+
+```
+response = greenAPI.statuses.sendTextStatus(
+    "I sent this status using Green Api Python SDK!", 
+    "#54c774", 
+    "NORICAN_REGULAR"
+)
+
+print(response.data)
+```
+
 ## Examples list
 
 | Description                                                    | Module                                                                                                                                    |
@@ -179,6 +193,7 @@ print(response.data)
 | Example of a group creation and sending a message to the group | [createGroupAndSendMessage.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/createGroupAndSendMessage.py) |
 | Example of incoming webhooks receiving                         | [receiveNotification.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/receiveNotification.py)             |
 | Example of sending a polling message                           | [sendPoll.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPoll.py)                                   |
+| Example of sending a text status                          | [sendTextStatus.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendTextStatus.py)                          |
 
 ## The full list of the library methods
 
@@ -204,6 +219,13 @@ print(response.data)
 | `groups.removeAdmin`                   | The method deprives the participant of group chat administration rights                                                  | [RemoveAdmin](https://green-api.com/en/docs/api/groups/RemoveAdmin/)                                        |
 | `groups.setGroupPicture`               | The method sets the avatar of the group                                                                                  | [SetGroupPicture](https://green-api.com/en/docs/api/groups/SetGroupPicture/)                                |
 | `groups.leaveGroup`                    | The method logs the user of the current account out of the group chat                                                    | [LeaveGroup](https://green-api.com/en/docs/api/groups/LeaveGroup/)                                          |
+| `statuses.sendTextStatus`                    | The method is aimed for sending a text status                                                    | [SendTextStatus](https://green-api.com/en/docs/api/statuses/SendTextStatus/)                                          |
+| `statuses.sendVoiceStatus`                    | The method is aimed for sending a voice status                                                    | [SendVoiceStatus](https://green-api.com/en/docs/api/statuses/SendVoiceStatus/)                                          |
+| `statuses.sendMediaStatus`                    | The method is aimed for sending a pictures or video status                                                    | [SendMediaStatus](https://green-api.com/en/docs/api/statuses/SendMediaStatus/)                                          |
+| `statuses.deleteStatus`                    | The method is aimed for deleting a certain status                                                    | [DeleteStatus](https://green-api.com/en/docs/api/statuses/DeleteStatus/)                                          |
+| `statuses.getStatusStatistic`                    | The method returns an array of recipients marked sent/delivered/read for a given status                                                    | [GetStatusStatistic](https://green-api.com/en/docs/api/statuses/GetStatusStatistic/)                                          |
+| `statuses.getOutgoingStatuses`                    | The method returns the outgoing statuses of the account                                                    | [GetOutgoingStatuses](https://green-api.com/en/docs/api/statuses/GetOutgoingStatuses/)                                          |
+| `statuses.getIncomingStatuses`                    | The method returns the incoming statuses of the account                                                    | [GetIncomingStatuses](https://green-api.com/en/docs/api/statuses/GetIncomingStatuses/)                                          |
 | `journals.getChatHistory`              | The method returns the chat message history                                                                              | [GetChatHistory](https://green-api.com/en/docs/api/journals/GetChatHistory/)                                |
 | `journals.getMessage`                  | The method returns a chat message                                                                                        | [GetMessage](https://green-api.com/en/docs/api/journals/GetMessage/)                                        |
 | `journals.lastIncomingMessages`        | The method returns the most recent incoming messages of the account                                                      | [LastIncomingMessages](https://green-api.com/en/docs/api/journals/LastIncomingMessages/)                    |

@@ -9,6 +9,5 @@ def main():
     response = greenAPI.partner.deleteInstanceAccount(1103123456)
     print(response.data)
 
-
 if __name__ == '__main__':
     main()
