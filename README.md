@@ -193,7 +193,7 @@ print(response.data)
 | Example of a group creation and sending a message to the group | [createGroupAndSendMessage.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/createGroupAndSendMessage.py) |
 | Example of incoming webhooks receiving                         | [receiveNotification.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/receiveNotification.py)             |
 | Example of sending a polling message                           | [sendPoll.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPoll.py)                                   |
-| Example of sending a text status                          | [sendTextStatus.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/statusMethods/sendTextStatus.py)                          |
+| Example of sending a text status                          | [sendTextStatus.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/statusesMethods/sendTextStatus.py)                          |
 | Example of creating instance                          | [CreateInstance.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/partherMethods/CreateInstance.py)                          |
 
 ## The full list of the library methods
