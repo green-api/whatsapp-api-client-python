@@ -77,11 +77,31 @@ class ServiceMethods:
             ), request_body
         )
 
-    def deleteMessage(self, chatId: str, idMessage: str) -> Response:
+    def deleteMessage(self, chatId: str, idMessage: str, onlySenderDelete: Optional[bool] = None) -> Response:
         """
         The method deletes a message from a chat.
 
         https://green-api.com/en/docs/api/service/deleteMessage/
+        """
+
+        request_body = locals()
+        if onlySenderDelete is None:
+            request_body.pop("onlySenderDelete")
+        request_body.pop("self")
+        print(request_body)
+
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "deleteMessage/{{apiTokenInstance}}"
+            ), request_body
+        )
+
+    def editMessage(self, chatId: str, idMessage: str, message: str) -> Response:
+        """
+        The method edits a message in chat.
+
+        https://green-api.com/en/docs/api/service/editMessage/
         """
 
         request_body = locals()
@@ -90,7 +110,7 @@ class ServiceMethods:
         return self.api.request(
             "POST", (
                 "{{host}}/waInstance{{idInstance}}/"
-                "deleteMessage/{{apiTokenInstance}}"
+                "editMessage/{{apiTokenInstance}}"
             ), request_body
         )
 

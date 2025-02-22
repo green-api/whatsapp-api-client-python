@@ -17,6 +17,7 @@ from .tools import (
     sending,
     serviceMethods,
     webhooks,
+    partner,
     statuses
 )
 
@@ -34,12 +35,18 @@ class GreenApi:
             debug_mode: bool = False,
             raise_errors: bool = False,
             host: str = "https://api.green-api.com",
-            media: str = "https://media.green-api.com"
+            media: str = "https://media.green-api.com",
+            host_timeout: float = 180, # sec per retry
+            media_timeout: float = 10800, # sec per retry
     ):
         self.host = host
         self.media = media
         self.debug_mode = debug_mode
         self.raise_errors = raise_errors
+
+        # Change default values in init() if required
+        self.host_timeout = host_timeout
+        self.media_timeout = media_timeout
 
         self.idInstance = idInstance
         self.apiTokenInstance = apiTokenInstance
@@ -74,14 +81,18 @@ class GreenApi:
         url = url.replace("{{idInstance}}", self.idInstance)
         url = url.replace("{{apiTokenInstance}}", self.apiTokenInstance)
 
+        headers = {
+            'User-Agent': 'GREEN-API_SDK_PY/1.0'
+        }
+
         try:
             if not files:
                 response = self.session.request(
-                    method=method, url=url, json=payload
+                    method=method, url=url, json=payload, timeout=self.host_timeout, headers=headers
                 )
             else:
                 response = self.session.request(
-                    method=method, url=url, data=payload, files=files
+                    method=method, url=url, data=payload, files=files, timeout=self.media_timeout, headers=headers
                 )
         except Exception as error:
             error_message = f"Request was failed with error: {error}."
@@ -174,3 +185,33 @@ class GreenAPI(GreenApi):
 
 class GreenAPIError(Exception):
     pass
+
+class GreenApiPartner(GreenApi):
+    def __init__(
+            self,
+            partnerToken: str,
+            email: str = None,
+            host: str = "https://api.green-api.com"
+    ):
+
+        super().__init__(
+            idInstance="",
+            apiTokenInstance="",
+            host=host
+        )
+        
+        self.partnerToken = partnerToken
+        self.email = email
+        self.partner = partner.Partner(self)
+
+    def request(
+            self,
+            method: str,
+            url: str,
+            payload: Optional[dict] = None,
+            files: Optional[dict] = None
+    ) -> GreenAPIResponse:
+
+        url = url.replace("{{partnerToken}}", self.partnerToken)
+
+        return super().request(method, url, payload, files)
