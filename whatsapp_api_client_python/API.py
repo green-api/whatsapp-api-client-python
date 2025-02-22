@@ -16,7 +16,8 @@ from .tools import (
     receiving,
     sending,
     serviceMethods,
-    webhooks
+    webhooks,
+    partner
 )
 
 
@@ -182,3 +183,33 @@ class GreenAPI(GreenApi):
 
 class GreenAPIError(Exception):
     pass
+
+class GreenApiPartner(GreenApi):
+    def __init__(
+            self,
+            partnerToken: str,
+            email: str = None,
+            host: str = "https://api.green-api.com"
+    ):
+
+        super().__init__(
+            idInstance="",
+            apiTokenInstance="",
+            host=host
+        )
+        
+        self.partnerToken = partnerToken
+        self.email = email
+        self.partner = partner.Partner(self)
+
+    def request(
+            self,
+            method: str,
+            url: str,
+            payload: Optional[dict] = None,
+            files: Optional[dict] = None
+    ) -> GreenAPIResponse:
+
+        url = url.replace("{{partnerToken}}", self.partnerToken)
+
+        return super().request(method, url, payload, files)
