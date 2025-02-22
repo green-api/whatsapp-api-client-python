@@ -171,9 +171,7 @@ print(response.data)
 
 ### Sending a text status
 
-Link to example: [sendTextStatus.py](
-https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendTextStatus.py
-).
+Link to example: [sendTextStatus.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/statusesMethods/sendTextStatus.py).
 
 ```
 response = greenAPI.statuses.sendTextStatus(
