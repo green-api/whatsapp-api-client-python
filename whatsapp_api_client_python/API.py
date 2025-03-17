@@ -27,6 +27,7 @@ class GreenApi:
     media: str
     idInstance: str
     apiTokenInstance: str
+    directHost: bool #Добавил флаг для прямого хоста
 
     def __init__(
             self,
@@ -34,6 +35,7 @@ class GreenApi:
             apiTokenInstance: str,
             debug_mode: bool = False,
             raise_errors: bool = False,
+            directHost: bool = False, #Добавил флаг для прямого хоста
             host: str = "https://api.green-api.com",
             media: str = "https://media.green-api.com",
             host_timeout: float = 180, # sec per retry
@@ -43,6 +45,12 @@ class GreenApi:
         self.media = media
         self.debug_mode = debug_mode
         self.raise_errors = raise_errors
+        #Если флаг directHost == True, вызываю метод для определения прямого хоста
+        self.directHost = directHost
+        if self.directHost:
+            self.host = self._determine_host(idInstance)
+        else:
+            self.host = host
 
         # Change default values in init() if required
         self.host_timeout = host_timeout
@@ -68,6 +76,17 @@ class GreenApi:
 
         self.logger = logging.getLogger("whatsapp-api-client-python")
         self.__prepare_logger()
+
+    def _determine_host(self, idInstance: str) -> str:  #Метод для определения прямого хоста по первым цифрам idInstance
+        if idInstance.startswith("1103"):
+            return f"https://{idInstance[:4]}.api.green-api.com"
+        elif idInstance.startswith("11"):
+            return "https://api.green-api.com"
+        elif idInstance.startswith("55"):
+            return "https://api.green-api.com"
+        elif idInstance.startswith("7"):
+            return f"https://{idInstance[:4]}.api.greenapi.com"
+        return "https://api.green-api.com"
 
     def request(
             self,
