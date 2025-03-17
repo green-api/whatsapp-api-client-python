@@ -48,9 +48,10 @@ class GreenApi:
         #Если флаг directHost == True, вызываю метод для определения прямого хоста
         self.directHost = directHost
         if self.directHost:
-            self.host = self._determine_host(idInstance)
+            self.host, self.media = self._determine_host(idInstance)
         else:
             self.host = host
+            self.media = media
 
         # Change default values in init() if required
         self.host_timeout = host_timeout
@@ -79,14 +80,14 @@ class GreenApi:
 
     def _determine_host(self, idInstance: str) -> str:  #Метод для определения прямого хоста по первым цифрам idInstance
         if idInstance.startswith("1103"):
-            return f"https://{idInstance[:4]}.api.green-api.com"
+            return f"https://{idInstance[:4]}.api.green-api.com", f"https://{idInstance[:4]}.media.green-api.com"
         elif idInstance.startswith("11"):
-            return "https://api.green-api.com"
+            return "https://api.green-api.com", "https://media.green-api.com"
         elif idInstance.startswith("55"):
-            return "https://api.green-api.com"
+            return "https://api.green-api.com", "https://media.green-api.com"
         elif idInstance.startswith("7"):
-            return f"https://{idInstance[:4]}.api.greenapi.com"
-        return "https://api.green-api.com"
+            return f"https://{idInstance[:4]}.api.greenapi.com", f"https://{idInstance[:4]}.media.greenapi.com"
+        return "https://api.green-api.com", "https://media.green-api.com"
 
     def request(
             self,
