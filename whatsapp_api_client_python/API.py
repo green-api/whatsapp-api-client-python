@@ -80,7 +80,6 @@ class GreenApi:
         mapping = {
             "1103": (f"https://{idInstance[:4]}.api.green-api.com", f"https://{idInstance[:4]}.media.green-api.com"),
             "1104": (f"https://1103.api.green-api.com", f"https://1103.media.green-api.com"),
-            "5103": ("https://api.green-api.com", "https://media.green-api.com"),
             "5700": (f"https://{idInstance[:4]}.api.green-api.com", f"https://{idInstance[:4]}.media.green-api.com") ,
             "7723": ("https://7700.api.greenapi.com", "https://7700.media.greenapi.com"),
             "7726": ("https://api.greenapi.com", "https://media.greenapi.com"),
