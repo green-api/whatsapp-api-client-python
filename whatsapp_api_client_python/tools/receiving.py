@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import Optional, TYPE_CHECKING
 
 from ..response import Response
 
@@ -10,18 +10,21 @@ class Receiving:
     def __init__(self, api: "GreenApi"):
         self.api = api
 
-    def receiveNotification(self) -> Response:
+    def receiveNotification(self, minutes: Optional[int] = None) -> Response:
         """
         The method is aimed for receiving one incoming notification
         from the notifications queue.
 
         https://green-api.com/en/docs/api/receiving/technology-http-api/ReceiveNotification/
         """
+        append_minutes = ""
+        if minutes is not None:
+            append_minutes = f"?minutes={minutes}"
 
         return self.api.request(
             "GET", (
                 "{{host}}/waInstance{{idInstance}}/"
-                "receiveNotification/{{apiTokenInstance}}"
+                "receiveNotification/{{apiTokenInstance}}"+append_minutes
             )
         )
 
