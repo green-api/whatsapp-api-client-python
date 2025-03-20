@@ -27,7 +27,7 @@ class GreenApi:
     media: str
     idInstance: str
     apiTokenInstance: str
-    directHost: bool #Добавил флаг для прямого хоста
+    directHost: bool #Flag for determining and using a direct host
 
     def __init__(
             self,
@@ -35,7 +35,7 @@ class GreenApi:
             apiTokenInstance: str,
             debug_mode: bool = False,
             raise_errors: bool = False,
-            directHost: bool = False, #Добавил флаг для прямого хоста
+            directHost: bool = False,
             host: str = "https://api.green-api.com",
             media: str = "https://media.green-api.com",
             host_timeout: float = 180, # sec per retry
@@ -45,7 +45,6 @@ class GreenApi:
         self.media = media
         self.debug_mode = debug_mode
         self.raise_errors = raise_errors
-        #Если флаг directHost == True, вызываю метод для определения прямого хоста
         self.directHost = directHost
         if self.directHost:
             self.host, self.media = self._determine_host(idInstance)
@@ -53,7 +52,6 @@ class GreenApi:
             self.host = host
             self.media = media
 
-        # Change default values in init() if required
         self.host_timeout = host_timeout
         self.media_timeout = media_timeout
 
@@ -78,16 +76,17 @@ class GreenApi:
         self.logger = logging.getLogger("whatsapp-api-client-python")
         self.__prepare_logger()
 
-    def _determine_host(self, idInstance: str) -> str:  #Метод для определения прямого хоста по первым цифрам idInstance
-        if idInstance.startswith("1103"):
-            return f"https://{idInstance[:4]}.api.green-api.com", f"https://{idInstance[:4]}.media.green-api.com"
-        elif idInstance.startswith("11"):
-            return "https://api.green-api.com", "https://media.green-api.com"
-        elif idInstance.startswith("55"):
-            return "https://api.green-api.com", "https://media.green-api.com"
-        elif idInstance.startswith("7"):
-            return f"https://{idInstance[:4]}.api.greenapi.com", f"https://{idInstance[:4]}.media.greenapi.com"
-        return "https://api.green-api.com", "https://media.green-api.com"
+    def _determine_host(self, idInstance: str) -> str: #Method for determining a direct host
+        mapping = {
+            "1103": (f"https://{idInstance[:4]}.api.green-api.com", f"https://{idInstance[:4]}.media.green-api.com"),
+            "1104": (f"https://1103.api.green-api.com", f"https://1103.media.green-api.com"),
+            "5103": ("https://api.green-api.com", "https://media.green-api.com"),
+            "5700": (f"https://{idInstance[:4]}.api.green-api.com", f"https://{idInstance[:4]}.media.green-api.com") ,
+            "7723": ("https://7700.api.greenapi.com", "https://7700.media.greenapi.com"),
+            "7726": ("https://api.greenapi.com", "https://media.greenapi.com"),
+            "7": (f"https://{idInstance[:4]}.api.greenapi.com", f"https://{idInstance[:4]}.media.greenapi.com")
+        }
+        return next((url for key, url in mapping.items() if idInstance.startswith(key)), ("https://api.green-api.com", "https://media.green-api.com"))
 
     def request(
             self,
