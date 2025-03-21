@@ -48,6 +48,7 @@ class GreenApi:
         self.useDirectHost = useDirectHost
         self.host, self.media = self._determine_host(idInstance) if self.useDirectHost else (host, media)
 
+        # Change default values in init() if required (slow connection)
         self.host_timeout = host_timeout
         self.media_timeout = media_timeout
 
