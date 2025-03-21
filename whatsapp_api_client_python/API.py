@@ -74,9 +74,9 @@ class GreenApi:
 
     def _determine_host(self, idInstance: str) -> str:
         mapping = {
-            "1103": (f"https://1103.api.green-api.com", f"https://1103.media.green-api.com"),
-            "1104": (f"https://1103.api.green-api.com", f"https://1103.media.green-api.com"),
-            "5700": (f"https://5700.api.green-api.com", f"https://5700.media.green-api.com"),
+            "1103": ("https://1103.api.green-api.com", "https://1103.media.green-api.com"),
+            "1104": ("https://1103.api.green-api.com", "https://1103.media.green-api.com"),
+            "5700": ("https://5700.api.green-api.com", "https://5700.media.green-api.com"),
             "7103": ("https://7103.api.greenapi.com", "https://7103.media.greenapi.com"),
             "7105": ("https://7105.api.greenapi.com", "https://7105.media.greenapi.com"),
             "7723": ("https://7700.api.greenapi.com", "https://7700.media.greenapi.com"),
