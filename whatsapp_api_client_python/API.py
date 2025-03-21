@@ -81,7 +81,7 @@ class GreenApi:
             "7103": ("https://7103.api.greenapi.com", "https://7103.media.greenapi.com"),
             "7105": ("https://7105.api.greenapi.com", "https://7105.media.greenapi.com"),
             "7723": ("https://7700.api.greenapi.com", "https://7700.media.greenapi.com"),
-            "7726": ("https://api.greenapi.com", "https://media.greenapi.com")
+            "7": ("https://api.greenapi.com", "https://media.greenapi.com")
         }
         return next((url for key, url in mapping.items() if idInstance.startswith(key)), ("https://api.green-api.com", "https://media.green-api.com"))
 
