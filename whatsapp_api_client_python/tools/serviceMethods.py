@@ -5,7 +5,6 @@ from ..response import Response
 if TYPE_CHECKING:
     from ..API import GreenApi
 
-
 class ServiceMethods:
     def __init__(self, api: "GreenApi"):
         self.api = api
@@ -28,6 +27,16 @@ class ServiceMethods:
             ), request_body
         )
 
+    async def checkWhatsappAsync(self, phoneNumber: int) -> Response:
+        request_body = locals()
+        request_body.pop("self")
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/checkWhatsapp/{{apiTokenInstance}}",
+            request_body
+        )
+
     def getAvatar(self, chatId: str) -> Response:
         """
         The method returns a user or a group chat avatar.
@@ -45,6 +54,16 @@ class ServiceMethods:
             ), request_body
         )
 
+    async def getAvatarAsync(self, chatId: str) -> Response:
+        request_body = locals()
+        request_body.pop("self")
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/getAvatar/{{apiTokenInstance}}",
+            request_body
+        )
+
     def getContacts(self) -> Response:
         """
         The method is aimed for getting a list of the current account
@@ -58,6 +77,11 @@ class ServiceMethods:
                 "{{host}}/waInstance{{idInstance}}/"
                 "getContacts/{{apiTokenInstance}}"
             )
+        )
+
+    async def getContactsAsync(self) -> Response:
+        return await self.api.requestAsync(
+            "GET", "{{host}}/waInstance{{idInstance}}/getContacts/{{apiTokenInstance}}"
         )
 
     def getContactInfo(self, chatId: str) -> Response:
@@ -75,6 +99,16 @@ class ServiceMethods:
                 "{{host}}/waInstance{{idInstance}}/"
                 "getContactInfo/{{apiTokenInstance}}"
             ), request_body
+        )
+
+    async def getContactInfoAsync(self, chatId: str) -> Response:
+        request_body = locals()
+        request_body.pop("self")
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/getContactInfo/{{apiTokenInstance}}",
+            request_body
         )
 
     def deleteMessage(self, chatId: str, idMessage: str, onlySenderDelete: Optional[bool] = None) -> Response:
@@ -97,6 +131,18 @@ class ServiceMethods:
             ), request_body
         )
 
+    async def deleteMessageAsync(self, chatId: str, idMessage: str, onlySenderDelete: Optional[bool] = None) -> Response:
+        request_body = locals()
+        if onlySenderDelete is None:
+            request_body.pop("onlySenderDelete")
+        request_body.pop("self")
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/deleteMessage/{{apiTokenInstance}}",
+            request_body
+        )
+
     def editMessage(self, chatId: str, idMessage: str, message: str) -> Response:
         """
         The method edits a message in chat.
@@ -112,6 +158,16 @@ class ServiceMethods:
                 "{{host}}/waInstance{{idInstance}}/"
                 "editMessage/{{apiTokenInstance}}"
             ), request_body
+        )
+
+    async def editMessageAsync(self, chatId: str, idMessage: str, message: str) -> Response:
+        request_body = locals()
+        request_body.pop("self")
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/editMessage/{{apiTokenInstance}}",
+            request_body
         )
 
     def archiveChat(self, chatId: str) -> Response:
@@ -131,6 +187,16 @@ class ServiceMethods:
             ), request_body
         )
 
+    async def archiveChatAsync(self, chatId: str) -> Response:
+        request_body = locals()
+        request_body.pop("self")
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/archiveChat/{{apiTokenInstance}}",
+            request_body
+        )
+
     def unarchiveChat(self, chatId: str) -> Response:
         """
         The method unarchives a chat.
@@ -146,6 +212,16 @@ class ServiceMethods:
                 "{{host}}/waInstance{{idInstance}}/"
                 "unarchiveChat/{{apiTokenInstance}}"
             ), request_body
+        )
+
+    async def unarchiveChatAsync(self, chatId: str) -> Response:
+        request_body = locals()
+        request_body.pop("self")
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/unarchiveChat/{{apiTokenInstance}}",
+            request_body
         )
 
     def setDisappearingChat(
@@ -168,4 +244,18 @@ class ServiceMethods:
                 "{{host}}/waInstance{{idInstance}}/"
                 "setDisappearingChat/{{apiTokenInstance}}"
             ), request_body
+        )
+
+    async def setDisappearingChatAsync(
+            self, chatId: str, ephemeralExpiration: Optional[int] = None
+    ) -> Response:
+        request_body = locals()
+        if ephemeralExpiration is None:
+            request_body.pop("ephemeralExpiration")
+        request_body.pop("self")
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/setDisappearingChat/{{apiTokenInstance}}",
+            request_body
         )

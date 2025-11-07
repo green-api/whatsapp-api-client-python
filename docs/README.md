@@ -57,7 +57,7 @@ greenAPI = API.GreenAPI(
 
 ### Отправка текстового сообщения на номер WhatsApp
 
-Ссылка на пример: [sendTextMessage.py](../examples/sendTextMessage.py).
+Ссылка на пример: [sendTextMessage.py](../examples/sync/sendTextMessage.py).
 
 ```
 response = greenAPI.sending.sendMessage("11001234567@c.us", "Message text")
@@ -65,9 +65,24 @@ response = greenAPI.sending.sendMessage("11001234567@c.us", "Message text")
 print(response.data)
 ```
 
+
+### Отправка текстового сообщения асинхронно
+
+Ссылка на пример: [sendMessageAsync.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/async/sending/sendMessageAsync.py).
+
+```
+import asyncio
+
+async def main():
+    response = await greenAPI.sending.sendMessageAsync("11001234567@c.us", "Message text")
+    print(response.data)
+
+asyncio.run(main())
+```
+
 ### Отправка картинки по URL
 
-Ссылка на пример: [sendPictureByLink.py](../examples/sendPictureByLink.py).
+Ссылка на пример: [sendPictureByLink.py](../examples/sync/sendPictureByLink.py).
 
 ```
 response = greenAPI.sending.sendFileByUrl(
@@ -82,17 +97,37 @@ print(response.data)
 
 ### Отправка картинки загрузкой с диска
 
-Ссылка на пример: [sendPictureByUpload.py](../examples/sendPictureByUpload.py).
+Ссылка на пример: [sendPictureByUpload.py](../examples/sync/sendPictureByUpload.py).
 
 ```
 response = greenAPI.sending.sendFileByUpload(
     "11001234567@c.us",
-    "data/rates.png",
-    "rates.png",
+    "data/logo.jpg",
+    "logo.jpg",
     "Available rates"
 )
 
 print(response.data)
+```
+
+
+### Отправка картинки асинхронно загрузкой с диска
+
+Ссылка на пример: [sendFileByUploadAsync.py](../examples/async/sending/sendFileByUploadAsync.py).
+
+```
+import asyncio
+
+async def main():
+    response = await greenAPI.sending.sendFileByUploadAsync(
+        "11001234567@c.us",
+        "data/logo.jpg",
+        "logo.jpg",
+        "Available rates"
+    )
+    print(response.data)
+
+asyncio.run(main())
 ```
 
 ### Создание группы и отправка сообщения в эту группу
@@ -100,7 +135,7 @@ print(response.data)
 **Важно**. Если попытаться создать группу с несуществующим номером WhatsApp, то может заблокировать номер отправителя.
 Номер в примере не существует.
 
-Ссылка на пример: [createGroupAndSendMessage.py](../examples/createGroupAndSendMessage.py).
+Ссылка на пример: [createGroupAndSendMessage.py](../examples/sync/createGroupAndSendMessage.py).
 
 ```
 create_group_response = greenAPI.groups.createGroup(
@@ -114,7 +149,7 @@ if create_group_response.code == 200:
 
 ### Получение входящих уведомлений через HTTP API
 
-Ссылка на пример: [receiveNotification.py](../examples/receiveNotification.py).
+Ссылка на пример: [receiveNotification.py](../examples/sync/receiveNotification.py).
 
 Общая концепция получения данных в GREEN API описана [здесь](https://green-api.com/docs/api/receiving/). Для старта
 получения уведомлений через HTTP API требуется выполнить метод библиотеки:
@@ -135,9 +170,23 @@ onEvent - ваша функция, которая должен содержат�
 Эта функция будет вызываться при получении входящего уведомления. Далее обрабатываете уведомления согласно бизнес-логике
 вашей системы.
 
+
+### Асинхронное получение входящих уведомлений через HTTP API
+
+Ссылка на пример: [receiveNotificationAsync.py](../examples/async/receiveNotificationAsync.py).
+
+```
+import asyncio
+
+async def main():
+    await greenAPI.webhooks.startReceivingNotificationsAsync(onEvent)
+
+asyncio.run(main())
+```
+
 ### Отправка сообщения с опросом
 
-Ссылка на пример: [sendPoll.py](../examples/sendPoll.py).
+Ссылка на пример: [sendPoll.py](../examples/sync/sendPoll.py).
 
 ```
 response = greenAPI.sending.sendPoll(
@@ -155,7 +204,7 @@ print(response.data)
 
 ## Отправка текстового статуса
 
-Ссылка на пример: [sendPoll.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/statusesMethods/sendTextStatus.py).
+Ссылка на пример: [sendPoll.py](../examples/sync/statusesMethods/sendTextStatus.py).
 
 ```
 response = greenAPI.statuses.sendTextStatus(
@@ -169,19 +218,28 @@ print(response.data)
 
 ## Список примеров
 
-| Описание                                             | Модуль                                                                   |
-|------------------------------------------------------|--------------------------------------------------------------------------|
-| Пример отправки текста                               | [sendTextMessage.py](../examples/sendTextMessage.py)                     |
-| Пример отправки картинки по URL                      | [sendPictureByLink.py](../examples/sendPictureByLink.py)                 |
-| Пример отправки картинки загрузкой с диска           | [sendPictureByUpload.py](../examples/sendPictureByUpload.py)             |
-| Пример создание группы и отправка сообщения в группу | [createGroupAndSendMessage.py](../examples/createGroupAndSendMessage.py) |
-| Пример получения входящих уведомлений                | [receiveNotification.py](../examples/receiveNotification.py)             |
-| Пример отправки сообщения с опросом                  | [sendPoll.py](../examples/sendPoll.py)                                   |
-| Пример отправки текстового статуса                  | [sendTextStatus.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/statusesMethods/sendTextStatus.py)                          |
-| Пример создания инстанса                            | [CreateInstance.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/partherMethods/CreateInstance.py)                          |
+| Описание                                               | Модуль                                                                            |
+|--------------------------------------------------------|-----------------------------------------------------------------------------------|
+| Пример отправки текста                                 | [sendTextMessage.py](../examples/sync/sendTextMessage.py)                         |
+| Пример асинхронной отправки текста                     | [sendTextMessageAsync.py](../examples/async/sending/sendMessageAsync.py)          |
+| Пример отправки картинки по URL                        | [sendPictureByLink.py](../examples/sync/sendPictureByLink.py)                     |
+| Пример асинхронной отправки файла по URL               | [sendFileByUrlAsync.py](../examples/async/sending/sendFileByUrlAsync.py)          |
+| Пример отправки картинки загрузкой с диска             | [sendPictureByUpload.py](../examples/sync/sendPictureByUpload.py)                 |
+| Пример асинхронной отправки картинки загрузкой с диска | [sendFileByUploadAsync.py](../examples/async/sending/sendFileByUploadAsync.py)    |
+| Пример создания группы и отправки сообщения в группу   | [createGroupAndSendMessage.py](../examples/sync/createGroupAndSendMessage.py)     |
+| Пример асинхронных создания группы и отправки сообщения в группу | [createGroupAndSendMessageAsync.py](../examples/async/createGroupAndSendMessageAsync.py)  |
+| Пример получения входящих уведомлений                  | [receiveNotification.py](../examples/sync/receiveNotification.py)                 |
+| Пример асинхронного получения входящих уведомлений     | [receiveNotificationФынтс.py](../examples/async/receiveNotificationAsync.py)      |
+| Пример отправки сообщения с опросом                    | [sendPoll.py](../examples/sync/sendPoll.py)                                       |
+| Пример асинхронной отправки сообщения с опросом        | [sendPollAsync.py](../examples/async/sending/sendPollAsync.py)                    |
+| Пример отправки текстового статуса                     | [sendTextStatus.py](../examples/sync/statusesMethods/sendTextStatus.py)           |
+| Пример асинхронной отправки текстового статуса        | [sendTextStatusAsync.py](../examples/async/statusesMethods/sendTextStatusAsync.py) |
+| Пример создания инстанса                               | [CreateInstance.py](../examples/sync/partherMethods/CreateInstance.py)            |
+| Пример асинхронного создания инстанса                  | [CreateInstanceAsync.py](../examples/async/partnerMethods/CreateInstanceAsync.py)            |
+
 ## Полный список методов библиотеки
 
-| Метод API                              | Описание                                                                                                                  | Documentation link                                                                                       |
+| Метод API                              | Описание                                                                                                                  | Ссылка на документацию                                                                                       |
 |----------------------------------------|---------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------|
 | `account.getSettings`                  | Метод предназначен для получения текущих настроек аккаунта                                                                | [GetSettings](https://green-api.com/docs/api/account/GetSettings/)                                       |
 | `account.getWaSettings`                | Метод предназначен для получения информации о аккаунте WhatsApp                                                           | [GetWaSettings](https://green-api.com/docs/api/account/GetWaSettings/)                                   |
@@ -247,10 +305,9 @@ print(response.data)
 ## Сторонние продукты
 
 - [requests](https://requests.readthedocs.io/en/latest/) - для HTTP запросов.
+- [aiohttp](https://docs.aiohttp.org/) - для асинхронных HTTP запросов.
 
 ## Лицензия
 
-Лицензировано на условиях [
-Creative Commons Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)
-](https://creativecommons.org/licenses/by-nd/4.0/).
+Лицензировано на условиях [Creative Commons Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)](https://creativecommons.org/licenses/by-nd/4.0/).
 [LICENSE](../LICENSE).

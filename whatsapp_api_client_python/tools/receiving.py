@@ -25,6 +25,11 @@ class Receiving:
             )
         )
 
+    async def receiveNotificationAsync(self) -> Response:
+        return await self.api.requestAsync(
+            "GET", "{{host}}/waInstance{{idInstance}}/receiveNotification/{{apiTokenInstance}}"
+        )
+
     def deleteNotification(self, receiptId: int) -> Response:
         """
         The method is aimed for deleting an incoming notification from
@@ -39,6 +44,13 @@ class Receiving:
         )
 
         return self.api.request("DELETE", f"{url}/{receiptId}")
+
+    async def deleteNotificationAsync(self, receiptId: int) -> Response:
+        return await self.api.requestAsync(
+            "DELETE", 
+            "{{host}}/waInstance{{idInstance}}/deleteNotification/{{apiTokenInstance}}/",
+            receiptId
+        )
 
     def downloadFile(self, chatId: str, idMessage: str) -> Response:
         """
@@ -55,4 +67,14 @@ class Receiving:
                 "{{host}}/waInstance{{idInstance}}/"
                 "downloadFile/{{apiTokenInstance}}"
             ), request_body
+        )
+
+    async def downloadFileAsync(self, chatId: str, idMessage: str) -> Response:
+        request_body = locals()
+        request_body.pop("self")
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/downloadFile/{{apiTokenInstance}}",
+            request_body
         )

@@ -32,6 +32,21 @@ class Statuses:
             ), request_body
         )
 
+    async def sendTextStatusAsync(
+            self,
+            message: str,
+            backgroundColor: Optional[str] = None,
+            font: Optional[str] = None,
+            participants: Optional[List[str]] = None
+    ) -> Response:
+        request_body = self.__handle_parameters(locals())
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/sendTextStatus/{{apiTokenInstance}}",
+            request_body
+        )
+
     def sendVoiceStatus(
             self,
             urlFile: str,
@@ -52,6 +67,21 @@ class Statuses:
                 "{{host}}/waInstance{{idInstance}}/"
                 "sendVoiceStatus/{{apiTokenInstance}}"
             ), request_body
+        )
+
+    async def sendVoiceStatusAsync(
+            self,
+            urlFile: str,
+            fileName: str,
+            backgroundColor: Optional[str] = None,
+            participants: Optional[List[str]] = None
+    ) -> Response:
+        request_body = self.__handle_parameters(locals())
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/sendVoiceStatus/{{apiTokenInstance}}",
+            request_body
         )
 
     def sendMediaStatus(
@@ -76,6 +106,21 @@ class Statuses:
             ), request_body
         )
 
+    async def sendMediaStatusAsync(
+            self,
+            urlFile: str,
+            fileName: str,
+            caption: Optional[str] = None,
+            participants: Optional[List[str]] = None
+    ) -> Response:
+        request_body = self.__handle_parameters(locals())
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/sendMediaStatus/{{apiTokenInstance}}",
+            request_body
+        )
+
     def deleteStatus(
             self,
             idMessage: str
@@ -95,6 +140,18 @@ class Statuses:
             ), request_body
         )
 
+    async def deleteStatusAsync(
+            self,
+            idMessage: str
+    ) -> Response:
+        request_body = self.__handle_parameters(locals())
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/deleteStatus/{{apiTokenInstance}}",
+            request_body
+        )
+
     def getStatusStatistic(
             self,
             idMessage: str
@@ -110,6 +167,14 @@ class Statuses:
         )
 
         return self.api.request("GET", f"{url}?idMessage={idMessage}")
+
+    async def getStatusStatisticAsync(
+            self,
+            idMessage: str
+    ) -> Response:
+        return await self.api.requestAsync(
+            "GET", 
+            f"{{host}}/waInstance{{idInstance}}/getStatusStatistic/{{apiTokenInstance}}?idMessage={idMessage}")
 
     def getIncomingStatuses(
             self,
@@ -131,6 +196,18 @@ class Statuses:
         else:
             return self.api.request("GET", f"{url}")
 
+    async def getIncomingStatusesAsync(
+            self,
+            minutes: Optional[int] = None
+    ) -> Response:
+        params = {"minutes": minutes} if minutes else {}
+
+        return await self.api.requestAsync(
+            "GET",
+            "{{host}}/waInstance{{idInstance}}/getIncomingStatuses/{{apiTokenInstance}}",
+            params
+        )
+
     def getOutgoingStatuses(
             self,
             minutes: Optional[int] = None
@@ -150,6 +227,17 @@ class Statuses:
             return self.api.request("GET", f"{url}?minutes={minutes}")
         else:
             return self.api.request("GET", f"{url}")
+
+    async def getOutgoingStatusesAsync(
+            self,
+            minutes: Optional[int] = None
+    ) -> Response:
+
+        params = {"minutes": minutes} if minutes else {}
+        return await self.api.requestAsync(
+            "GET",
+            "{{host}}/waInstance{{idInstance}}/getOutgoingStatuses/{{apiTokenInstance}}",
+            params)
 
     @classmethod
     def __handle_parameters(cls, parameters: dict) -> dict:

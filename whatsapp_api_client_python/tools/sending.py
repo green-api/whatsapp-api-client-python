@@ -2,6 +2,8 @@ import mimetypes
 import pathlib
 from typing import Dict, List, Optional, TYPE_CHECKING, Union
 
+import aiofiles
+
 from ..response import Response
 
 if TYPE_CHECKING:
@@ -36,6 +38,22 @@ class Sending:
             ), request_body
         )
 
+    async def sendMessageAsync(
+            self,
+            chatId: str,
+            message: str,
+            quotedMessageId: Optional[str] = None,
+            archiveChat: Optional[bool] = None,
+            linkPreview: Optional[bool] = None
+    ) -> Response:
+        request_body = self.__handle_parameters(locals())
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/sendMessage/{{apiTokenInstance}}",
+            request_body
+        )
+
     def sendButtons(
             self,
             chatId: str,
@@ -46,6 +64,8 @@ class Sending:
             archiveChat: Optional[bool] = None
     ) -> Response:
         """
+        The method is deprecated.
+
         The method is aimed for sending a button message to a personal
         or a group chat.
 
@@ -144,6 +164,32 @@ class Sending:
             ), request_body, files
         )
 
+    async def sendFileByUploadAsync(
+            self,
+            chatId: str,
+            path: str,
+            fileName: Optional[str] = None,
+            caption: Optional[str] = None,
+            quotedMessageId: Optional[str] = None
+    ) -> Response:
+        request_body = self.__handle_parameters(locals())
+
+        file_name = pathlib.Path(path).name
+        content_type = mimetypes.guess_type(file_name)[0]
+
+        async with aiofiles.open(path, "rb") as file:
+            file_data = await file.read()
+            files = {"file": (file_name, file_data, content_type)}
+
+        request_body.pop("path")
+
+        return await self.api.requestAsync(
+            "POST", 
+            "{{media}}/waInstance{{idInstance}}/sendFileByUpload/{{apiTokenInstance}}",
+            request_body, 
+            files=files
+        )
+
     def sendFileByUrl(
             self,
             chatId: str,
@@ -168,6 +214,23 @@ class Sending:
             ), request_body
         )
 
+    async def sendFileByUrlAsync(
+            self,
+            chatId: str,
+            urlFile: str,
+            fileName: str,
+            caption: Optional[str] = None,
+            quotedMessageId: Optional[str] = None,
+            archiveChat: Optional[bool] = None
+    ) -> Response:
+        request_body = self.__handle_parameters(locals())
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/sendFileByUrl/{{apiTokenInstance}}",
+            request_body
+        )
+
     def uploadFile(self, path: str) -> Response:
         """
         The method is designed to upload a file to the cloud storage,
@@ -181,6 +244,22 @@ class Sending:
 
         with open(path, "rb") as file:
             return self.api.raw_request(
+                method="POST",
+                url=(
+                    f"{self.api.media}/waInstance{self.api.idInstance}/"
+                    f"uploadFile/{self.api.apiTokenInstance}"
+                ),
+                data=file.read(),
+                headers={"Content-Type": content_type,
+                         "GA-Filename": file_name}
+            )
+
+    async def uploadFileAsync(self, path: str) -> Response:
+        file_name = pathlib.Path(path).name
+        content_type = mimetypes.guess_type(file_name)[0]
+
+        async with aiofiles.open(path, "rb") as file:
+            return await self.api.raw_request_async(
                 method="POST",
                 url=(
                     f"{self.api.media}/waInstance{self.api.idInstance}/"
@@ -215,6 +294,23 @@ class Sending:
             ), request_body
         )
 
+    async def sendLocationAsync(
+            self,
+            chatId: str,
+            latitude: float,
+            longitude: float,
+            nameLocation: Optional[str] = None,
+            address: Optional[str] = None,
+            quotedMessageId: Optional[str] = None
+    ) -> Response:
+        request_body = self.__handle_parameters(locals())
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/sendLocation/{{apiTokenInstance}}",
+            request_body
+        )
+
     def sendContact(
             self,
             chatId: str,
@@ -234,6 +330,20 @@ class Sending:
                 "{{host}}/waInstance{{idInstance}}/"
                 "sendContact/{{apiTokenInstance}}"
             ), request_body
+        )
+
+    async def sendContactAsync(
+            self,
+            chatId: str,
+            contact: Dict[str, Union[int, str]],
+            quotedMessageId: Optional[str] = None
+    ) -> Response:
+        request_body = self.__handle_parameters(locals())
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/sendContact/{{apiTokenInstance}}",
+            request_body
         )
 
     def sendLink(
@@ -282,6 +392,20 @@ class Sending:
             ), request_body
         )
 
+    async def forwardMessagesAsync(
+            self,
+            chatId: str,
+            chatIdFrom: str,
+            messages: List[str]
+    ) -> Response:
+        request_body = self.__handle_parameters(locals())
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/forwardMessages/{{apiTokenInstance}}",
+            request_body
+        )
+
     def sendPoll(
             self,
             chatId: str,
@@ -306,10 +430,25 @@ class Sending:
             ), request_body
         )
 
+    async def sendPollAsync(
+            self,
+            chatId: str,
+            message: str,
+            options: List[Dict[str, str]],
+            multipleAnswers: Optional[bool] = None,
+            quotedMessageId: Optional[str] = None
+    ) -> Response:
+        request_body = self.__handle_parameters(locals())
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/sendPoll/{{apiTokenInstance}}",
+            request_body
+        )
+
     @classmethod
     def __handle_parameters(cls, parameters: dict) -> dict:
         handled_parameters = parameters.copy()
-
         handled_parameters.pop("self")
 
         for key, value in parameters.items():

@@ -8,8 +8,8 @@ greenAPI = API.GreenAPI(
 def main():
     response = greenAPI.sending.sendFileByUpload(
         "11001234567@c.us",
-        "data/rates.png",
-        "rates.png",
+        "data/logo.jpg",
+        "logo.jpg",
         "Available rates"
     )
 

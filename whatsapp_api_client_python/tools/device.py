@@ -4,14 +4,14 @@ from ..response import Response
 
 if TYPE_CHECKING:
     from ..API import GreenApi
-
-
 class Device:
     def __init__(self, api: "GreenApi"):
         self.api = api
 
     def getDeviceInfo(self) -> Response:
         """
+        The method is deprecated.
+        
         The method is aimed for getting information about the device
         (phone) running WhatsApp Business application.
 
@@ -24,3 +24,4 @@ class Device:
                 "getDeviceInfo/{{apiTokenInstance}}"
             )
         )
+

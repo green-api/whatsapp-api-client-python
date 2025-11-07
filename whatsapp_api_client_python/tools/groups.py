@@ -1,6 +1,8 @@
 from pathlib import Path
 from typing import List, TYPE_CHECKING
 
+import aiofiles
+
 from ..response import Response
 
 if TYPE_CHECKING:
@@ -27,6 +29,16 @@ class Groups:
             ), request_body
         )
 
+
+    async def createGroupAsync(self, groupName: str, chatIds: List[str]) -> Response:
+        request_body = self.__handle_parameters(locals())
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/createGroup/{{apiTokenInstance}}",
+            request_body
+        )
+
     def updateGroupName(self, groupId: str, groupName: str) -> Response:
         """
         The method changes a group chat name.
@@ -43,6 +55,15 @@ class Groups:
             ), request_body
         )
 
+    async def updateGroupNameAsync(self, groupId: str, groupName: str) -> Response:
+        request_body = self.__handle_parameters(locals())
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/updateGroupName/{{apiTokenInstance}}",
+            request_body
+        )
+
     def getGroupData(self, groupId: str) -> Response:
         """
         The method gets group chat data.
@@ -57,6 +78,15 @@ class Groups:
                 "{{host}}/waInstance{{idInstance}}/"
                 "getGroupData/{{apiTokenInstance}}"
             ), request_body
+        )
+
+    async def getGroupDataAsync(self, groupId: str) -> Response:
+        request_body = self.__handle_parameters(locals())
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/getGroupData/{{apiTokenInstance}}",
+            request_body
         )
 
     def addGroupParticipant(
@@ -77,6 +107,17 @@ class Groups:
             ), request_body
         )
 
+    async def addGroupParticipantAsync(
+            self, groupId: str, participantChatId: str
+    ) -> Response:
+        request_body = self.__handle_parameters(locals())
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/addGroupParticipant/{{apiTokenInstance}}",
+            request_body
+        )
+
     def removeGroupParticipant(
             self, groupId: str, participantChatId: str
     ) -> Response:
@@ -95,6 +136,17 @@ class Groups:
             ), request_body
         )
 
+    async def removeGroupParticipantAsync(
+            self, groupId: str, participantChatId: str
+    ) -> Response:
+        request_body = self.__handle_parameters(locals())
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/removeGroupParticipant/{{apiTokenInstance}}",
+            request_body
+        )
+
     def setGroupAdmin(self, groupId: str, participantChatId: str) -> Response:
         """
         The method sets a group chat participant as an administrator.
@@ -109,6 +161,15 @@ class Groups:
                 "{{host}}/waInstance{{idInstance}}/"
                 "setGroupAdmin/{{apiTokenInstance}}"
             ), request_body
+        )
+
+    async def setGroupAdminAsync(self, groupId: str, participantChatId: str) -> Response:
+        request_body = self.__handle_parameters(locals())
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/setGroupAdmin/{{apiTokenInstance}}",
+            request_body
         )
 
     def removeAdmin(self, groupId: str, participantChatId: str) -> Response:
@@ -126,6 +187,15 @@ class Groups:
                 "{{host}}/waInstance{{idInstance}}/"
                 "removeAdmin/{{apiTokenInstance}}"
             ), request_body
+        )
+
+    async def removeAdminAsync(self, groupId: str, participantChatId: str) -> Response:
+        request_body = self.__handle_parameters(locals())
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/removeAdmin/{{apiTokenInstance}}",
+            request_body
         )
 
     def setGroupPicture(self, groupId: str, path: str) -> Response:
@@ -149,6 +219,23 @@ class Groups:
             ), request_body, files
         )
 
+    async def setGroupPictureAsync(self, groupId: str, path: str) -> Response:
+        request_body = self.__handle_parameters(locals())
+
+        request_body.pop("path")
+        file_name = Path(path).name
+
+        async with aiofiles.open(path, "rb") as file:
+            file_data = await file.read()
+            files = {"file": (file_name, file_data, "image/jpeg")}
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/setGroupPicture/{{apiTokenInstance}}",
+            request_body, 
+            files=files
+        )
+
     def leaveGroup(self, groupId: str) -> Response:
         """
         The method makes the current account user leave the group chat.
@@ -163,6 +250,15 @@ class Groups:
                 "{{host}}/waInstance{{idInstance}}/"
                 "leaveGroup/{{apiTokenInstance}}"
             ), request_body
+        )
+
+    async def leaveGroupAsync(self, groupId: str) -> Response:
+        request_body = self.__handle_parameters(locals())
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/leaveGroup/{{apiTokenInstance}}",
+            request_body
         )
 
     @classmethod

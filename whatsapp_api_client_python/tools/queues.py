@@ -25,6 +25,11 @@ class Queues:
             )
         )
 
+    async def showMessagesQueueAsync(self) -> Response:
+        return await self.api.requestAsync(
+            "GET", "{{host}}/waInstance{{idInstance}}/showMessagesQueue/{{apiTokenInstance}}"
+        )
+
     def clearMessagesQueue(self) -> Response:
         """
         The method is aimed for clearing the queue of messages to be
@@ -38,4 +43,9 @@ class Queues:
                 "{{host}}/waInstance{{idInstance}}/"
                 "clearMessagesQueue/{{apiTokenInstance}}"
             )
+        )
+
+    async def clearMessagesQueueAsync(self) -> Response:
+        return await self.api.requestAsync(
+            "GET", "{{host}}/waInstance{{idInstance}}/clearMessagesQueue/{{apiTokenInstance}}"
         )
