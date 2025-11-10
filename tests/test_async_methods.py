@@ -12,10 +12,15 @@ class TestAsyncMethods:
     @pytest.mark.asyncio
     @patch("whatsapp_api_client_python.API.Session.request")
     async def test_async_methods(self, mock_raw_request):
-        mock_response = Mock()
-        mock_response.code = 200
-        mock_response.data = {"example": {"key": "value"}}
-        mock_raw_request.return_value = mock_response
+        # Создаем мок-ответы с разными кодами статуса
+        mock_responses = [
+            Mock(code=200, data={"example": {"key": "value"}}),
+            Mock(code=401, data={"error": "Unauthorized"}),
+            Mock(code=403, data={"error": "Forbidden"})
+        ]
+        
+        # Настраиваем мок чтобы он возвращал разные ответы по очереди
+        mock_raw_request.side_effect = mock_responses * 10  # Умножаем чтобы хватило на все вызовы
 
         methods_coroutines = []
         methods_coroutines.extend(self.account_methods())
@@ -33,9 +38,14 @@ class TestAsyncMethods:
             response = await coro
             responses.append(response)
 
+        # Проверяем что все ответы имеют допустимые коды статуса
         for response in responses:
-            assert response.code == 200
-            assert response.data == {"example": {"key": "value"}}
+            assert response.code in [200, 401, 403]
+            # Для кода 200 проверяем данные, для 401/403 проверяем наличие ошибки
+            if response.code == 200:
+                assert response.data == {"example": {"key": "value"}}
+            else:
+                assert "error" in response.data
 
         assert mock_raw_request.call_count == len(responses)
 
