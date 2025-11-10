@@ -12,9 +12,6 @@ async def main():
 
     try:
         await greenAPI.webhooks.startReceivingNotificationsAsync(handler)
-        await stop_event.wait()
-        await greenAPI.webhooks.stopReceivingNotificationsAsync()
-
     except Exception as e:
         print(e)
 

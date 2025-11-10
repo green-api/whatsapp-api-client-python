@@ -12,7 +12,8 @@ async def main():
         "sample-clouds2-400x300.png",
         "Sample PNG"
     )
-    print(response.data) if response.code == 200 else print(response.error)
+    if response.code == 200:
+        print(response.data)
 
 if __name__ == '__main__':
     asyncio.run(main())

@@ -7,7 +7,8 @@ greenAPI = API.GreenAPI(
 
 async def main():
     response = await greenAPI.statuses.deleteStatusAsync('BAE54F518532FCB1')
-    print(response.data) if response.code == 200 else print(response.error)
+    if response.code == 200:
+        print(response.data)
 
 if __name__ == '__main__':
     asyncio.run(main())

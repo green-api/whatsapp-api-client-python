@@ -26,7 +26,8 @@ async def main():
     }
 
     response = await greenAPI.partner.createInstanceAsync(settings)
-    print(response.data) if response.code == 200 else print(response.error)
+    if response.code == 200:
+        print(response.data)
 
 if __name__ == '__main__':
     asyncio.run(main())

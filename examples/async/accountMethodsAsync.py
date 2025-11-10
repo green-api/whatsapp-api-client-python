@@ -6,27 +6,18 @@ greenAPI = API.GreenAPI(
 )
 
 async def main():
-    response = await greenAPI.account.getSettingsAsync()
-    print(response.data) if response.code == 200 else print(response.error)
-
-    response = await greenAPI.account.getWaSettingsAsync()
-    print(response.data) if response.code == 200 else print(response.error)
-
-    settings = {"outgoingWebhook": "yes", "incomingWebhook": "yes"}
-    response = await greenAPI.account.setSettingsAsync(settings)
-    print(response.data) if response.code == 200 else print(response.error)
-
-    response = await greenAPI.account.getStateInstanceAsync()
-    print(response.data) if response.code == 200 else print(response.error)
-
-    response = await greenAPI.account.rebootAsync()
-    print(response.data) if response.code == 200 else print(response.error)
+    tasks = [
+        greenAPI.account.getSettingsAsync(),
+        greenAPI.account.getWaSettingsAsync(),
+        greenAPI.account.setSettingsAsync({"outgoingWebhook": "yes", "incomingWebhook": "yes"}),
+        greenAPI.account.getStateInstanceAsync(),
+        greenAPI.account.rebootAsync(),
+        greenAPI.account.qrAsync(),
+        greenAPI.account.getAuthorizationCodeAsync(79876543210)
+    ]
     
-    response = await greenAPI.account.qrAsync()
-    print(response.data) if response.code == 200 else print(response.error)
-
-    response = await greenAPI.account.getAuthorizationCodeAsync(79876543210)
-    print(response.data) if response.code == 200 else print(response.error)
+    responses = await asyncio.gather(*tasks, return_exceptions=True)
+    [print(response.data) for response in responses if response.code == 200]
 
 if __name__ == '__main__':
     asyncio.run(main())

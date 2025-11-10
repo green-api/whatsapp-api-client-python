@@ -6,11 +6,14 @@ greenAPI = API.GreenAPI(
 )
 
 async def main():
-    response = await greenAPI.journals.lastIncomingMessagesAsync(4320)
-    print(response.data) if response.code == 200 else print(response.error)
+    tasks = [
+        greenAPI.journals.lastIncomingMessagesAsync(4320),
+        greenAPI.journals.lastOutgoingMessagesAsync(4320)
+    ]
 
-    response = await greenAPI.journals.lastOutgoingMessagesAsync(4320)
-    print(response.data) if response.code == 200 else print(response.error)
+    responses = await asyncio.gather(*tasks, return_exceptions=True)
+    [print(response.data) for response in responses if response.code == 200]
+            
 
 if __name__ == '__main__':
     asyncio.run(main())

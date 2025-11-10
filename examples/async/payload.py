@@ -7,16 +7,21 @@ class GreenAPIDemo:
         self.test_chat = "11001234567@c.us"
 
     async def run_demo(self):
-        await self.demo_account_management()
-        await self.demo_contacts()
-        await self.demo_sending_messages()
-        await self.demo_journals()
-        await self.demo_queues()
+        tasks = [
+            self.demo_account_management(),
+            self.demo_contacts(),
+            self.demo_sending_messages(),
+            self.demo_journals(),
+            self.demo_queues()
+        ]
+        await asyncio.gather(*tasks, return_exceptions=True)
+
 
     async def demo_account_management(self):
         response = await self.greenAPI.account.getStateInstanceAsync()
-        print(f"getStateInstanceAsync: {response.data.get('stateInstance') if response.code == 200 else response.error}")
-
+        if response.code == 200:
+            print(response.data)
+            
         response = await self.greenAPI.account.getSettingsAsync()
         if response.code == 200:
             settings = response.data
@@ -27,17 +32,18 @@ class GreenAPIDemo:
 
         new_settings = {"delaySendMessagesMilliseconds": 1000, "outgoingWebhook": "yes", "incomingWebhook": "yes"}
         response = await self.greenAPI.account.setSettingsAsync(new_settings)
-        print(f"setSettingsAsync: {'Success' if response.code == 200 else 'Error'}")
+        if response.code == 200:
+            print("setSettings: ", response.data)
 
         response = await self.greenAPI.account.qrAsync()
         if response.code == 200:
-            print(f"qrAsync received (data size: {len(response.data)} bytes)")
+            print(f"QR received (data size: {len(response.data)} bytes)")
 
     async def demo_contacts(self):
         response = await self.greenAPI.serviceMethods.getContactsAsync()
         if response.code == 200:
             contacts = response.data
-            print(f"getContactsAsync: {len(contacts)} contacts were received")
+            print(f"getContacts: {len(contacts)} contacts were received")
 
             for i, contact in enumerate(contacts[:3]):
                 print(f"   {i+1}. {contact.get('name', 'No name')} - {contact.get('id')}")
@@ -55,14 +61,16 @@ class GreenAPIDemo:
             self.test_chat,
             "This message was sent from Green-API SDK Python"
         )
-        print(f"Text message {'sent' if response.code == 200 else 'error'}")
+        if response.code == 200:
+            print("Text message sent: ", response.data)
 
         response = await self.greenAPI.sending.sendMessageAsync(
             self.test_chat,
             "Checking link preview: https://green-api.com",
             linkPreview=True
         )
-        print(f"Message with preview {'sent' if response.code == 200 else 'error'}")
+        if response.code == 200:
+            print("Message with preview sent: ", response.data)
 
         response = await self.greenAPI.sending.sendPollAsync(
             self.test_chat,
@@ -74,7 +82,8 @@ class GreenAPIDemo:
             ],
             multipleAnswers=False
         )
-        print(f"Poll message {'sent' if response.code == 200 else 'error'}")
+        if response.code == 200:
+            print("Poll message sent: ", response.data)
 
         contact = {
             "phoneContact": 79001234567,
@@ -85,16 +94,18 @@ class GreenAPIDemo:
             self.test_chat,
             contact
         )
-        print(f"Contact message {'sent' if response.code == 200 else 'error'}")
+        if response.code == 200:
+            print("Contact message sent: ", response.data)
 
-        response = await self.greenAPI.sending.sendLocationAsync(
-            self.test_chat,
-            55.755826,
-            37.617300,
-            "Red Square,"
-            "Moscow, Russia"
+        response = await greenAPI.sending.sendLocationAsync(
+            "79001234567@c.us",
+            44.9370129,
+            89.8728409,
+            "Restaurant",
+            "123456, Best Place"
         )
-        print(f"Location message {'sent' if response.code == 200 else 'error'}")
+        if response.code == 200:
+            print("Location message sent: ", response.data)
 
     async def demo_journals(self):
         response = await self.greenAPI.journals.lastIncomingMessagesAsync(minutes=1440)
@@ -115,7 +126,8 @@ class GreenAPIDemo:
         await asyncio.sleep(5)
 
         response = await self.greenAPI.queues.clearMessagesQueueAsync()
-        print(f"Queue cleared: {'success' if response.code == 200 else 'error'}")
+        if response.code == 200:
+            print("Queue cleared: ", response.data)
 
 async def main():
     demo = GreenAPIDemo()
@@ -123,5 +135,6 @@ async def main():
         await demo.run_demo()
     except Exception as e:
         print(f"error: {e}")
+
 if __name__ == '__main__':
     asyncio.run(main())

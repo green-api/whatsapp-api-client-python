@@ -136,7 +136,6 @@ class GreenApi:
                     data = aiohttp.FormData()
                     for key, value in (payload or {}).items():
                         if isinstance(value, (dict, list)):
-                            import json
                             data.add_field(key, json.dumps(value), content_type='application/json')
                         else:
                             data.add_field(key, str(value))

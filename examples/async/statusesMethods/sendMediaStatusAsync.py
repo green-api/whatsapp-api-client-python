@@ -11,7 +11,8 @@ async def main():
         "test.mp4", 
         "#54c774"
     )
-    print(response.data) if response.code == 200 else print(response.error)
+    if response.code == 200:
+        print(response.data)
 
 if __name__ == '__main__':
     asyncio.run(main())

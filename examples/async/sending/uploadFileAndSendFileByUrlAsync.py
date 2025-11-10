@@ -1,5 +1,5 @@
 import asyncio
-from os.path import basename
+import os
 from urllib.parse import urlparse
 from whatsapp_api_client_python import API
 
@@ -8,7 +8,12 @@ greenAPI = API.GreenAPI(
 )
 
 async def main():
-    upload_file_response = await greenAPI.sending.uploadFileAsync("data/logo.jpg")
+    file_path = "data/logo.jpg"
+    if not os.path.exists(file_path):
+        print(f"File {file_path} not found")
+        return
+
+    upload_file_response = await greenAPI.sending.uploadFileAsync(file_path)
     
     if upload_file_response.code == 200:
         print(upload_file_response.data)
@@ -20,9 +25,9 @@ async def main():
         send_file_response = await greenAPI.sending.sendFileByUrlAsync(
             "11001234567@c.us", url_file, file_name
         )
-        print(send_file_response.data) if send_file_response.code == 200 else print(send_file_response.error)
-    else:
-        print(upload_file_response.error)
+
+        if send_file_response.code == 200:
+            print(send_file_response.data)
 
 if __name__ == '__main__':
     asyncio.run(main())

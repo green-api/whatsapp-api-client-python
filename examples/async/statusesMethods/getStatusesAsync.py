@@ -6,14 +6,14 @@ greenAPI = API.GreenAPI(
 )
 
 async def main():
-    response1 = await greenAPI.statuses.getIncomingStatusesAsync(1400)
-    print(response1.data) if response.code == 200 else print(response1.error)
+    tasks = [
+        greenAPI.statuses.getIncomingStatusesAsync(1400),
+        greenAPI.statuses.getOutgoingStatusesAsync(1400),
+        greenAPI.statuses.getStatusStatisticAsync('BAE54F518532FCB1')
+    ]
 
-    response2 = await greenAPI.statuses.getOutgoingStatusesAsync(1400)
-    print(response2.data) if response.code == 200 else print(response2.error)
-
-    response3 = await greenAPI.statuses.getStatusStatisticAsync('BAE54F518532FCB1')
-    print(response3.data) if response.code == 200 else print(response3.error)
+    responses = await asyncio.gather(*tasks, return_exceptions=True)
+    [print(response.data) for response in responses if response.code == 200]
 
 if __name__ == '__main__':
     asyncio.run(main())

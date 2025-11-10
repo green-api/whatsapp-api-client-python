@@ -6,8 +6,9 @@ greenAPI = API.GreenAPI(
 )
 
 async def main():
-    response = await greenAPI.sending.sendMessageAsync("11001234567@c.us", "Message Text (async)")
-    print(response.data) if response.code == 200 else print(response.error)
+    response = await greenAPI.sending.sendMessageAsync("11001234567@c.us", "I use Green-API to send this message to you!")
+    if response.code == 200:
+        print(response.data)
 
 if __name__ == '__main__':
     asyncio.run(main())

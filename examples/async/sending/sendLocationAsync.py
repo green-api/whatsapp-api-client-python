@@ -7,13 +7,14 @@ greenAPI = API.GreenAPI(
 
 async def main():
     response = await greenAPI.sending.sendLocationAsync(
-        "11001234567@c.us",
-        0.0,
-        0.0,
+        "79001234567@c.us",
+        44.9370129,
+        89.8728409,
         "Restaurant",
-        "123456, Best Place",
+        "123456, Best Place"
     )
-    print(response.data) if response.code == 200 else print(response.error)
+    if response.code == 200:
+        print(response.data)
 
 if __name__ == '__main__':
     asyncio.run(main())

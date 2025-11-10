@@ -6,20 +6,14 @@ greenAPI = API.GreenAPI(
 )
 
 async def main():
-    response = await greenAPI.groups.createGroupAsync(
-        "SDK Python", 
-        ["11001234567@c.us", "11001234568@c.us"]
-    )
-    print(response.data) if response.code == 200 else print(response.error)
-    
-    response = await greenAPI.groups.addGroupParticipantAsync(
-        "1234567890@g.us", 
-        "11001234567@c.us"
-    )
-    print(response.data) if response.code == 200 else print(response.error)
-    
-    response = await greenAPI.groups.getGroupDataAsync("1234567890@g.us")
-    print(response.data) if response.code == 200 else print(response.error)
+    tasks = [
+        greenAPI.groups.createGroupAsync("SDK Python", ["11001234567@c.us", "11001234568@c.us"]),
+        greenAPI.groups.addGroupParticipantAsync("1234567890@g.us", "11001234567@c.us"),
+        greenAPI.groups.getGroupDataAsync("1234567890@g.us")
+    ]
+
+    responses = await asyncio.gather(*tasks, return_exceptions=True)
+    [print(response.data) for response in responses if response.code == 200]
 
 if __name__ == '__main__':
     asyncio.run(main())
