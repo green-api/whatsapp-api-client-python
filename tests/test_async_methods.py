@@ -1,7 +1,6 @@
 import typing
 import pytest
-from unittest.mock import Mock, patch, AsyncMock
-import asyncio
+from unittest.mock import Mock, patch
 
 from whatsapp_api_client_python.API import GreenAPI
 
@@ -13,17 +12,14 @@ class TestAsyncMethods:
     @pytest.mark.asyncio
     async def test_single_async_method(self):
         """Тестируем только один метод для упрощения отладки"""
-        # Создаем реальный мок-объект с нужными атрибутами
         mock_response = Mock()
         mock_response.code = 200
         mock_response.data = {"example": {"key": "value"}}
         
-        # Создаем асинхронную функцию, которая возвращает наш мок
         async def mock_request(*args, **kwargs):
             return mock_response
         
         with patch("whatsapp_api_client_python.API.Session.request", side_effect=mock_request):
-            # Тестируем только один метод
             response = await api.account.getSettingsAsync()
             
             assert response.code == 200
@@ -31,12 +27,9 @@ class TestAsyncMethods:
 
     @pytest.mark.asyncio
     async def test_async_methods_with_different_status_codes(self):
-        """Тестируем все методы с разными кодами ответа"""
-        # Создаем список мок-ответов с разными статусами
         mock_responses = []
-        for i in range(50):  # Создаем достаточно ответов
+        for i in range(50):
             mock_response = Mock()
-            # Чередуем коды статусов: 200, 401, 403
             status_code = [200, 401, 403][i % 3]
             mock_response.code = status_code
             if status_code == 200:
@@ -65,7 +58,6 @@ class TestAsyncMethods:
                 response = await coro
                 responses.append(response)
 
-            # Проверяем что все ответы имеют допустимые коды статуса
             valid_codes = [200, 401, 403]
             for response in responses:
                 assert response.code in valid_codes
@@ -76,8 +68,6 @@ class TestAsyncMethods:
 
     @pytest.mark.asyncio
     async def test_async_methods_all_success(self):
-        """Тестируем все методы с успешными ответами"""
-        # Создаем мок для успешных ответов
         mock_response = Mock()
         mock_response.code = 200
         mock_response.data = {"example": {"key": "value"}}
