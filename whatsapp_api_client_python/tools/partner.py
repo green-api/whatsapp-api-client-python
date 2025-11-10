@@ -22,7 +22,12 @@ class Partner:
                 "getInstances/{{partnerToken}}"
             )
         )
-    
+
+    async def getInstancesAsync(self) -> Response:
+        return await self.api.requestAsync(
+            "GET", "{{host}}/partner/getInstances/{{partnerToken}}"
+        )
+
     def createInstance(self, requestBody: Dict[str, Union[int, str]]) -> Response:
         """
         The method is aimed for creating a messenger account instance on the partner's part.
@@ -36,7 +41,14 @@ class Partner:
                 "createInstance/{{partnerToken}}"
             ), requestBody
         )
-    
+
+    async def createInstanceAsync(self, requestBody: Dict[str, Union[int, str]]) -> Response:
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/partner/createInstance/{{partnerToken}}",
+            requestBody
+        )
+
     def deleteInstanceAccount(self, idInstance: int) -> Response:
         """
         The method is aimed for deleting an instance of the partners's account.
@@ -52,7 +64,16 @@ class Partner:
                 "deleteInstanceAccount/{{partnerToken}}"
             ), request_body
         )
-    
+
+    async def deleteInstanceAccountAsync(self, idInstance: int) -> Response:
+        request_body = self.__handle_parameters(locals())
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/partner/deleteInstanceAccount/{{partnerToken}}",
+            request_body
+        )
+
     @classmethod
     def __handle_parameters(cls, parameters: dict) -> dict:
         handled_parameters = parameters.copy()

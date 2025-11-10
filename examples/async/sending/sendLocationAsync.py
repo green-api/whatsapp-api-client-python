@@ -1,0 +1,20 @@
+import asyncio
+from whatsapp_api_client_python import API
+
+greenAPI = API.GreenAPI(
+    "1101000001", "d75b3a66374942c5b3c019c698abc2067e151558acbd412345"
+)
+
+async def main():
+    response = await greenAPI.sending.sendLocationAsync(
+        "79001234567@c.us",
+        44.9370129,
+        89.8728409,
+        "Restaurant",
+        "123456, Best Place"
+    )
+    if response.code == 200:
+        print(response.data)
+
+if __name__ == '__main__':
+    asyncio.run(main())

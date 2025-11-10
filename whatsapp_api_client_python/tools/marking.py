@@ -30,3 +30,17 @@ class Marking:
                 "readChat/{{apiTokenInstance}}"
             ), request_body
         )
+
+    async def readChatAsync(
+            self, chatId: str, idMessage: Optional[str] = None
+    ) -> Response:
+        request_body = locals()
+        if idMessage is None:
+            request_body.pop("idMessage")
+        request_body.pop("self")
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/readChat/{{apiTokenInstance}}",
+            request_body
+        )

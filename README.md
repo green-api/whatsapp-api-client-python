@@ -58,9 +58,7 @@ greenAPI = API.GreenAPI(
 
 ### Sending a text message to a WhatsApp number
 
-Link to example: [sendTextMessage.py](
-https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendTextMessage.py
-).
+Link to example: [sendTextMessage.py](./examples/sync/sendTextMessage.py).
 
 ```
 response = greenAPI.sending.sendMessage("11001234567@c.us", "Message text")
@@ -68,11 +66,23 @@ response = greenAPI.sending.sendMessage("11001234567@c.us", "Message text")
 print(response.data)
 ```
 
+### Sending a text message asynchronously
+
+Link to example: [sendMessageAsync.py](./examples/async/sending/sendMessageAsync.py).
+
+```
+import asyncio
+
+async def main():
+    response = await greenAPI.sending.sendMessageAsync("11001234567@c.us", "Message text")
+    print(response.data)
+
+asyncio.run(main())
+```
+
 ### Sending an image via URL
 
-Link to example: [sendPictureByLink.py](
-https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPictureByLink.py
-).
+Link to example: [sendPictureByLink.py](./examples/sync/sendPictureByLink.py).
 
 ```
 response = greenAPI.sending.sendFileByUrl(
@@ -87,19 +97,36 @@ print(response.data)
 
 ### Sending an image by uploading from the disk
 
-Link to example: [sendPictureByUpload.py](
-https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPictureByUpload.py
-).
+Link to example: [sendPictureByUpload.py](./examples/sync/sendPictureByUpload.py).
 
 ```
 response = greenAPI.sending.sendFileByUpload(
     "11001234567@c.us",
-    "data/rates.png",
-    "rates.png",
+    "data/logo.jpg",
+    "logo.jpg",
     "Available rates"
 )
 
 print(response.data)
+```
+
+### Sending an image asynchronously by uploading from the disk
+
+Link to example: [sendFileByUploadAsync.py](./examples/async/sending/sendFileByUploadAsync.py).
+
+```
+import asyncio
+
+async def main():
+    response = await greenAPI.sending.sendFileByUploadAsync(
+        "11001234567@c.us",
+        "data/logo.jpg",
+        "logo.jpg",
+        "Available rates"
+    )
+    print(response.data)
+
+asyncio.run(main())
 ```
 
 ### Group creation and sending a message to the group
@@ -107,9 +134,7 @@ print(response.data)
 **Attention**. If one tries to create a group with a non-existent number, WhatsApp may block the sender's number. The
 number in the example is non-existent.
 
-Link to example: [createGroupAndSendMessage.py](
-https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/createGroupAndSendMessage.py
-).
+Link to example: [createGroupAndSendMessage.py](./examples/sync/createGroupAndSendMessage.py).
 
 ```
 create_group_response = greenAPI.groups.createGroup(
@@ -123,9 +148,7 @@ if create_group_response.code == 200:
 
 ### Receive incoming messages by HTTP API
 
-Link to example: [receiveNotification.py](
-https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/receiveNotification.py
-).
+Link to example: [receiveNotification.py](./examples/sync/receiveNotification.py).
 
 The general concept of receiving data in the GREEN API is described [here](
 https://green-api.com/en/docs/api/receiving/
@@ -142,18 +165,27 @@ onEvent - your function which should contain parameters:
 | typeWebhook | received notification type (str) |
 | body        | notification body (dict)         |
 
-Notification body types and formats can be found [here](
-https://green-api.com/en/docs/api/receiving/notifications-format/
-).
+Notification body types and formats can be found [here](https://green-api.com/en/docs/api/receiving/notifications-format/).
 
 This method will be called when an incoming notification is received. Next, process notifications according to the
 business logic of your system.
 
+### Receive incoming messages asynchronously by HTTP API
+
+Link to example: [receiveNotificationAsync.py](./examples/async/receiveNotificationAsync.py).
+
+```
+import asyncio
+
+async def main():
+    await greenAPI.webhooks.startReceivingNotificationsAsync(onEvent)
+
+asyncio.run(main())
+```
+
 ### Sending a polling message
 
-Link to example: [sendPoll.py](
-https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPoll.py
-).
+Link to example: [sendPoll.py](./examples/sync/sendPoll.py).
 
 ```
 response = greenAPI.sending.sendPoll(
@@ -171,7 +203,7 @@ print(response.data)
 
 ### Sending a text status
 
-Link to example: [sendTextStatus.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/statusesMethods/sendTextStatus.py).
+Link to example: [sendTextStatus.py](./examples/sync/statusesMethods/sendTextStatus.py).
 
 ```
 response = greenAPI.statuses.sendTextStatus(
@@ -185,16 +217,24 @@ print(response.data)
 
 ## Examples list
 
-| Description                                                    | Module                                                                                                                                    |
-|----------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
-| Example of sending text                                        | [sendTextMessage.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendTextMessage.py)                     |
-| Example of sending a picture by URL                            | [sendPictureByLink.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPictureByLink.py)                 |
-| Example of sending a picture by uploading from the disk        | [sendPictureByUpload.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPictureByUpload.py)             |
-| Example of a group creation and sending a message to the group | [createGroupAndSendMessage.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/createGroupAndSendMessage.py) |
-| Example of incoming webhooks receiving                         | [receiveNotification.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/receiveNotification.py)             |
-| Example of sending a polling message                           | [sendPoll.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/sendPoll.py)                                   |
-| Example of sending a text status                          | [sendTextStatus.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/statusesMethods/sendTextStatus.py)                          |
-| Example of creating instance                          | [CreateInstance.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/partherMethods/CreateInstance.py)                          |
+| Description                                                    | Module                                                                                                                                         |
+|----------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| Example of sending text                                        | [sendTextMessage.py](./examples/sync/sendTextMessage.pyy)                     |
+| Example of sending text asynchronously                         | [sendTextMessageAsync.py](./examples/async/sendMessageAsync.py)              |
+| Example of sending a picture by URL                            | [sendPictureByLink.py](./examples/sync/sendPictureByLink.py)                 |
+| Example of sending a file by URL asynchronously                | [sendFileByUrlAsync.py](./examples/async/sending/sendFileByUrlAsync.py)      |
+| Example of sending a picture by uploading from the disk        | [sendPictureByUpload.py](./examples/sync/sendPictureByUpload.py)             |
+| Example of sending file by uploading from the disk asynchronously  | [sendFileByUploadAsync.py](./examples/async/sending/sendFileByUploadAsync.py) |
+| Example of a group creation and sending a message to the group | [createGroupAndSendMessage.py](./examples/sync/createGroupAndSendMessage.py) |
+| Example of a group creation and sending a message to the group asynchronously | [createGroupAndSendMessageAsync.py](./examples/async/createGroupAndSendMessageAsync.py) |
+| Example of incoming webhooks receiving                         | [receiveNotification.py](./examples/sync/receiveNotification.py)             |
+| Example of incoming webhooks receiving asynchronously          | [receiveNotificationAsync.py](./examples/async/receiveNotificationAsync.py)  |
+| Example of sending a polling message                           | [sendPoll.py](./examples/sync/sendPoll.py)                                   |
+| Example of sending a polling message asynchronously            | [sendPollAsync.py](./examples/async/sending/sendPollasync.py)                |
+| Example of sending a text status                               | [sendTextStatus.py](./examples/sync/statusesMethods/sendTextStatus.py)       |
+| Example of sending a text status asynchronously                | [sendTextStatusAsync.py](./examples/async/statusesMethods/sendTextStatusAsync.py) |
+| Example of creating instance                                   | [CreateInstance.py](./examples/sync/partherMethods/CreateInstance.py)        |
+| Example of creating instance asynchronously                    | [CreateInstanceAsync.py](./examples/async/partherMethods/CreateInstanceAsync.py)  |
 
 ## The full list of the library methods
 
@@ -272,10 +312,9 @@ print(response.data)
 ## External products
 
 - [requests](https://requests.readthedocs.io/en/latest/) - for HTTP requests.
+- [aiohttp](https://docs.aiohttp.org/) - for async HTTP requests.
 
 ## License
 
-Licensed under [
-Creative Commons Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)
-](https://creativecommons.org/licenses/by-nd/4.0/) terms.
+Licensed under [Creative Commons Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)](https://creativecommons.org/licenses/by-nd/4.0/) terms.
 Please see file [LICENSE](https://github.com/green-api/whatsapp-api-client-python/blob/master/LICENSE).

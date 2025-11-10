@@ -10,7 +10,7 @@ greenAPI = API.GreenAPI(
 
 def main():
     upload_file_response = greenAPI.sending.uploadFile(
-        "data/rates.png"
+        "data/logo.jpg"
     )
     if upload_file_response.code == 200:
         print(upload_file_response.data)

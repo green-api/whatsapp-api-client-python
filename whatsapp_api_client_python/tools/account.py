@@ -1,6 +1,8 @@
 from pathlib import Path
 from typing import Dict, TYPE_CHECKING, Union
 
+import aiofiles
+
 from ..response import Response
 
 if TYPE_CHECKING:
@@ -25,6 +27,11 @@ class Account:
             )
         )
 
+    async def getSettingsAsync(self) -> Response:
+        return await self.api.requestAsync(
+            "GET", "{{host}}/waInstance{{idInstance}}/getSettings/{{apiTokenInstance}}"
+        )
+
     def getWaSettings(self) -> Response:
         """
         The method is aimed to get information about the WhatsApp
@@ -38,6 +45,11 @@ class Account:
                 "{{host}}/waInstance{{idInstance}}/"
                 "getWaSettings/{{apiTokenInstance}}"
             )
+        )
+
+    async def getWaSettingsAsync(self) -> Response:
+        return await self.api.requestAsync(
+            "GET", "{{host}}/waInstance{{idInstance}}/getWaSettings/{{apiTokenInstance}}"
         )
 
     def setSettings(self, requestBody: Dict[str, Union[int, str]]) -> Response:
@@ -54,6 +66,14 @@ class Account:
             ), requestBody
         )
 
+    async def setSettingsAsync(self, requestBody: Dict[str, Union[int, str]]) -> Response:
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/setSettings/{{apiTokenInstance}}",
+            requestBody
+        )
+
+
     def getStateInstance(self) -> Response:
         """
         The method is aimed for getting the account state.
@@ -66,6 +86,11 @@ class Account:
                 "{{host}}/waInstance{{idInstance}}/"
                 "getStateInstance/{{apiTokenInstance}}"
             )
+        )
+
+    async def getStateInstanceAsync(self) -> Response:
+        return await self.api.requestAsync(
+            "GET", "{{host}}/waInstance{{idInstance}}/getStateInstance/{{apiTokenInstance}}"
         )
 
     def getStatusInstance(self) -> Response:
@@ -82,7 +107,7 @@ class Account:
                 "getStatusInstance/{{apiTokenInstance}}"
             )
         )
-
+    
     def reboot(self) -> Response:
         """
         The method is aimed for rebooting an account.
@@ -94,6 +119,11 @@ class Account:
             "GET", (
                 "{{host}}/waInstance{{idInstance}}/reboot/{{apiTokenInstance}}"
             )
+        )
+
+    async def rebootAsync(self) -> Response:
+        return await self.api.requestAsync(
+            "GET", "{{host}}/waInstance{{idInstance}}/reboot/{{apiTokenInstance}}"
         )
 
     def logout(self) -> Response:
@@ -109,6 +139,11 @@ class Account:
             )
         )
 
+    async def logoutAsync(self) -> Response:
+        return await self.api.requestAsync(
+            "GET", "{{host}}/waInstance{{idInstance}}/logout/{{apiTokenInstance}}"
+        )
+
     def qr(self) -> Response:
         """
         The method is aimed for getting QR code.
@@ -117,6 +152,11 @@ class Account:
         """
 
         return self.api.request(
+            "GET", "{{host}}/waInstance{{idInstance}}/qr/{{apiTokenInstance}}"
+        )
+
+    async def qrAsync(self) -> Response:
+        return await self.api.requestAsync(
             "GET", "{{host}}/waInstance{{idInstance}}/qr/{{apiTokenInstance}}"
         )
 
@@ -137,6 +177,18 @@ class Account:
             ), files=files
         )
 
+    async def setProfilePictureAsync(self, path: str) -> Response:
+        file_name = Path(path).name
+        async with aiofiles.open(path, "rb") as file:
+            file_data = await file.read()
+            files = {"file": (file_name, file_data, "image/jpeg")}
+
+        return await self.api.requestAsync(
+            "POST", 
+            "{{host}}/waInstance{{idInstance}}/setProfilePicture/{{apiTokenInstance}}",
+            files=files
+        )
+
     def getAuthorizationCode(self, phoneNumber: int) -> Response:
         """
         The method is designed to authorize an instance by phone number.
@@ -152,4 +204,14 @@ class Account:
                 "{{host}}/waInstance{{idInstance}}/"
                 "getAuthorizationCode/{{apiTokenInstance}}"
             ), request_body
+        )
+
+    async def getAuthorizationCodeAsync(self, phoneNumber: int) -> Response:
+        request_body = locals()
+        request_body.pop("self")
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/getAuthorizationCode/{{apiTokenInstance}}",
+            request_body
         )
