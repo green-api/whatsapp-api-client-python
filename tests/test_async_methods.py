@@ -1,6 +1,6 @@
 import typing
 import pytest
-from unittest.mock import Mock, patch
+from unittest.mock import Mock, patch, AsyncMock
 
 from whatsapp_api_client_python.API import GreenAPI
 
@@ -10,7 +10,7 @@ path = "examples/data/logo.jpg"
 class TestAsyncMethods:
     
     @pytest.mark.asyncio
-    @patch("whatsapp_api_client_python.API.Session.request")
+    @patch("whatsapp_api_client_python.API.Session.request", new_callable=AsyncMock)
     async def test_async_methods(self, mock_raw_request):
         # Создаем мок-ответы с разными кодами статуса
         mock_responses = [
@@ -20,7 +20,7 @@ class TestAsyncMethods:
         ]
         
         # Настраиваем мок чтобы он возвращал разные ответы по очереди
-        mock_raw_request.side_effect = mock_responses * 10  # Умножаем чтобы хватило на все вызовы
+        mock_raw_request.side_effect = mock_responses * 20  # Умножаем чтобы хватило на все вызовы
 
         methods_coroutines = []
         methods_coroutines.extend(self.account_methods())
