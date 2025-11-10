@@ -97,7 +97,7 @@ class GreenAPIDemo:
         if response.code == 200:
             print("Contact message sent: ", response.data)
 
-        response = await greenAPI.sending.sendLocationAsync(
+        response = await self.greenAPI.sending.sendLocationAsync(
             "79001234567@c.us",
             44.9370129,
             89.8728409,

@@ -20,7 +20,7 @@ async def main():
         
         url_file = upload_file_response.data["urlFile"]
         url = urlparse(url_file)
-        file_name = basename(url.path)
+        file_name = os.path.basename(url.path)
         
         send_file_response = await greenAPI.sending.sendFileByUrlAsync(
             "11001234567@c.us", url_file, file_name
