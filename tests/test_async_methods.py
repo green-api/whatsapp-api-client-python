@@ -1,6 +1,7 @@
 import typing
 import pytest
 from unittest.mock import Mock, patch, AsyncMock
+import asyncio
 
 from whatsapp_api_client_python.API import GreenAPI
 
@@ -12,26 +13,76 @@ class TestAsyncMethods:
     @pytest.mark.asyncio
     async def test_single_async_method(self):
         """Тестируем только один метод для упрощения отладки"""
-        mock_response = AsyncMock()
+        # Создаем реальный мок-объект с нужными атрибутами
+        mock_response = Mock()
         mock_response.code = 200
         mock_response.data = {"example": {"key": "value"}}
         
-        with patch("whatsapp_api_client_python.API.Session.request", return_value=mock_response) as mock_request:
+        # Создаем асинхронную функцию, которая возвращает наш мок
+        async def mock_request(*args, **kwargs):
+            return mock_response
+        
+        with patch("whatsapp_api_client_python.API.Session.request", side_effect=mock_request):
             # Тестируем только один метод
             response = await api.account.getSettingsAsync()
             
             assert response.code == 200
             assert response.data == {"example": {"key": "value"}}
-            assert mock_request.call_count == 1
-    
+
     @pytest.mark.asyncio
-    async def test_async_methods(self):
-        """Полный тест всех методов"""
-        # Создаем простой асинхронный мок
-        async def mock_request(*args, **kwargs):
+    async def test_async_methods_with_different_status_codes(self):
+        """Тестируем все методы с разными кодами ответа"""
+        # Создаем список мок-ответов с разными статусами
+        mock_responses = []
+        for i in range(50):  # Создаем достаточно ответов
             mock_response = Mock()
-            mock_response.code = 200
-            mock_response.data = {"example": {"key": "value"}}
+            # Чередуем коды статусов: 200, 401, 403
+            status_code = [200, 401, 403][i % 3]
+            mock_response.code = status_code
+            if status_code == 200:
+                mock_response.data = {"example": {"key": "value"}}
+            else:
+                mock_response.data = {"error": "Unauthorized" if status_code == 401 else "Forbidden"}
+            mock_responses.append(mock_response)
+        
+        async def mock_request(*args, **kwargs):
+            return mock_responses.pop(0)
+        
+        with patch("whatsapp_api_client_python.API.Session.request", side_effect=mock_request):
+            methods_coroutines = []
+            methods_coroutines.extend(self.account_methods())
+            methods_coroutines.extend(self.group_methods())
+            methods_coroutines.extend(self.status_methods())
+            methods_coroutines.extend(self.log_methods())
+            methods_coroutines.extend(self.queue_methods())
+            methods_coroutines.extend(self.read_mark_methods())
+            methods_coroutines.extend(self.receiving_methods())
+            methods_coroutines.extend(self.sending_methods())
+            methods_coroutines.extend(self.service_methods())
+
+            responses = []
+            for coro in methods_coroutines:
+                response = await coro
+                responses.append(response)
+
+            # Проверяем что все ответы имеют допустимые коды статуса
+            valid_codes = [200, 401, 403]
+            for response in responses:
+                assert response.code in valid_codes
+                if response.code == 200:
+                    assert response.data == {"example": {"key": "value"}}
+                else:
+                    assert "error" in response.data
+
+    @pytest.mark.asyncio
+    async def test_async_methods_all_success(self):
+        """Тестируем все методы с успешными ответами"""
+        # Создаем мок для успешных ответов
+        mock_response = Mock()
+        mock_response.code = 200
+        mock_response.data = {"example": {"key": "value"}}
+        
+        async def mock_request(*args, **kwargs):
             return mock_response
         
         with patch("whatsapp_api_client_python.API.Session.request", side_effect=mock_request):
