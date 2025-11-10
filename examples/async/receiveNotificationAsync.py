@@ -8,8 +8,6 @@ greenAPI = API.GreenAPI(
 )
 
 async def main():
-    stop_event = asyncio.Event()
-
     try:
         await greenAPI.webhooks.startReceivingNotificationsAsync(handler)
     except Exception as e:

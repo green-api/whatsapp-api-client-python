@@ -25,7 +25,7 @@ class GreenAPIDemo:
         response = await self.greenAPI.account.getSettingsAsync()
         if response.code == 200:
             settings = response.data
-            print(f"getSettingsAsync:")
+            print("getSettings:")
             print(f"   - delaySendMessagesMilliseconds: {settings.get('delaySendMessagesMilliseconds', 'N/A')}ms")
             print(f"   - incomingWebhook: {settings.get('incomingWebhook', 'N/A')}")
             print(f"   - outgoingWebhook: {settings.get('outgoingWebhook', 'N/A')}")
@@ -122,7 +122,7 @@ class GreenAPIDemo:
             queue = response.data
             print(f"MessagesQueue: {len(queue)}")
 
-        print(f"Waiting 5 seconds... (for all messages to send)")
+        print("Waiting 5 seconds... (for all messages to send)")
         await asyncio.sleep(5)
 
         response = await self.greenAPI.queues.clearMessagesQueueAsync()
