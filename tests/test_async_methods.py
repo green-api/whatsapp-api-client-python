@@ -43,43 +43,43 @@ class TestAsyncMethods:
         return [
             api.account.getSettingsAsync(),
             api.account.getWaSettingsAsync(),
-            api.account.setSettingsAsync({}),
+            api.account.setSettingsAsync({"key": "value"}),
             api.account.getStateInstanceAsync(),
             api.account.rebootAsync(),
             api.account.logoutAsync(),
             api.account.qrAsync(),
             api.account.setProfilePictureAsync(path),
-            api.account.getAuthorizationCodeAsync(0)
+            api.account.getAuthorizationCodeAsync(12345678)
         ]
 
     def group_methods(self) -> typing.List:
         return [
-            api.groups.createGroupAsync("", []),
-            api.groups.updateGroupNameAsync(""),
-            api.groups.getGroupDataAsync(""),
-            api.groups.removeGroupParticipantAsync("", ""),
-            api.groups.addGroupParticipantAsync("", ""),
-            api.groups.setGroupAdminAsync("", ""),
-            api.groups.removeAdminAsync("", ""),
-            api.groups.setGroupPictureAsync("", ""),
-            api.groups.leaveGroupAsync("")
+            api.groups.createGroupAsync("GroupName", ["1234567890@c.us"]),
+            api.groups.updateGroupNameAsync("group_id", "NewGroupName"),
+            api.groups.getGroupDataAsync("group_id"),
+            api.groups.removeGroupParticipantAsync("group_id", "1234567890@c.us"),
+            api.groups.addGroupParticipantAsync("group_id", "1234567890@c.us"),
+            api.groups.setGroupAdminAsync("group_id", "1234567890@c.us"),
+            api.groups.removeAdminAsync("group_id", "1234567890@c.us"),
+            api.groups.setGroupPictureAsync("group_id", path),
+            api.groups.leaveGroupAsync("group_id")
         ]
 
     def status_methods(self) -> typing.List:
         return [
-            api.statuses.sendTextStatusAsync(""),
-            api.statuses.sendVoiceStatusAsync("", ""),
-            api.statuses.sendMediaStatusAsync("", ""),
-            api.statuses.deleteStatusAsync(""),
-            api.statuses.getStatusStatisticAsync(""),
+            api.statuses.sendTextStatusAsync("Status text"),
+            api.statuses.sendVoiceStatusAsync("status_id", path),
+            api.statuses.sendMediaStatusAsync("status_id", path),
+            api.statuses.deleteStatusAsync("status_id"),
+            api.statuses.getStatusStatisticAsync("status_id"),
             api.statuses.getIncomingStatusesAsync(),
             api.statuses.getOutgoingStatusesAsync()
         ]
 
     def log_methods(self) -> typing.List:
         return [
-            api.journals.getChatHistoryAsync(""),
-            api.journals.getMessageAsync("", ""),
+            api.journals.getChatHistoryAsync("1234567890@c.us"),
+            api.journals.getMessageAsync("chat_id", "message_id"),
             api.journals.lastIncomingMessagesAsync(),
             api.journals.lastOutgoingMessagesAsync()
         ]
@@ -91,36 +91,39 @@ class TestAsyncMethods:
         ]
 
     def read_mark_methods(self) -> typing.List:
-        return [api.marking.readChatAsync("")]
+        return [api.marking.readChatAsync("1234567890@c.us")]
 
     def receiving_methods(self) -> typing.List:
         return [
             api.receiving.receiveNotificationAsync(),
-            api.receiving.deleteNotificationAsync(0),
-            api.receiving.downloadFileAsync("", "")
+            api.receiving.deleteNotificationAsync(123),
+            api.receiving.downloadFileAsync("file_id", "path/to/save")
         ]
 
     def sending_methods(self) -> typing.List:
         return [
-            api.sending.sendMessageAsync("", ""),
-            api.sending.sendFileByUploadAsync("", ""),
-            api.sending.sendFileByUrlAsync("", "", ""),
-            api.sending.uploadFileAsync("image_path"),
-            api.sending.sendLocationAsync("", 0.0, 0.0),
-            api.sending.sendContactAsync("", {}),
-            api.sending.sendPollAsync("", "", [])
+            api.sending.sendMessageAsync("1234567890@c.us", "Hello"),
+            api.sending.sendFileByUploadAsync("1234567890@c.us", path),
+            api.sending.sendFileByUrlAsync("1234567890@c.us", "https://example.com/file.jpg", "file.jpg"),
+            api.sending.uploadFileAsync(path),
+            api.sending.sendLocationAsync("1234567890@c.us", 40.7128, -74.0060),
+            api.sending.sendContactAsync("1234567890@c.us", {
+                "name": {"firstName": "John", "lastName": "Doe"},
+                "phone": "1234567890"
+            }),
+            api.sending.sendPollAsync("1234567890@c.us", "Question?", ["Option1", "Option2"])
         ]
 
     def service_methods(self) -> typing.List:
         return [
-            api.serviceMethods.checkWhatsappAsync(0),
-            api.serviceMethods.getAvatarAsync(""),
+            api.serviceMethods.checkWhatsappAsync(1234567890),
+            api.serviceMethods.getAvatarAsync("1234567890@c.us"),
             api.serviceMethods.getContactsAsync(),
-            api.serviceMethods.getContactInfoAsync(""),
-            api.serviceMethods.deleteMessageAsync("", ""),
-            api.serviceMethods.archiveChatAsync(""),
-            api.serviceMethods.unarchiveChatAsync(""),
-            api.serviceMethods.setDisappearingChatAsync("")
+            api.serviceMethods.getContactInfoAsync("1234567890@c.us"),
+            api.serviceMethods.deleteMessageAsync("chat_id", "message_id"),
+            api.serviceMethods.archiveChatAsync("1234567890@c.us"),
+            api.serviceMethods.unarchiveChatAsync("1234567890@c.us"),
+            api.serviceMethods.setDisappearingChatAsync("1234567890@c.us", 3600)
         ]
 
 if __name__ == "__main__":
