@@ -24,7 +24,8 @@ async def main():
         "Check this out",
         "Hope you like it"
     )
-    if response.code == 200: print(response.data)
+    if response.code == 200: 
+        print(response.data)
 
 if __name__ == '__main__':
     asyncio.run(main())
