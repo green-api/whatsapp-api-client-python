@@ -58,7 +58,7 @@ greenAPI = API.GreenAPI(
 
 ### Sending a text message to a WhatsApp number
 
-Link to example: [sendTextMessage.py](./examples/sync/sendTextMessage.py).
+Link to example: [sendTextMessage.py](./examples/sync/sending/sendTextMessage.py).
 
 ```
 response = greenAPI.sending.sendMessage("11001234567@c.us", "Message text")
@@ -82,7 +82,7 @@ asyncio.run(main())
 
 ### Sending an image via URL
 
-Link to example: [sendPictureByLink.py](./examples/sync/sendPictureByLink.py).
+Link to example: [sendPictureByLink.py](./examples/sync/sending/sendPictureByLink.py).
 
 ```
 response = greenAPI.sending.sendFileByUrl(
@@ -97,7 +97,7 @@ print(response.data)
 
 ### Sending an image by uploading from the disk
 
-Link to example: [sendPictureByUpload.py](./examples/sync/sendPictureByUpload.py).
+Link to example: [sendPictureByUpload.py](./examples/sync/sending/sendPictureByUpload.py).
 
 ```
 response = greenAPI.sending.sendFileByUpload(
@@ -185,7 +185,7 @@ asyncio.run(main())
 
 ### Sending a polling message
 
-Link to example: [sendPoll.py](./examples/sync/sendPoll.py).
+Link to example: [sendPoll.py](./examples/sync/sending/sendPoll.py).
 
 ```
 response = greenAPI.sending.sendPoll(
@@ -215,26 +215,87 @@ response = greenAPI.statuses.sendTextStatus(
 print(response.data)
 ```
 
+### Sending interactive buttons
+
+Link to example: [sendInteractiveButtons.py](../examples/sync/sending/sendInteractiveButtons.py).
+
+```
+response = greenAPI.sending.sendInteractiveButtons(
+    "79001234567@c.us",
+    "This is message with buttons!",
+    [{
+        "type": "call",
+        "buttonId": "1",
+        "buttonText": "Call me",
+        "phoneNumber": "79001234567"
+    },
+    {
+        "type": "url",
+        "buttonId": "2",
+        "buttonText": "Green-api",
+        "url": "https://green-api.com/en/docs/api/sending/SendInteractiveButtons/"
+    }],
+    "Check this out",
+    "Hope you like it"
+)
+
+print(response.data)
+```
+
+### Sending interactive buttons async
+
+Link to example: [sendInteractiveButtonsAsync.py](../examples/async/sending/sendInteractiveButtonsAsync.py).
+
+```
+import asyncio
+
+async def main():
+    response = await greenAPI.sending.sendInteractiveButtonsAsync(
+        "79001234567@c.us",
+        "This is message with buttons!",
+        [{
+            "type": "call",
+            "buttonId": "1",
+            "buttonText": "Call me",
+            "phoneNumber": "79001234567"
+        },
+        {
+            "type": "url",
+            "buttonId": "2",
+            "buttonText": "Green-api",
+            "url": "https://green-api.com/en/docs/api/sending/SendInteractiveButtons/"
+        }],
+        "Check this out",
+        "Hope you like it"
+    )
+    print(response.data)
+asyncio.run(main())
+```
+
 ## Examples list
 
 | Description                                                    | Module                                                                                                                                         |
 |----------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
-| Example of sending text                                        | [sendTextMessage.py](./examples/sync/sendTextMessage.pyy)                     |
+| Example of sending text                                        | [sendTextMessage.py](./examples/sync/sending/sendTextMessage.pyy)                     |
 | Example of sending text asynchronously                         | [sendTextMessageAsync.py](./examples/async/sendMessageAsync.py)              |
-| Example of sending a picture by URL                            | [sendPictureByLink.py](./examples/sync/sendPictureByLink.py)                 |
+| Example of sending a picture by URL                            | [sendPictureByLink.py](./examples/sync/sending/sendPictureByLink.py)                 |
 | Example of sending a file by URL asynchronously                | [sendFileByUrlAsync.py](./examples/async/sending/sendFileByUrlAsync.py)      |
-| Example of sending a picture by uploading from the disk        | [sendPictureByUpload.py](./examples/sync/sendPictureByUpload.py)             |
+| Example of sending a picture by uploading from the disk        | [sendPictureByUpload.py](./examples/sync/sending/sendPictureByUpload.py)             |
 | Example of sending file by uploading from the disk asynchronously  | [sendFileByUploadAsync.py](./examples/async/sending/sendFileByUploadAsync.py) |
-| Example of a group creation and sending a message to the group | [createGroupAndSendMessage.py](./examples/sync/createGroupAndSendMessage.py) |
+| Example of a group creation and sending a message to the group | [createGroupAndSendMessage.py](./examples/sync/sending/createGroupAndSendMessage.py) |
 | Example of a group creation and sending a message to the group asynchronously | [createGroupAndSendMessageAsync.py](./examples/async/createGroupAndSendMessageAsync.py) |
 | Example of incoming webhooks receiving                         | [receiveNotification.py](./examples/sync/receiveNotification.py)             |
 | Example of incoming webhooks receiving asynchronously          | [receiveNotificationAsync.py](./examples/async/receiveNotificationAsync.py)  |
-| Example of sending a polling message                           | [sendPoll.py](./examples/sync/sendPoll.py)                                   |
+| Example of sending a polling message                           | [sendPoll.py](./examples/sync/sending/sendPoll.py)                                   |
 | Example of sending a polling message asynchronously            | [sendPollAsync.py](./examples/async/sending/sendPollasync.py)                |
 | Example of sending a text status                               | [sendTextStatus.py](./examples/sync/statusesMethods/sendTextStatus.py)       |
 | Example of sending a text status asynchronously                | [sendTextStatusAsync.py](./examples/async/statusesMethods/sendTextStatusAsync.py) |
 | Example of creating instance                                   | [CreateInstance.py](./examples/sync/partherMethods/CreateInstance.py)        |
 | Example of creating instance asynchronously                    | [CreateInstanceAsync.py](./examples/async/partherMethods/CreateInstanceAsync.py)  |
+| Example of sending interactive buttons | [SendInteractiveButtons.py](../examples/sync/sending/sendInteractiveButtons.py) |
+| Example of sending interactive buttons asynchronously | [SendInteractiveButtonsAsync.py](../examples/async/sending/sendInteractiveButtonsAsync.py) |
+| Example of sending interactive buttons with a reply | [SendInteractiveButtonsReply.py](../examples/sync/sending/sendInteractiveButtonsReply.py) |
+| Example of sending interactive buttons asynchronously with a reply | [SendInteractiveButtonsReplyAsync.py](../examples/async/sending/sendInteractiveButtonsReplyAsync.py) |
 
 ## The full list of the library methods
 
@@ -289,6 +350,8 @@ print(response.data)
 | `sending.sendLink`                     | The method is designed to send a message with a link that will add an image preview, title and description               | [SendLink](https://green-api.com/en/docs/api/sending/SendLink/)                                             |
 | `sending.forwardMessages`              | The method is designed for forwarding messages to a personal or group chat                                               | [ForwardMessages](https://green-api.com/en/docs/api/sending/ForwardMessages/)                               |
 | `sending.sendPoll`                     | The method is designed for sending messages with a poll to a private or group chat                                       | [SendPoll](https://green-api.com/en/docs/api/sending/SendPoll/)                                             |
+| `sending.sendInteractiveButtons`       | This method is used to send messages with interactive buttons | [sendInteractiveButtons](https://green-api.com/en/docs/api/sending/SendInteractiveButtons/) |
+| `sending.sendInteractiveButtonsReply`  | This method is used to send messages with interactive buttons with a reply | [sendInteractiveButtonsReply](https://green-api.com/en/docs/api/sending/SendInteractiveButtonsReply/) |
 | `serviceMethods.checkWhatsapp`         | The method checks if there is a WhatsApp account on the phone number                                                     | [CheckWhatsapp](https://green-api.com/en/docs/api/service/CheckWhatsapp/)                                   |
 | `serviceMethods.getAvatar`             | The method returns the avatar of the correspondent or group chat                                                         | [GetAvatar](https://green-api.com/en/docs/api/service/GetAvatar/)                                           |
 | `serviceMethods.getContacts`           | The method is designed to get a list of contacts of the current account                                                  | [GetContacts](https://green-api.com/en/docs/api/service/GetContacts/)                                       |

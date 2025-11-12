@@ -445,6 +445,86 @@ class Sending:
             "{{host}}/waInstance{{idInstance}}/sendPoll/{{apiTokenInstance}}",
             request_body
         )
+    
+    def sendInteractiveButtons(
+            self,
+            chatId: str,
+            body: str,
+            buttons: List[Dict[str, Union[str, Dict[str, str]]]],
+            header: Optional[str] = None,
+            footer: Optional[str] = None,
+    ) -> Response:
+        """
+        The method is used to send a message with buttons to personal chats. 
+
+        https://green-api.com/en/docs/api/sending/SendInteractiveButtons/
+        """
+
+        request_body = self.__handle_parameters(locals())
+
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "sendInteractiveButtons/{{apiTokenInstance}}"
+            ), request_body
+        )
+    
+    async def sendInteractiveButtonsAsync(
+            self,
+            chatId: str,
+            body: str,
+            buttons: List[Dict[str, Union[str, Dict[str, str]]]],
+            header: Optional[str] = None,
+            footer: Optional[str] = None,
+    ) -> Response:
+        request_body = self.__handle_parameters(locals())
+
+        return await self.api.requestAsync(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "sendInteractiveButtons/{{apiTokenInstance}}"
+            ), request_body
+        )
+    
+    def sendInteractiveButtonsReply(
+            self,
+            chatId: str,
+            body: str,
+            buttons: List[Dict[str, str]],
+            header: Optional[str] = None,
+            footer: Optional[str] = None,
+    ) -> Response:
+        """
+        The method is used to send a message with buttons to personal chats. 
+
+        https://green-api.com/en/docs/api/sending/SendInteractiveButtonsReply/
+        """
+
+        request_body = self.__handle_parameters(locals())
+
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "sendInteractiveButtonsReply/{{apiTokenInstance}}"
+            ), request_body
+        )
+    
+    async def sendInteractiveButtonsReplyAsync(
+            self,
+            chatId: str,
+            body: str,
+            buttons: List[Dict[str, str]],
+            header: Optional[str] = None,
+            footer: Optional[str] = None,
+    ) -> Response:
+        request_body = self.__handle_parameters(locals())
+
+        return await self.api.requestAsync(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "sendInteractiveButtonsReply/{{apiTokenInstance}}"
+            ), request_body
+        )
 
     @classmethod
     def __handle_parameters(cls, parameters: dict) -> dict:
