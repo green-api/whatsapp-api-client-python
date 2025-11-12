@@ -64,7 +64,7 @@ class Sending:
             archiveChat: Optional[bool] = None
     ) -> Response:
         """
-        The method is deprecated.
+        The method is deprecated. Please use SendInteractiveButtons.
 
         The method is aimed for sending a button message to a personal
         or a group chat.
@@ -91,6 +91,8 @@ class Sending:
             archiveChat: Optional[bool] = None
     ) -> Response:
         """
+        The method is deprecated. Please use SendInteractiveButtonsReply.
+
         The method is aimed for sending a message with template list
         interactive buttons to a personal or a group chat.
 
@@ -118,6 +120,8 @@ class Sending:
             archiveChat: Optional[bool] = None
     ) -> Response:
         """
+        The method is deprecated. Please use SendMessage.
+        
         The method is aimed for sending a message with a select button
         from a list of values to a personal or a group chat.
 
