@@ -57,7 +57,7 @@ greenAPI = API.GreenAPI(
 
 ### Отправка текстового сообщения на номер WhatsApp
 
-Ссылка на пример: [sendTextMessage.py](../examples/sync/sendTextMessage.py).
+Ссылка на пример: [sendTextMessage.py](../examples/sync/sending/sendTextMessage.py).
 
 ```
 response = greenAPI.sending.sendMessage("11001234567@c.us", "Message text")
@@ -68,7 +68,7 @@ print(response.data)
 
 ### Отправка текстового сообщения асинхронно
 
-Ссылка на пример: [sendMessageAsync.py](https://github.com/green-api/whatsapp-api-client-python/blob/master/examples/async/sending/sendMessageAsync.py).
+Ссылка на пример: [sendMessageAsync.py](../examples/async/sending/sendMessageAsync.py).
 
 ```
 import asyncio
@@ -82,7 +82,7 @@ asyncio.run(main())
 
 ### Отправка картинки по URL
 
-Ссылка на пример: [sendPictureByLink.py](../examples/sync/sendPictureByLink.py).
+Ссылка на пример: [sendPictureByLink.py](../examples/sync/sending/sendPictureByLink.py).
 
 ```
 response = greenAPI.sending.sendFileByUrl(
@@ -97,7 +97,7 @@ print(response.data)
 
 ### Отправка картинки загрузкой с диска
 
-Ссылка на пример: [sendPictureByUpload.py](../examples/sync/sendPictureByUpload.py).
+Ссылка на пример: [sendPictureByUpload.py](../examples/sync/sending/sendPictureByUpload.py).
 
 ```
 response = greenAPI.sending.sendFileByUpload(
@@ -186,7 +186,7 @@ asyncio.run(main())
 
 ### Отправка сообщения с опросом
 
-Ссылка на пример: [sendPoll.py](../examples/sync/sendPoll.py).
+Ссылка на пример: [sendPoll.py](../examples/sync/sending/sendPoll.py).
 
 ```
 response = greenAPI.sending.sendPoll(
@@ -202,9 +202,9 @@ response = greenAPI.sending.sendPoll(
 print(response.data)
 ```
 
-## Отправка текстового статуса
+### Отправка текстового статуса
 
-Ссылка на пример: [sendPoll.py](../examples/sync/statusesMethods/sendTextStatus.py).
+Ссылка на пример: [sendTextStatus.py](../examples/sync/statusesMethods/sendTextStatus.py).
 
 ```
 response = greenAPI.statuses.sendTextStatus(
@@ -216,26 +216,87 @@ response = greenAPI.statuses.sendTextStatus(
 print(response.data)
 ```
 
+### Отправка интерактивных кнопок
+
+Ссылка на пример: [sendInteractiveButtons.py](../examples/sync/sending/sendInteractiveButtons.py).
+
+```
+response = greenAPI.sending.sendInteractiveButtons(
+    "79001234567@c.us",
+    "This is message with buttons!",
+    [{
+        "type": "call",
+        "buttonId": "1",
+        "buttonText": "Call me",
+        "phoneNumber": "79001234567"
+    },
+    {
+        "type": "url",
+        "buttonId": "2",
+        "buttonText": "Green-api",
+        "url": "https://green-api.com/en/docs/api/sending/SendInteractiveButtons/"
+    }],
+    "Check this out",
+    "Hope you like it"
+)
+
+print(response.data)
+```
+
+### Асинхронная отправка интерактивных кнопок
+
+Ссылка на пример: [sendInteractiveButtonsAsync.py](../examples/async/sending/sendInteractiveButtonsAsync.py).
+
+```
+import asyncio
+
+async def main():
+    response = await greenAPI.sending.sendInteractiveButtonsAsync(
+        "79001234567@c.us",
+        "This is message with buttons!",
+        [{
+            "type": "call",
+            "buttonId": "1",
+            "buttonText": "Call me",
+            "phoneNumber": "79001234567"
+        },
+        {
+            "type": "url",
+            "buttonId": "2",
+            "buttonText": "Green-api",
+            "url": "https://green-api.com/en/docs/api/sending/SendInteractiveButtons/"
+        }],
+        "Check this out",
+        "Hope you like it"
+    )
+    print(response.data)
+asyncio.run(main())
+```
+
 ## Список примеров
 
 | Описание                                               | Модуль                                                                            |
 |--------------------------------------------------------|-----------------------------------------------------------------------------------|
-| Пример отправки текста                                 | [sendTextMessage.py](../examples/sync/sendTextMessage.py)                         |
+| Пример отправки текста                                 | [sendTextMessage.py](../examples/sync/sending/sendTextMessage.py)                 |
 | Пример асинхронной отправки текста                     | [sendTextMessageAsync.py](../examples/async/sending/sendMessageAsync.py)          |
-| Пример отправки картинки по URL                        | [sendPictureByLink.py](../examples/sync/sendPictureByLink.py)                     |
+| Пример отправки картинки по URL                        | [sendPictureByLink.py](../examples/sync/sending/sendPictureByLink.py)             |
 | Пример асинхронной отправки файла по URL               | [sendFileByUrlAsync.py](../examples/async/sending/sendFileByUrlAsync.py)          |
-| Пример отправки картинки загрузкой с диска             | [sendPictureByUpload.py](../examples/sync/sendPictureByUpload.py)                 |
+| Пример отправки картинки загрузкой с диска             | [sendPictureByUpload.py](../examples/sync/sending/sendPictureByUpload.py)         |
 | Пример асинхронной отправки картинки загрузкой с диска | [sendFileByUploadAsync.py](../examples/async/sending/sendFileByUploadAsync.py)    |
 | Пример создания группы и отправки сообщения в группу   | [createGroupAndSendMessage.py](../examples/sync/createGroupAndSendMessage.py)     |
 | Пример асинхронных создания группы и отправки сообщения в группу | [createGroupAndSendMessageAsync.py](../examples/async/createGroupAndSendMessageAsync.py)  |
 | Пример получения входящих уведомлений                  | [receiveNotification.py](../examples/sync/receiveNotification.py)                 |
 | Пример асинхронного получения входящих уведомлений     | [receiveNotificationФынтс.py](../examples/async/receiveNotificationAsync.py)      |
-| Пример отправки сообщения с опросом                    | [sendPoll.py](../examples/sync/sendPoll.py)                                       |
+| Пример отправки сообщения с опросом                    | [sendPoll.py](../examples/sync/sending/sendPoll.py)                               |
 | Пример асинхронной отправки сообщения с опросом        | [sendPollAsync.py](../examples/async/sending/sendPollAsync.py)                    |
 | Пример отправки текстового статуса                     | [sendTextStatus.py](../examples/sync/statusesMethods/sendTextStatus.py)           |
 | Пример асинхронной отправки текстового статуса        | [sendTextStatusAsync.py](../examples/async/statusesMethods/sendTextStatusAsync.py) |
 | Пример создания инстанса                               | [CreateInstance.py](../examples/sync/partherMethods/CreateInstance.py)            |
-| Пример асинхронного создания инстанса                  | [CreateInstanceAsync.py](../examples/async/partnerMethods/CreateInstanceAsync.py)            |
+| Пример асинхронного создания инстанса                  | [CreateInstanceAsync.py](../examples/async/partnerMethods/CreateInstanceAsync.py) |
+| Пример отправки интерактивных кнопок                   | [SendInteractiveButtons.py](../examples/sync/sending/sendInteractiveButtons.py)   |
+| Пример асинхронной отправки интерактивных кнопок       | [SendInteractiveButtonsAsync.py](../examples/async/sending/sendInteractiveButtonsAsync.py)   |
+| Пример отправки интерактивных кнопок с ответом         | [SendInteractiveButtonsReply.py](../examples/sync/sending/sendInteractiveButtonsReply.py)   |
+| Пример асинхронной отправки интерактивных кнопок с ответом | [SendInteractiveButtonsReplyAsync.py](../examples/async/sending/sendInteractiveButtonsReplyAsync.py)   |
 
 ## Полный список методов библиотеки
 
@@ -272,17 +333,15 @@ print(response.data)
 | `receiving.deleteNotification`         | Метод предназначен для удаления входящего уведомления из очереди уведомлений                                              | [DeleteNotification](https://green-api.com/docs/api/receiving/technology-http-api/DeleteNotification/)   |
 | `receiving.downloadFile`               | Метод предназначен для скачивания принятых и отправленных файлов                                                          | [DownloadFile](https://green-api.com/docs/api/receiving/files/DownloadFile/)                             |
 | `sending.sendMessage`                  | Метод предназначен для отправки текстового сообщения в личный или групповой чат                                           | [SendMessage](https://green-api.com/docs/api/sending/SendMessage/)                                       |
-| `sending.sendButtons`                  | Метод предназначен для отправки сообщения с кнопками в личный или групповой чат                                           | [SendButtons](https://green-api.com/docs/api/sending/SendButtons/)                                       |
-| `sending.sendTemplateButtons`          | Метод предназначен для отправки сообщения с интерактивными кнопками из перечня шаблонов в личный или групповой чат        | [SendTemplateButtons](https://green-api.com/docs/api/sending/SendTemplateButtons/)                       |
-| `sending.sendListMessage`              | Метод предназначен для отправки сообщения с кнопкой выбора из списка значений в личный или групповой чат                  | [SendListMessage](https://green-api.com/docs/api/sending/SendListMessage/)                               |
 | `sending.sendFileByUpload`             | Метод предназначен для отправки файла, загружаемого через форму (form-data)                                               | [SendFileByUpload](https://green-api.com/docs/api/sending/SendFileByUpload/)                             |
 | `sending.sendFileByUrl`                | Метод предназначен для отправки файла, загружаемого по ссылке                                                             | [SendFileByUrl](https://green-api.com/docs/api/sending/SendFileByUrl/)                                   |
 | `sending.uploadFile`                   | Метод предназначен для загрузки файла в облачное хранилище, который можно отправить методом sendFileByUrl                 | [UploadFile](https://green-api.com/docs/api/sending/UploadFile/)                                         |
 | `sending.sendLocation`                 | Метод предназначен для отправки сообщения геолокации                                                                      | [SendLocation](https://green-api.com/docs/api/sending/SendLocation/)                                     |
 | `sending.sendContact`                  | Метод предназначен для отправки сообщения с контактом                                                                     | [SendContact](https://green-api.com/docs/api/sending/SendContact/)                                       |
-| `sending.sendLink`                     | Метод предназначен для отправки сообщения со ссылкой, по которой будут добавлены превью изображения, заголовок и описание | [SendLink](https://green-api.com/docs/api/sending/SendLink/)                                             |
 | `sending.forwardMessages`              | Метод предназначен для пересылки сообщений в личный или групповой чат                                                     | [ForwardMessages](https://green-api.com/docs/api/sending/ForwardMessages/)                               |
 | `sending.sendPoll`                     | Метод предназначен для отправки сообщения с опросом в личный или групповой чат                                            | [SendPoll](https://green-api.com/docs/api/sending/SendPoll/)                                             |
+| `sending.sendInteractiveButtons`       | Метод предназначен для отправки сообщений с интерактивными кнопками                                                       | [sendInteractiveButtons](https://green-api.com/docs/api/sending/SendInteractiveButtons/)  |
+| `sending.sendInteractiveButtonsReply`       | Метод предназначен для отправки сообщений с интерактивными кнопками с ответом                                        | [sendInteractiveButtonsReply](https://green-api.com/docs/api/sending/SendInteractiveButtonsReply/)  |
 | `serviceMethods.checkWhatsapp`         | Метод проверяет наличие аккаунта WhatsApp на номере телефона                                                              | [CheckWhatsapp](https://green-api.com/docs/api/service/CheckWhatsapp/)                                   |
 | `serviceMethods.getAvatar`             | Метод возвращает аватар корреспондента или группового чата                                                                | [GetAvatar](https://green-api.com/docs/api/service/GetAvatar/)                                           |
 | `serviceMethods.getContacts`           | Метод предназначен для получения списка контактов текущего аккаунта                                                       | [GetContacts](https://green-api.com/docs/api/service/GetContacts/)                                       |
