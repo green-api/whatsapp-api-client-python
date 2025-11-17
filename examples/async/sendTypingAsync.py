@@ -6,12 +6,7 @@ greenAPI = API.GreenAPI(
 )
 
 async def main():
-    response = await greenAPI.sending.sendFileByUrlAsync(
-        "79876543210@c.us",
-        "https://download.samplelib.com/png/sample-clouds2-400x300.png",
-        "sample-clouds2-400x300.png",
-        "Sample PNG"
-    )
+    response = await greenAPI.serviceMethods.sendTypingAsync("79876543210@c.us", 5000, "recording")
     if response.code == 200:
         print(response.data)
 

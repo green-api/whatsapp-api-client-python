@@ -21,7 +21,7 @@ def main():
         file_name = basename(url.path)
 
         send_file_by_url_response = greenAPI.sending.sendFileByUrl(
-            "11001234567@c.us", url_file, file_name
+            "79876543210@c.us", url_file, file_name
         )
         if send_file_by_url_response.code == 200:
             print(send_file_by_url_response.data)

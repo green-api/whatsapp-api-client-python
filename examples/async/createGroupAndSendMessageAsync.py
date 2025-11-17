@@ -7,7 +7,7 @@ greenAPI = API.GreenAPI(
 
 async def main():
     create_group_response = await greenAPI.groups.createGroupAsync(
-        "SDK Python", ["11001234567@c.us", "11001234568@c.us"]
+        "SDK Python", ["79876543210@c.us", "11001234568@c.us"]
     )
     
     if create_group_response.code == 200:

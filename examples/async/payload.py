@@ -4,7 +4,7 @@ from whatsapp_api_client_python import API
 class GreenAPIDemo:
     def __init__(self):
         self.greenAPI = API.GreenAPI("1101000001", "d75b3a66374942c5b3c019c698abc2067e151558acbd412345")
-        self.test_chat = "11001234567@c.us"
+        self.test_chat = "79876543210@c.us"
 
     async def run_demo(self):
         tasks = [
@@ -48,7 +48,7 @@ class GreenAPIDemo:
             for i, contact in enumerate(contacts[:3]):
                 print(f"   {i+1}. {contact.get('name', 'No name')} - {contact.get('id')}")
         
-        test_numbers = [79001234567, 79001234568]
+        test_numbers = [79876543210, 79001234568]
         for number in test_numbers:
             response = await self.greenAPI.serviceMethods.checkWhatsappAsync(number)
             if response.code == 200:
@@ -86,7 +86,7 @@ class GreenAPIDemo:
             print("Poll message sent: ", response.data)
 
         contact = {
-            "phoneContact": 79001234567,
+            "phoneContact": 79876543210,
             "firstName": "Jane",
             "lastName": "Doe"
         }
@@ -98,7 +98,7 @@ class GreenAPIDemo:
             print("Contact message sent: ", response.data)
 
         response = await self.greenAPI.sending.sendLocationAsync(
-            "79001234567@c.us",
+            "79876543210@c.us",
             44.9370129,
             89.8728409,
             "Restaurant",

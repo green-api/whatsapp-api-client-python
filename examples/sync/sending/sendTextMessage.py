@@ -6,7 +6,7 @@ greenAPI = API.GreenAPI(
 
 
 def main():
-    response = greenAPI.sending.sendMessage("11001234567@c.us", "Message text")
+    response = greenAPI.sending.sendMessage("79876543210@c.us", "Message text", typingTime=5000)
 
     print(response.data)
 

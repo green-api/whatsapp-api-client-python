@@ -7,8 +7,8 @@ greenAPI = API.GreenAPI(
 
 async def main():
     tasks = [
-        greenAPI.groups.createGroupAsync("SDK Python", ["11001234567@c.us", "11001234568@c.us"]),
-        greenAPI.groups.addGroupParticipantAsync("1234567890@g.us", "11001234567@c.us"),
+        greenAPI.groups.createGroupAsync("SDK Python", ["79876543210@c.us", "11001234568@c.us"]),
+        greenAPI.groups.addGroupParticipantAsync("1234567890@g.us", "79876543210@c.us"),
         greenAPI.groups.getGroupDataAsync("1234567890@g.us")
     ]
 

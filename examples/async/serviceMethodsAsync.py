@@ -7,11 +7,11 @@ greenAPI = API.GreenAPI(
 
 async def main():
     tasks = [
-        greenAPI.serviceMethods.checkWhatsappAsync(79001234567),
+        greenAPI.serviceMethods.checkWhatsappAsync(79876543210),
         greenAPI.serviceMethods.getContactsAsync(),
-        greenAPI.serviceMethods.deleteMessageAsync("11001234567@c.us", "BAE52A7F04F452F9", True),
-        greenAPI.serviceMethods.deleteMessageAsync("11001234567@c.us", "BAE52A7F04F452F9"),
-        greenAPI.serviceMethods.editMessageAsync("11001234567@c.us", "BAE5F793F61411D0", "Edited message text")
+        greenAPI.serviceMethods.deleteMessageAsync("79876543210@c.us", "BAE52A7F04F452F9", True),
+        greenAPI.serviceMethods.deleteMessageAsync("79876543210@c.us", "BAE52A7F04F452F9"),
+        greenAPI.serviceMethods.editMessageAsync("79876543210@c.us", "BAE5F793F61411D0", "Edited message text")
     ]
 
     responses = await asyncio.gather(*tasks, return_exceptions=True)

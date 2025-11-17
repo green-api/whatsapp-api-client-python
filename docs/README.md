@@ -60,7 +60,7 @@ greenAPI = API.GreenAPI(
 Ссылка на пример: [sendTextMessage.py](../examples/sync/sending/sendTextMessage.py).
 
 ```
-response = greenAPI.sending.sendMessage("11001234567@c.us", "Message text")
+response = greenAPI.sending.sendMessage("79876543210@c.us", "Message text")
 
 print(response.data)
 ```
@@ -74,7 +74,7 @@ print(response.data)
 import asyncio
 
 async def main():
-    response = await greenAPI.sending.sendMessageAsync("11001234567@c.us", "Message text")
+    response = await greenAPI.sending.sendMessageAsync("79876543210@c.us", "Message text")
     print(response.data)
 
 asyncio.run(main())
@@ -86,7 +86,7 @@ asyncio.run(main())
 
 ```
 response = greenAPI.sending.sendFileByUrl(
-    "11001234567@c.us",
+    "79876543210@c.us",
     "https://download.samplelib.com/png/sample-clouds2-400x300.png",
     "sample-clouds2-400x300.png",
     "Sample PNG"
@@ -101,7 +101,7 @@ print(response.data)
 
 ```
 response = greenAPI.sending.sendFileByUpload(
-    "11001234567@c.us",
+    "79876543210@c.us",
     "data/logo.jpg",
     "logo.jpg",
     "Available rates"
@@ -120,7 +120,7 @@ import asyncio
 
 async def main():
     response = await greenAPI.sending.sendFileByUploadAsync(
-        "11001234567@c.us",
+        "79876543210@c.us",
         "data/logo.jpg",
         "logo.jpg",
         "Available rates"
@@ -139,7 +139,7 @@ asyncio.run(main())
 
 ```
 create_group_response = greenAPI.groups.createGroup(
-    "Group Name", ["11001234567@c.us"]
+    "Group Name", ["79876543210@c.us"]
 )
 if create_group_response.code == 200:
     send_message_response = greenAPI.sending.sendMessage(
@@ -190,7 +190,7 @@ asyncio.run(main())
 
 ```
 response = greenAPI.sending.sendPoll(
-    "11001234567@c.us",
+    "79876543210@c.us",
     "Please choose a color:",
     [
         {"optionName": "Red"},
@@ -222,13 +222,13 @@ print(response.data)
 
 ```
 response = greenAPI.sending.sendInteractiveButtons(
-    "79001234567@c.us",
+    "79876543210@c.us",
     "This is message with buttons!",
     [{
         "type": "call",
         "buttonId": "1",
         "buttonText": "Call me",
-        "phoneNumber": "79001234567"
+        "phoneNumber": "79876543210"
     },
     {
         "type": "url",
@@ -252,13 +252,13 @@ import asyncio
 
 async def main():
     response = await greenAPI.sending.sendInteractiveButtonsAsync(
-        "79001234567@c.us",
+        "79876543210@c.us",
         "This is message with buttons!",
         [{
             "type": "call",
             "buttonId": "1",
             "buttonText": "Call me",
-            "phoneNumber": "79001234567"
+            "phoneNumber": "79876543210"
         },
         {
             "type": "url",
@@ -297,6 +297,8 @@ asyncio.run(main())
 | Пример асинхронной отправки интерактивных кнопок       | [SendInteractiveButtonsAsync.py](../examples/async/sending/sendInteractiveButtonsAsync.py)   |
 | Пример отправки интерактивных кнопок с ответом         | [SendInteractiveButtonsReply.py](../examples/sync/sending/sendInteractiveButtonsReply.py)   |
 | Пример асинхронной отправки интерактивных кнопок с ответом | [SendInteractiveButtonsReplyAsync.py](../examples/async/sending/sendInteractiveButtonsReplyAsync.py)   |
+| Пример отправки уведомления о наборе текста или записи аудио | [SendTyping.py](../examples/sync/sendTyping.py)                             |
+| Пример асинхронной отправки уведомления о наборе текста или записи аудио | [SendTypingAsync.py](../examples/async/sendTypingAsync.py)      |
 
 ## Полный список методов библиотеки
 
@@ -351,6 +353,7 @@ asyncio.run(main())
 | `serviceMethods.archiveChat`           | Метод архивирует чат                                                                                                      | [ArchiveChat](https://green-api.com/docs/api/service/archiveChat/)                                       |
 | `serviceMethods.unarchiveChat`         | Метод разархивирует чат                                                                                                   | [UnarchiveChat](https://green-api.com/docs/api/service/unarchiveChat/)                                   |
 | `serviceMethods.setDisappearingChat`   | Метод предназначен для изменения настроек исчезающих сообщений в чатах                                                    | [SetDisappearingChat](https://green-api.com/docs/api/service/SetDisappearingChat/)                       |
+| `serviceMethods.sendTyping`         | Метод предназначен для отправки уведомления о наборе текста или записи аудио в чат                                           | [SendTyping](https://green-api.com/docs/api/service/SendTyping/)                                   |
 | `webhooks.startReceivingNotifications` | Метод предназначен для старта получения новых уведомлений                                                                 |                                                                                                          |
 | `webhooks.stopReceivingNotifications`  | Метод предназначен для остановки получения новых уведомлений                                                              |                                                                                                          |
 | `partner.GetInstances`   | Метод предназначен для получения всех инстансов аккаунтов созданных партнёром.                                           | [GetInstances](https://green-api.com/docs/partners/getInstances/)                       |

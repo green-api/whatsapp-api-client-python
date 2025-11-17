@@ -7,7 +7,7 @@ greenAPI = API.GreenAPI(
 
 async def main():
     response = await greenAPI.sending.sendLocationAsync(
-        "79001234567@c.us",
+        "79876543210@c.us",
         44.9370129,
         89.8728409,
         "Restaurant",

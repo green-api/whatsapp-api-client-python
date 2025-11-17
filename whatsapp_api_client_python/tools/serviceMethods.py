@@ -259,3 +259,42 @@ class ServiceMethods:
             "{{host}}/waInstance{{idInstance}}/setDisappearingChat/{{apiTokenInstance}}",
             request_body
         )
+    
+    def sendTyping(
+            self, chatId: str, typingTime: Optional[int] = None, typingType: Optional[str] = None,
+    ) -> Response:
+        """
+        The method is used to send a notification about typing or recording audio in a chat.
+
+        https://green-api.com/en/docs/api/service/SendTyping/
+        """
+
+        request_body = locals()
+        if typingTime is None:
+            request_body.pop("typingTime")
+        if typingType is None:
+            request_body.pop("typingType")
+        request_body.pop("self")
+
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "sendTyping/{{apiTokenInstance}}"
+            ), request_body
+        )
+
+    async def sendTypingAsync(
+            self, chatId: str, typingTime: Optional[int] = None, typingType: Optional[str] = None,
+    ) -> Response:
+        request_body = locals()
+        if typingTime is None:
+            request_body.pop("typingTime")
+        if typingType is None:
+            request_body.pop("typingType")
+        request_body.pop("self")
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/sendTyping/{{apiTokenInstance}}",
+            request_body
+        )
