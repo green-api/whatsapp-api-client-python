@@ -7,7 +7,7 @@ greenAPI = API.GreenAPI(
 
 def main():
     response = greenAPI.sending.sendPoll(
-        "11001234567@c.us",
+        "79876543210@c.us",
         "Please choose a color:",
         [
             {"optionName": "Red"},

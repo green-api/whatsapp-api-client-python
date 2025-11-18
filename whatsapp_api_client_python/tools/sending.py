@@ -20,7 +20,8 @@ class Sending:
             message: str,
             quotedMessageId: Optional[str] = None,
             archiveChat: Optional[bool] = None,
-            linkPreview: Optional[bool] = None
+            linkPreview: Optional[bool] = None,
+            typingTime: Optional[int] = None
     ) -> Response:
         """
         The method is aimed for sending a text message to a personal or
@@ -44,7 +45,8 @@ class Sending:
             message: str,
             quotedMessageId: Optional[str] = None,
             archiveChat: Optional[bool] = None,
-            linkPreview: Optional[bool] = None
+            linkPreview: Optional[bool] = None,
+            typingTime: Optional[int] = None
     ) -> Response:
         request_body = self.__handle_parameters(locals())
 
@@ -143,7 +145,9 @@ class Sending:
             path: str,
             fileName: Optional[str] = None,
             caption: Optional[str] = None,
-            quotedMessageId: Optional[str] = None
+            quotedMessageId: Optional[str] = None,
+            typingTime: Optional[int] = None,
+            typingType: Optional[str] = None
     ) -> Response:
         """
         The method is aimed for sending a file uploaded by form
@@ -174,7 +178,9 @@ class Sending:
             path: str,
             fileName: Optional[str] = None,
             caption: Optional[str] = None,
-            quotedMessageId: Optional[str] = None
+            quotedMessageId: Optional[str] = None,
+            typingTime: Optional[int] = None,
+            typingType: Optional[str] = None
     ) -> Response:
         request_body = self.__handle_parameters(locals())
 
@@ -201,7 +207,9 @@ class Sending:
             fileName: str,
             caption: Optional[str] = None,
             quotedMessageId: Optional[str] = None,
-            archiveChat: Optional[bool] = None
+            archiveChat: Optional[bool] = None,
+            typingTime: Optional[int] = None,
+            typingType: Optional[str] = None
     ) -> Response:
         """
         The method is aimed for sending a file uploaded by URL.
@@ -225,7 +233,9 @@ class Sending:
             fileName: str,
             caption: Optional[str] = None,
             quotedMessageId: Optional[str] = None,
-            archiveChat: Optional[bool] = None
+            archiveChat: Optional[bool] = None,
+            typingTime: Optional[int] = None,
+            typingType: Optional[str] = None
     ) -> Response:
         request_body = self.__handle_parameters(locals())
 
@@ -281,7 +291,8 @@ class Sending:
             longitude: float,
             nameLocation: Optional[str] = None,
             address: Optional[str] = None,
-            quotedMessageId: Optional[str] = None
+            quotedMessageId: Optional[str] = None,
+            typingTime: Optional[int] = None
     ) -> Response:
         """
         The method is aimed for sending location message.
@@ -305,7 +316,8 @@ class Sending:
             longitude: float,
             nameLocation: Optional[str] = None,
             address: Optional[str] = None,
-            quotedMessageId: Optional[str] = None
+            quotedMessageId: Optional[str] = None,
+            typingTime: Optional[int] = None
     ) -> Response:
         request_body = self.__handle_parameters(locals())
 
@@ -319,7 +331,8 @@ class Sending:
             self,
             chatId: str,
             contact: Dict[str, Union[int, str]],
-            quotedMessageId: Optional[str] = None
+            quotedMessageId: Optional[str] = None,
+            typingTime: Optional[int] = None
     ) -> Response:
         """
         The method is aimed for sending a contact message.
@@ -340,7 +353,8 @@ class Sending:
             self,
             chatId: str,
             contact: Dict[str, Union[int, str]],
-            quotedMessageId: Optional[str] = None
+            quotedMessageId: Optional[str] = None,
+            typingTime: Optional[int] = None
     ) -> Response:
         request_body = self.__handle_parameters(locals())
 
@@ -400,7 +414,8 @@ class Sending:
             self,
             chatId: str,
             chatIdFrom: str,
-            messages: List[str]
+            messages: List[str],
+            typingTime: Optional[int] = None
     ) -> Response:
         request_body = self.__handle_parameters(locals())
 
@@ -416,7 +431,8 @@ class Sending:
             message: str,
             options: List[Dict[str, str]],
             multipleAnswers: Optional[bool] = None,
-            quotedMessageId: Optional[str] = None
+            quotedMessageId: Optional[str] = None,
+            typingTime: Optional[int] = None
     ) -> Response:
         """
         This method is intended for sending messages with a poll to a
@@ -440,7 +456,8 @@ class Sending:
             message: str,
             options: List[Dict[str, str]],
             multipleAnswers: Optional[bool] = None,
-            quotedMessageId: Optional[str] = None
+            quotedMessageId: Optional[str] = None,
+            typingTime: Optional[int] = None
     ) -> Response:
         request_body = self.__handle_parameters(locals())
 
@@ -457,6 +474,7 @@ class Sending:
             buttons: List[Dict[str, Union[str, Dict[str, str]]]],
             header: Optional[str] = None,
             footer: Optional[str] = None,
+            typingTime: Optional[int] = None,
     ) -> Response:
         """
         The method is used to send a message with buttons to personal chats. 
@@ -480,6 +498,7 @@ class Sending:
             buttons: List[Dict[str, Union[str, Dict[str, str]]]],
             header: Optional[str] = None,
             footer: Optional[str] = None,
+            typingTime: Optional[int] = None
     ) -> Response:
         request_body = self.__handle_parameters(locals())
 
@@ -497,6 +516,7 @@ class Sending:
             buttons: List[Dict[str, str]],
             header: Optional[str] = None,
             footer: Optional[str] = None,
+            typingTime: Optional[int] = None
     ) -> Response:
         """
         The method is used to send a message with buttons to personal chats. 
@@ -520,6 +540,7 @@ class Sending:
             buttons: List[Dict[str, str]],
             header: Optional[str] = None,
             footer: Optional[str] = None,
+            typingTime: Optional[int] = None
     ) -> Response:
         request_body = self.__handle_parameters(locals())
 

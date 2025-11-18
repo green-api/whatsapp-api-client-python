@@ -6,14 +6,7 @@ greenAPI = API.GreenAPI(
 
 
 def main():
-    response = greenAPI.sending.sendFileByUpload(
-        "79876543210@c.us",
-        "data/logo.jpg",
-        "logo.jpg",
-        "Available rates",
-        typingTime=5000,
-        typingType="recording"
-    )
+    response = greenAPI.serviceMethods.sendTyping("79876543210@c.us", 5000, "recording")
 
     print(response.data)
 

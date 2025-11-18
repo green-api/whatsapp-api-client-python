@@ -23,7 +23,7 @@ async def main():
         file_name = os.path.basename(url.path)
         
         send_file_response = await greenAPI.sending.sendFileByUrlAsync(
-            "11001234567@c.us", url_file, file_name
+            "79876543210@c.us", url_file, file_name
         )
 
         if send_file_response.code == 200:

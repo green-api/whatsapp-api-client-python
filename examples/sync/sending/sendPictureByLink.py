@@ -7,7 +7,7 @@ greenAPI = API.GreenAPI(
 
 def main():
     response = greenAPI.sending.sendFileByUrl(
-        "11001234567@c.us",
+        "79876543210@c.us",
         "https://download.samplelib.com/png/sample-clouds2-400x300.png",
         "sample-clouds2-400x300.png",
         "Sample PNG"

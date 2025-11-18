@@ -6,7 +6,7 @@ greenAPI = API.GreenAPI(
 )
 
 async def main():
-    response = await greenAPI.sending.sendMessageAsync("11001234567@c.us", "I use Green-API to send this message to you!")
+    response = await greenAPI.sending.sendMessageAsync("79876543210@c.us", "I use Green-API to send this message to you!", typingTime=5000)
     if response.code == 200:
         print(response.data)
 

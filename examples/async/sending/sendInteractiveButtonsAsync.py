@@ -7,13 +7,13 @@ greenAPI = API.GreenAPI(
 
 async def main():
     response = await greenAPI.sending.sendInteractiveButtonsAsync(
-        "79001234567@c.us",
+        "79876543210@c.us",
         "This is message with buttons!",
         [{
             "type": "call",
             "buttonId": "1",
             "buttonText": "Call me",
-            "phoneNumber": "79001234567"
+            "phoneNumber": "79876543210"
         },
         {
             "type": "url",

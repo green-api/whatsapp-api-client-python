@@ -7,7 +7,7 @@ greenAPI = API.GreenAPI(
 
 async def main():
     response = await greenAPI.sending.sendInteractiveButtonsReplyAsync(
-        "79001234567@c.us",
+        "79876543210@c.us",
         "This is message with buttons!",
         [{
             "buttonId": "1",

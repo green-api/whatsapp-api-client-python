@@ -12,10 +12,12 @@ async def main():
         print(f"File {file_path} not found")
     else:
         response = await greenAPI.sending.sendFileByUploadAsync(
-            "11001234567@c.us",
+            "79876543210@c.us",
             file_path,
             "logo.jpg",
-            "logo"
+            "logo",
+            typingTime=5000,
+            typingType="recording"
         )
         if response.code == 200:
             print(response.data)
