@@ -28,6 +28,7 @@ class GreenApi:
     media: str
     idInstance: str
     apiTokenInstance: str
+    session: Session()
 
     def __init__(
             self,
