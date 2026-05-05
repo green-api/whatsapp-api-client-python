@@ -50,6 +50,14 @@ class MethodsTestCase(unittest.TestCase):
             api.account.setProfilePicture(path),
             api.account.getAuthorizationCode(0)
         ]
+    
+    @property
+    def contacts_methods(self) -> typing.List[Response]:
+        return [
+            api.contacts.addContact("", "", "", False),
+            api.contacts.editContact("", "", "", False),
+            api.contacts.deleteContact("")
+        ]
 
     @property
     def device_methods(self) -> typing.List[Response]:

@@ -5,7 +5,7 @@ with open("README.md", encoding="UTF-8") as file:
 
 setup(
     name="whatsapp-api-client-python",
-    version="0.0.53",
+    version="0.0.54",
     description=(
         "This library helps you easily create"
         " a Python application with WhatsApp API."
@@ -27,8 +27,6 @@ setup(
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3 :: Only",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
@@ -44,5 +42,5 @@ setup(
         " (CC BY-ND 4.0)"
     ),
     install_requires=["requests>=2.31.0", "aiofiles>=24.1.0", "aiogram>=3.21.0", "aiohttp>=3.9.0"],
-    python_requires=">=3.7"
+    python_requires=">=3.9"
 )
