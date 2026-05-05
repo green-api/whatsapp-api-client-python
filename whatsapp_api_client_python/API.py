@@ -9,6 +9,7 @@ from requests.adapters import HTTPAdapter, Retry
 from .response import Response as GreenAPIResponse
 from .tools import (
     account,
+    contacts,
     device,
     groups,
     journals,
@@ -56,6 +57,7 @@ class GreenApi:
         self.__prepare_session()
 
         self.account = account.Account(self)
+        self.contacts = contacts.Contacts(self)
         self.device = device.Device(self)
         self.groups = groups.Groups(self)
         self.journals = journals.Journals(self)
