@@ -1,4 +1,4 @@
-requests>=2.31.0
+requests>=2.32.5
 aiofiles>=24.1.0
 aiogram>=3.13.1
 aiohttp>=3.9.0
