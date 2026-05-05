@@ -7,9 +7,9 @@ greenAPI = API.GreenAPI(
 
 async def main():
     tasks = [
-        greenAPI.contacts.addContact("79876543210@c.us", "Bruce", "Wayne", True),
-        greenAPI.contacts.editContact("79876543210@c.us", "Batman", "", True),
-        greenAPI.contacts.deleteContact("79876543210@c.us")
+        greenAPI.contacts.addContactAsync("79876543210@c.us", "Bruce", "Wayne", True),
+        greenAPI.contacts.editContactAsync("79876543210@c.us", "Batman", "", True),
+        greenAPI.contacts.deleteContactAsync("79876543210@c.us")
     ]
     responses = await asyncio.gather(*tasks, return_exceptions=True)
     [print(response.data) for response in responses if response.code == 200]

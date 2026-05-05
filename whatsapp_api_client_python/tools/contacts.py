@@ -31,7 +31,7 @@ class Contacts:
             ), request_body
         )
 
-    async def addContact(
+    async def addContactAsync(
             self, 
             chatId: str, 
             firstName: str,
@@ -68,7 +68,7 @@ class Contacts:
             ), request_body
         )
 
-    async def editContact(
+    async def editContactAsync(
             self, 
             chatId: str, 
             firstName: str,
@@ -102,7 +102,7 @@ class Contacts:
             ), request_body
         )
 
-    async def deleteContact(
+    async def deleteContactAsync(
             self, 
             chatId: str
     ) -> Response:
