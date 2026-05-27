@@ -27,7 +27,6 @@ setup(
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3 :: Only",
-        "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
@@ -42,5 +41,5 @@ setup(
         " (CC BY-ND 4.0)"
     ),
     install_requires=["requests-2.34.2", "aiofiles>=24.1.0", "aiogram>=3.28.2", "aiohttp>=3.13.5"],
-    python_requires=">=3.9"
+    python_requires=">=3.10"
 )
