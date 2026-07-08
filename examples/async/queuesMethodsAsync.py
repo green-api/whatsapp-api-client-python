@@ -7,15 +7,17 @@ greenAPI = API.GreenAPI(
 
 async def main():
     tasks = [
-        greenAPI.journals.lastIncomingMessagesAsync(4320),
-        greenAPI.journals.lastOutgoingMessagesAsync(4320),
-        greenAPI.journals.lastIncomingCallsAsync(4320),
-        greenAPI.journals.lastOutgoingCallsAsync(4320),
+        greenAPI.queues.getMessagesCountAsync(),
+        greenAPI.queues.getWebhooksCountAsync(),
     ]
 
     responses = await asyncio.gather(*tasks, return_exceptions=True)
     [print(response.data) for response in responses if response.code == 200]
-            
+
+    # Clear webhooks queue (rate-limited to once per minute)
+    response = await greenAPI.queues.clearWebhooksQueueAsync()
+    print(response.data)
+
 
 if __name__ == '__main__':
     asyncio.run(main())

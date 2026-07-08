@@ -124,3 +124,57 @@ class Journals:
             "{{host}}/waInstance{{idInstance}}/lastOutgoingMessages/{{apiTokenInstance}}",
             params
         )
+
+    def lastIncomingCalls(self, minutes: Optional[int] = None) -> Response:
+        """
+        The method returns the last incoming calls of the account.
+
+        https://green-api.com/en/docs/api/journals/LastIncomingCalls/
+        """
+
+        append_minutes = ""
+        if minutes is not None:
+            append_minutes = f"?minutes={minutes}"
+
+        return self.api.request(
+            "GET", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "lastIncomingCalls/{{apiTokenInstance}}" + append_minutes
+            )
+        )
+
+    async def lastIncomingCallsAsync(self, minutes: Optional[int] = None) -> Response:
+        params = {"minutes": minutes} if minutes else {}
+
+        return await self.api.requestAsync(
+            "GET",
+            "{{host}}/waInstance{{idInstance}}/lastIncomingCalls/{{apiTokenInstance}}",
+            params
+        )
+
+    def lastOutgoingCalls(self, minutes: Optional[int] = None) -> Response:
+        """
+        The method returns the last outgoing calls of the account.
+
+        https://green-api.com/en/docs/api/journals/LastOutgoingCalls/
+        """
+
+        append_minutes = ""
+        if minutes is not None:
+            append_minutes = f"?minutes={minutes}"
+
+        return self.api.request(
+            "GET", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "lastOutgoingCalls/{{apiTokenInstance}}" + append_minutes
+            )
+        )
+
+    async def lastOutgoingCallsAsync(self, minutes: Optional[int] = None) -> Response:
+        params = {"minutes": minutes} if minutes else {}
+
+        return await self.api.requestAsync(
+            "GET",
+            "{{host}}/waInstance{{idInstance}}/lastOutgoingCalls/{{apiTokenInstance}}",
+            params
+        )

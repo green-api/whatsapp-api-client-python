@@ -21,7 +21,9 @@ class Sending:
             quotedMessageId: Optional[str] = None,
             archiveChat: Optional[bool] = None,
             linkPreview: Optional[bool] = None,
-            typingTime: Optional[int] = None
+            typingTime: Optional[int] = None,
+            typePreview: Optional[str] = None,
+            customPreview: Optional[dict] = None
     ) -> Response:
         """
         The method is aimed for sending a text message to a personal or
@@ -46,7 +48,9 @@ class Sending:
             quotedMessageId: Optional[str] = None,
             archiveChat: Optional[bool] = None,
             linkPreview: Optional[bool] = None,
-            typingTime: Optional[int] = None
+            typingTime: Optional[int] = None,
+            typePreview: Optional[str] = None,
+            customPreview: Optional[dict] = None
     ) -> Response:
         request_body = self.__handle_parameters(locals())
 
@@ -392,7 +396,8 @@ class Sending:
             self,
             chatId: str,
             chatIdFrom: str,
-            messages: List[str]
+            messages: List[str],
+            typingTime: Optional[int] = None
     ) -> Response:
         """
         The method is intended for forwarding messages to a personal or

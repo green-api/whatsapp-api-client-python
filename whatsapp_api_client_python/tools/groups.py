@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import List, TYPE_CHECKING
+from typing import List, Optional, TYPE_CHECKING
 
 import aiofiles
 
@@ -258,6 +258,41 @@ class Groups:
         return await self.api.requestAsync(
             "POST",
             "{{host}}/waInstance{{idInstance}}/leaveGroup/{{apiTokenInstance}}",
+            request_body
+        )
+
+    def updateGroupSettings(
+            self,
+            groupId: str,
+            allowParticipantsEditGroupSettings: Optional[bool] = None,
+            allowParticipantsSendMessages: Optional[bool] = None
+    ) -> Response:
+        """
+        The method changes the group settings.
+
+        https://green-api.com/en/docs/api/groups/UpdateGroupSettings/
+        """
+
+        request_body = self.__handle_parameters(locals())
+
+        return self.api.request(
+            "POST", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "updateGroupSettings/{{apiTokenInstance}}"
+            ), request_body
+        )
+
+    async def updateGroupSettingsAsync(
+            self,
+            groupId: str,
+            allowParticipantsEditGroupSettings: Optional[bool] = None,
+            allowParticipantsSendMessages: Optional[bool] = None
+    ) -> Response:
+        request_body = self.__handle_parameters(locals())
+
+        return await self.api.requestAsync(
+            "POST",
+            "{{host}}/waInstance{{idInstance}}/updateGroupSettings/{{apiTokenInstance}}",
             request_body
         )
 
