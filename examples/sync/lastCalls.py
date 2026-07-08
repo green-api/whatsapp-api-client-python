@@ -6,15 +6,7 @@ greenAPI = API.GreenAPI(
 
 
 def main():
-    # If no argument, the messages/calls for 24 hours are returned.
-
-    print("Incoming messages in the last 72 hours:")
-    response = greenAPI.journals.lastIncomingMessages(4320)
-    print(response.data)
-
-    print("Outgoing messages in the last 72 hours:")
-    response = greenAPI.journals.lastOutgoingMessages(4320)
-    print(response.data)
+    # If no argument, calls for the last 24 hours are returned.
 
     print("Incoming calls in the last 72 hours:")
     response = greenAPI.journals.lastIncomingCalls(4320)

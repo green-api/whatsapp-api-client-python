@@ -298,6 +298,18 @@ asyncio.run(main())
 | Example of sending interactive buttons asynchronously with a reply | [SendInteractiveButtonsReplyAsync.py](../examples/async/sending/sendInteractiveButtonsReplyAsync.py) |
 | Example of sending a notification about typing or recording audio | [SendTyping.py](../examples/sync/sendTyping.py) |
 | Example of sending a notification about typing or recording audio asynchronously | [SendTypingAsync.py](../examples/async/sendTypingAsync.py) |
+| Example of account methods (state history, token update) | [accountMethods.py](./examples/sync/accountMethods.py) |
+| Example of account methods asynchronously | [accountMethodsAsync.py](./examples/async/accountMethodsAsync.py) |
+| Example of getting last incoming and outgoing calls | [lastCalls.py](./examples/sync/lastCalls.py) |
+| Example of getting last calls asynchronously | [lastCallsAsync.py](./examples/async/lastCallsAsync.py) |
+| Example of sending a message with link preview options | [sendMessageWithPreview.py](./examples/sync/sending/sendMessageWithPreview.py) |
+| Example of sending a message with link preview options asynchronously | [sendMessageWithPreviewAsync.py](./examples/async/sending/sendMessageWithPreviewAsync.py) |
+| Example of queues methods (counts, clear webhooks queue) | [queuesMethods.py](./examples/sync/queuesMethods.py) |
+| Example of queues methods asynchronously | [queuesMethodsAsync.py](./examples/async/queuesMethodsAsync.py) |
+| Example of groups methods (update settings) | [groupsMethods.py](./examples/sync/groupsMethods.py) |
+| Example of groups methods asynchronously | [groupsMethodsAsync.py](./examples/async/groupsMethodsAsync.py) |
+| Example of service methods (getChats, checkWhatsapp, getContacts) | [serviceMethods.py](./examples/sync/serviceMethods.py) |
+| Example of service methods asynchronously | [serviceMethodsAsync.py](./examples/async/serviceMethodsAsync.py) |
 
 ## The full list of the library methods
 
@@ -313,6 +325,8 @@ asyncio.run(main())
 | `account.qr`                           | The method is designed to get a QR code                                                                                  | [QR](https://green-api.com/en/docs/api/account/QR/)                                                         |
 | `account.setProfilePicture`            | The method is designed to set the avatar of the account                                                                  | [SetProfilePicture](https://green-api.com/en/docs/api/account/SetProfilePicture/)                           |
 | `account.getAuthorizationCode`         | The method is designed to authorize an instance by phone number                                                          | [GetAuthorizationCode](https://green-api.com/en/docs/api/account/GetAuthorizationCode/)                     |
+| `account.getStateInstanceHistory`      | The method returns the history of the instance state changes                                                             | [GetStateInstanceHistory](https://green-api.com/en/docs/api/account/GetStateInstanceHistory/)               |
+| `account.updateApiToken`               | The method generates a new API token for the instance (beta)                                                             | [UpdateApiToken](https://green-api.com/en/docs/api/account/UpdateApiToken/)                                 |
 | `contacts.addContact`                  | The method is used to add a number to contacts                   | [addContact](https://green-api.com/en/docs/api/contacts/AddContact/)   |
 | `contacts.editContact`                 | The method is used to edit a number in contacts                  | [editContact](https://green-api.com/en/docs/api/contacts/EditContact/) |
 | `contacts.deleteContact`               | The method is used to remove a number from contacts              | [deleteContact](https://green-api.com/en/docs/api/contacts/DeleteContact/)   |
@@ -326,6 +340,7 @@ asyncio.run(main())
 | `groups.removeAdmin`                   | The method deprives the participant of group chat administration rights                                                  | [RemoveAdmin](https://green-api.com/en/docs/api/groups/RemoveAdmin/)                                        |
 | `groups.setGroupPicture`               | The method sets the avatar of the group                                                                                  | [SetGroupPicture](https://green-api.com/en/docs/api/groups/SetGroupPicture/)                                |
 | `groups.leaveGroup`                    | The method logs the user of the current account out of the group chat                                                    | [LeaveGroup](https://green-api.com/en/docs/api/groups/LeaveGroup/)                                          |
+| `groups.updateGroupSettings`           | The method changes the group settings (beta)                                                                             | [UpdateGroupSettings](https://green-api.com/en/docs/api/groups/UpdateGroupSettings/)                        |
 | `statuses.sendTextStatus`                    | The method is aimed for sending a text status                                                    | [SendTextStatus](https://green-api.com/en/docs/api/statuses/SendTextStatus/)                                          |
 | `statuses.sendVoiceStatus`                    | The method is aimed for sending a voice status                                                    | [SendVoiceStatus](https://green-api.com/en/docs/api/statuses/SendVoiceStatus/)                                          |
 | `statuses.sendMediaStatus`                    | The method is aimed for sending a pictures or video status                                                    | [SendMediaStatus](https://green-api.com/en/docs/api/statuses/SendMediaStatus/)                                          |
@@ -337,8 +352,13 @@ asyncio.run(main())
 | `journals.getMessage`                  | The method returns a chat message                                                                                        | [GetMessage](https://green-api.com/en/docs/api/journals/GetMessage/)                                        |
 | `journals.lastIncomingMessages`        | The method returns the most recent incoming messages of the account                                                      | [LastIncomingMessages](https://green-api.com/en/docs/api/journals/LastIncomingMessages/)                    |
 | `journals.lastOutgoingMessages`        | The method returns the last sent messages of the account                                                                 | [LastOutgoingMessages](https://green-api.com/en/docs/api/journals/LastOutgoingMessages/)                    |
+| `journals.lastIncomingCalls`           | The method returns the last incoming calls of the account (beta)                                                         | [LastIncomingCalls](https://green-api.com/en/docs/api/journals/LastIncomingCalls/)                          |
+| `journals.lastOutgoingCalls`           | The method returns the last outgoing calls of the account (beta)                                                         | [LastOutgoingCalls](https://green-api.com/en/docs/api/journals/LastOutgoingCalls/)                          |
 | `queues.showMessagesQueue`             | The method is designed to get the list of messages that are in the queue to be sent                                      | [ShowMessagesQueue](https://green-api.com/en/docs/api/queues/ShowMessagesQueue/)                            |
 | `queues.clearMessagesQueue`            | The method is designed to clear the queue of messages to be sent                                                         | [ClearMessagesQueue](https://green-api.com/en/docs/api/queues/ClearMessagesQueue/)                          |
+| `queues.getMessagesCount`              | The method returns the number of messages in the outgoing queue                                                          | [GetMessagesCount](https://green-api.com/en/docs/api/queues/GetMessagesCount/)                              |
+| `queues.getWebhooksCount`              | The method returns the number of notifications in the incoming webhooks queue                                            | [GetWebhooksCount](https://green-api.com/en/docs/api/queues/GetWebhooksCount/)                              |
+| `queues.clearWebhooksQueue`            | The method clears the incoming webhooks queue                                                                            | [ClearWebhooksQueue](https://green-api.com/en/docs/api/queues/ClearWebhooksQueue/)                          |
 | `marking.readChat`                     | The method is designed to mark chat messages as read                                                                     | [ReadChat](https://green-api.com/en/docs/api/marks/ReadChat/)                                               |
 | `receiving.receiveNotification`        | The method is designed to receive a single incoming notification from the notification queue                             | [ReceiveNotification](https://green-api.com/en/docs/api/receiving/technology-http-api/ReceiveNotification/) |
 | `receiving.deleteNotification`         | The method is designed to remove an incoming notification from the notification queue                                    | [DeleteNotification](https://green-api.com/en/docs/api/receiving/technology-http-api/DeleteNotification/)   |
@@ -362,7 +382,8 @@ asyncio.run(main())
 | `serviceMethods.archiveChat`           | The method archives the chat                                                                                             | [ArchiveChat](https://green-api.com/en/docs/api/service/archiveChat/)                                       |
 | `serviceMethods.unarchiveChat`         | The method unarchives the chat                                                                                           | [UnarchiveChat](https://green-api.com/en/docs/api/service/unarchiveChat/)                                   |
 | `serviceMethods.setDisappearingChat`   | The method is designed to change the settings of disappearing messages in chats                                          | [SetDisappearingChat](https://green-api.com/en/docs/api/service/SetDisappearingChat/)                       |
-| `serviceMethods.sendTyping`            | The method is intended to send a notification about typing or recording audio in the chat                                | [SendTyping](https://green-api.com/docs/api/service/SendTyping/) |
+| `serviceMethods.sendTyping`            | The method is intended to send a notification about typing or recording audio in the chat                                | [SendTyping](https://green-api.com/en/docs/api/service/SendTyping/) |
+| `serviceMethods.getChats`              | The method returns a list of chats sorted by message activity time                                                       | [GetChats](https://green-api.com/en/docs/api/service/GetChats/)                                             |
 | `webhooks.startReceivingNotifications` | The method is designed to start receiving new notifications                                                              |                                                                                                             |
 | `webhooks.stopReceivingNotifications`  | The method is designed to stop receiving new notifications                                                               |                                                                                                             |
 | `partner.GetInstances`   | The method is for getting all the account instances created by the partner.                                           | [GetInstances](https://green-api.com/en/docs/partners/getInstances/)                       |

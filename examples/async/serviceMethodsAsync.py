@@ -7,8 +7,20 @@ greenAPI = API.GreenAPI(
 
 async def main():
     tasks = [
+        # Preferred: use chatId
+        greenAPI.serviceMethods.checkWhatsappAsync(chatId="79876543210@c.us"),
+        # Bypass cache
+        greenAPI.serviceMethods.checkWhatsappAsync(chatId="79876543210@c.us", force=True),
+        # Old-style call still works (backward compatible)
         greenAPI.serviceMethods.checkWhatsappAsync(79876543210),
+        # All contacts
         greenAPI.serviceMethods.getContactsAsync(),
+        # Only groups
+        greenAPI.serviceMethods.getContactsAsync(group=True),
+        # Only personal chats, limit 20
+        greenAPI.serviceMethods.getContactsAsync(group=False, count=20),
+        # Last 10 active chats
+        greenAPI.serviceMethods.getChatsAsync(count=10),
         greenAPI.serviceMethods.deleteMessageAsync("79876543210@c.us", "BAE52A7F04F452F9", True),
         greenAPI.serviceMethods.deleteMessageAsync("79876543210@c.us", "BAE52A7F04F452F9"),
         greenAPI.serviceMethods.editMessageAsync("79876543210@c.us", "BAE5F793F61411D0", "Edited message text")

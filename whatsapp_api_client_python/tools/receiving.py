@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import Optional, TYPE_CHECKING
 
 from ..response import Response
 
@@ -10,7 +10,7 @@ class Receiving:
     def __init__(self, api: "GreenApi"):
         self.api = api
 
-    def receiveNotification(self) -> Response:
+    def receiveNotification(self, receiveTimeout: Optional[int] = None) -> Response:
         """
         The method is aimed for receiving one incoming notification
         from the notifications queue.
@@ -18,17 +18,21 @@ class Receiving:
         https://green-api.com/en/docs/api/receiving/technology-http-api/ReceiveNotification/
         """
 
-        return self.api.request(
-            "GET", (
-                "{{host}}/waInstance{{idInstance}}/"
-                "receiveNotification/{{apiTokenInstance}}"
-            )
+        url = (
+            "{{host}}/waInstance{{idInstance}}/"
+            "receiveNotification/{{apiTokenInstance}}"
         )
+        if receiveTimeout is not None:
+            url = f"{url}?receiveTimeout={receiveTimeout}"
 
-    async def receiveNotificationAsync(self) -> Response:
-        return await self.api.requestAsync(
-            "GET", "{{host}}/waInstance{{idInstance}}/receiveNotification/{{apiTokenInstance}}"
-        )
+        return self.api.request("GET", url)
+
+    async def receiveNotificationAsync(self, receiveTimeout: Optional[int] = None) -> Response:
+        url = "{{host}}/waInstance{{idInstance}}/receiveNotification/{{apiTokenInstance}}"
+        if receiveTimeout is not None:
+            url = f"{url}?receiveTimeout={receiveTimeout}"
+
+        return await self.api.requestAsync("GET", url)
 
     def deleteNotification(self, receiptId: int) -> Response:
         """

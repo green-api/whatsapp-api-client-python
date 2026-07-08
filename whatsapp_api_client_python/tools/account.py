@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Dict, TYPE_CHECKING, Union
+from typing import Dict, Optional, TYPE_CHECKING, Union
 
 import aiofiles
 
@@ -214,4 +214,46 @@ class Account:
             "POST",
             "{{host}}/waInstance{{idInstance}}/getAuthorizationCode/{{apiTokenInstance}}",
             request_body
+        )
+
+    def getStateInstanceHistory(self, count: Optional[int] = None) -> Response:
+        """
+        The method returns the history of the instance state changes.
+
+        https://green-api.com/en/docs/api/account/GetStateInstanceHistory/
+        """
+
+        url = (
+            "{{host}}/waInstance{{idInstance}}/"
+            "GetStateInstanceHistory/{{apiTokenInstance}}"
+        )
+        if count is not None:
+            url = f"{url}?count={count}"
+
+        return self.api.request("GET", url)
+
+    async def getStateInstanceHistoryAsync(self, count: Optional[int] = None) -> Response:
+        url = "{{host}}/waInstance{{idInstance}}/GetStateInstanceHistory/{{apiTokenInstance}}"
+        if count is not None:
+            url = f"{url}?count={count}"
+
+        return await self.api.requestAsync("GET", url)
+
+    def updateApiToken(self) -> Response:
+        """
+        The method generates a new apiTokenInstance for the account instance.
+
+        https://green-api.com/en/docs/api/account/UpdateApiToken/
+        """
+
+        return self.api.request(
+            "GET", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "updateApiToken/{{apiTokenInstance}}"
+            )
+        )
+
+    async def updateApiTokenAsync(self) -> Response:
+        return await self.api.requestAsync(
+            "GET", "{{host}}/waInstance{{idInstance}}/updateApiToken/{{apiTokenInstance}}"
         )

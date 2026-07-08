@@ -49,3 +49,61 @@ class Queues:
         return await self.api.requestAsync(
             "GET", "{{host}}/waInstance{{idInstance}}/clearMessagesQueue/{{apiTokenInstance}}"
         )
+
+    def getMessagesCount(self) -> Response:
+        """
+        The method returns the number of messages in the outgoing queue.
+
+        https://green-api.com/en/docs/api/queues/GetMessagesCount/
+        """
+
+        return self.api.request(
+            "GET", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "getMessagesCount/{{apiTokenInstance}}"
+            )
+        )
+
+    async def getMessagesCountAsync(self) -> Response:
+        return await self.api.requestAsync(
+            "GET", "{{host}}/waInstance{{idInstance}}/getMessagesCount/{{apiTokenInstance}}"
+        )
+
+    def getWebhooksCount(self) -> Response:
+        """
+        The method returns the number of notifications in the incoming
+        webhooks queue.
+
+        https://green-api.com/en/docs/api/queues/GetWebhooksCount/
+        """
+
+        return self.api.request(
+            "GET", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "getWebhooksCount/{{apiTokenInstance}}"
+            )
+        )
+
+    async def getWebhooksCountAsync(self) -> Response:
+        return await self.api.requestAsync(
+            "GET", "{{host}}/waInstance{{idInstance}}/getWebhooksCount/{{apiTokenInstance}}"
+        )
+
+    def clearWebhooksQueue(self) -> Response:
+        """
+        The method clears the incoming webhooks queue.
+
+        https://green-api.com/en/docs/api/queues/ClearWebhooksQueue/
+        """
+
+        return self.api.request(
+            "DELETE", (
+                "{{host}}/waInstance{{idInstance}}/"
+                "clearWebhooksQueue/{{apiTokenInstance}}"
+            )
+        )
+
+    async def clearWebhooksQueueAsync(self) -> Response:
+        return await self.api.requestAsync(
+            "DELETE", "{{host}}/waInstance{{idInstance}}/clearWebhooksQueue/{{apiTokenInstance}}"
+        )

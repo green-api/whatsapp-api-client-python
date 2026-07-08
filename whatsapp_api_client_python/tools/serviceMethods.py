@@ -9,15 +9,27 @@ class ServiceMethods:
     def __init__(self, api: "GreenApi"):
         self.api = api
 
-    def checkWhatsapp(self, phoneNumber: int) -> Response:
+    def checkWhatsapp(
+            self,
+            phoneNumber: Optional[int] = None,
+            chatId: Optional[str] = None,
+            force: Optional[bool] = None
+    ) -> Response:
         """
-        The method checks WhatsApp account availability on a phone
-        number.
+        The method checks WhatsApp account availability on a phone number.
+        Use chatId (e.g. "79001234567@c.us") as the preferred parameter.
+        phoneNumber is kept for backward compatibility.
 
         https://green-api.com/en/docs/api/service/CheckWhatsapp/
         """
 
         request_body = locals()
+        if phoneNumber is None:
+            request_body.pop("phoneNumber")
+        if chatId is None:
+            request_body.pop("chatId")
+        if force is None:
+            request_body.pop("force")
         request_body.pop("self")
 
         return self.api.request(
@@ -27,8 +39,19 @@ class ServiceMethods:
             ), request_body
         )
 
-    async def checkWhatsappAsync(self, phoneNumber: int) -> Response:
+    async def checkWhatsappAsync(
+            self,
+            phoneNumber: Optional[int] = None,
+            chatId: Optional[str] = None,
+            force: Optional[bool] = None
+    ) -> Response:
         request_body = locals()
+        if phoneNumber is None:
+            request_body.pop("phoneNumber")
+        if chatId is None:
+            request_body.pop("chatId")
+        if force is None:
+            request_body.pop("force")
         request_body.pop("self")
 
         return await self.api.requestAsync(
@@ -64,7 +87,11 @@ class ServiceMethods:
             request_body
         )
 
-    def getContacts(self) -> Response:
+    def getContacts(
+            self,
+            group: Optional[bool] = None,
+            count: Optional[int] = None
+    ) -> Response:
         """
         The method is aimed for getting a list of the current account
         contacts.
@@ -72,17 +99,35 @@ class ServiceMethods:
         https://green-api.com/en/docs/api/service/GetContacts/
         """
 
-        return self.api.request(
-            "GET", (
-                "{{host}}/waInstance{{idInstance}}/"
-                "getContacts/{{apiTokenInstance}}"
-            )
+        url = (
+            "{{host}}/waInstance{{idInstance}}/"
+            "getContacts/{{apiTokenInstance}}"
         )
+        query_parts = []
+        if group is not None:
+            query_parts.append(f"group={'true' if group else 'false'}")
+        if count is not None:
+            query_parts.append(f"count={count}")
+        if query_parts:
+            url = f"{url}?{'&'.join(query_parts)}"
 
-    async def getContactsAsync(self) -> Response:
-        return await self.api.requestAsync(
-            "GET", "{{host}}/waInstance{{idInstance}}/getContacts/{{apiTokenInstance}}"
-        )
+        return self.api.request("GET", url)
+
+    async def getContactsAsync(
+            self,
+            group: Optional[bool] = None,
+            count: Optional[int] = None
+    ) -> Response:
+        url = "{{host}}/waInstance{{idInstance}}/getContacts/{{apiTokenInstance}}"
+        query_parts = []
+        if group is not None:
+            query_parts.append(f"group={'true' if group else 'false'}")
+        if count is not None:
+            query_parts.append(f"count={count}")
+        if query_parts:
+            url = f"{url}?{'&'.join(query_parts)}"
+
+        return await self.api.requestAsync("GET", url)
 
     def getContactInfo(self, chatId: str) -> Response:
         """
@@ -298,3 +343,26 @@ class ServiceMethods:
             "{{host}}/waInstance{{idInstance}}/sendTyping/{{apiTokenInstance}}",
             request_body
         )
+
+    def getChats(self, count: Optional[int] = None) -> Response:
+        """
+        The method returns a list of chats sorted by message activity time.
+
+        https://green-api.com/en/docs/api/service/GetChats/
+        """
+
+        url = (
+            "{{host}}/waInstance{{idInstance}}/"
+            "getChats/{{apiTokenInstance}}"
+        )
+        if count is not None:
+            url = f"{url}?count={count}"
+
+        return self.api.request("GET", url)
+
+    async def getChatsAsync(self, count: Optional[int] = None) -> Response:
+        url = "{{host}}/waInstance{{idInstance}}/getChats/{{apiTokenInstance}}"
+        if count is not None:
+            url = f"{url}?count={count}"
+
+        return await self.api.requestAsync("GET", url)
