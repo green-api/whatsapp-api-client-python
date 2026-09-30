@@ -40,6 +40,7 @@ setup(
         "Creative Commons Attribution-NoDerivatives 4.0 International"
         " (CC BY-ND 4.0)"
     ),
-    install_requires=["requests-2.34.2", "aiofiles>=24.1.0", "aiogram>=3.28.2", "aiohttp>=3.13.5"],
+    install_requires=["requests==2.34.2", "aiofiles>=24.1.0", "aiogram>=3.28.2", "aiohttp>=3.13.5"],
+    extras_require={"voip": ["aiortc>=1.15,<2", "httpx>=0.28,<1", "websockets>=16,<17"]},
     python_requires=">=3.10"
 )
