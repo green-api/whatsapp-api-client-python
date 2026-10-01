@@ -1,13 +1,19 @@
 """Local media and ICE checks without an account or audio hardware."""
 
+import asyncio
 from fractions import Fraction
+
+import pytest
 from aiortc import AudioStreamTrack
 from aiortc.mediastreams import MediaStreamError
 from av import AudioFrame
+
 from whatsapp_api_client_python.tools.voip import FrameAudioSink
-from whatsapp_api_client_python.tools.voip.rtc import AiortcBridge, candidate_from_json, candidate_to_json
-import asyncio
-import pytest
+from whatsapp_api_client_python.tools.voip.rtc import (
+    AiortcBridge,
+    candidate_from_json,
+    candidate_to_json,
+)
 
 
 class OneFrameTrack(AudioStreamTrack):
@@ -35,13 +41,13 @@ async def test_frame_sink_delivers_async_callback_and_closes():
         frames.append(frame)
 
     sink = FrameAudioSink(on_frame)
-    await sink.attach(OneFrameTrack())
+    await sink.attachAsync(OneFrameTrack())
     for _ in range(30):
         if frames:
             break
         await asyncio.sleep(0)
     assert len(frames) == 1 and isinstance(frames[0], AudioFrame)
-    await sink.close()
+    await sink.closeAsync()
 
 
 def test_candidate_wire_round_trip():

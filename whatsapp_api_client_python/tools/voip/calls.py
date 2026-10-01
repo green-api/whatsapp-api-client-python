@@ -1,14 +1,15 @@
 """REST commands, call state and media bridge lifecycle."""
 
-from dataclasses import dataclass
-from typing import Literal, Mapping
-from urllib.parse import urlsplit, urlunsplit
-from .audio import AudioFactory, CallAudio
-from .signaling import ReconnectingSocket
 import asyncio
 import inspect
 import json
 import logging
+from dataclasses import dataclass
+from typing import Literal, Mapping
+from urllib.parse import urlsplit, urlunsplit
+
+from .audio import AudioFactory, CallAudio
+from .signaling import ReconnectingSocket
 
 # Types
 
@@ -59,7 +60,7 @@ class Voip:
             f"/{method}/{self._api.apiTokenInstance}"
         )
 
-    def websocket_url(self) -> str:
+    def websocketUrl(self) -> str:
         host = urlsplit(self._api.host.rstrip("/"))
 
         if host.scheme not in ("http", "https"):
@@ -92,23 +93,23 @@ class Voip:
 
         return json.loads(response.text)
 
-    async def get_state(self) -> CallState:
+    async def getStateAsync(self) -> CallState:
         return call_state_from_json(await self._request("GET", "callsState"))
 
-    async def get_ice_servers(self):
+    async def getIceServersAsync(self):
         return await self._request("GET", "callsGetIceServers")
 
-    async def dial(self, target: str) -> None:
+    async def dialAsync(self, target: str) -> None:
         chat_id = target if "@" in target else f"{target}@c.us"
         await self._request("POST", "callsDial", {"chatId": chat_id})
 
-    async def accept(self) -> None:
+    async def acceptAsync(self) -> None:
         await self._request("POST", "callsAccept")
 
-    async def reject(self) -> None:
+    async def rejectAsync(self) -> None:
         await self._request("POST", "callsReject")
 
-    async def hang_up(self) -> None:
+    async def hangUpAsync(self) -> None:
         await self._request("POST", "callsHangUp")
 
     def connect(self, *, audio_factory: AudioFactory, **callbacks) -> "CallsConnection":
@@ -135,7 +136,7 @@ class CallsConnection:
         bridge_factory=None,
     ):
         self._voip = voip
-        self._socket = socket if socket is not None else ReconnectingSocket(voip.websocket_url())
+        self._socket = socket if socket is not None else ReconnectingSocket(voip.websocketUrl())
         self._bridge_factory = bridge_factory
         self._audio_factory = audio_factory
         self._state: CallState | None = None
@@ -195,13 +196,13 @@ class CallsConnection:
     def has_audio_bridge(self) -> bool:
         return self._peer_connection is not None
 
-    async def open(self, *, timeout: float | None = None) -> None:
+    async def openAsync(self, *, timeout: float | None = None) -> None:
         if self._closed:
             raise RuntimeError("CallsConnection is closed")
 
         await self._socket.open(timeout=timeout)
 
-    async def start_audio(self) -> None:
+    async def startAudioAsync(self) -> None:
         if self._peer_connection is not None or self._pending_bridge is not None:
             raise RuntimeError("Audio bridge already starting or active")
 
@@ -233,12 +234,12 @@ class CallsConnection:
 
             raise
 
-    async def stop_audio(self) -> None:
+    async def stopAudioAsync(self) -> None:
         self._resume_pending = False
         self._reject_pending(RuntimeError("Audio bridge stopped"))
         await self._teardown_bridge(True)
 
-    async def close(self) -> None:
+    async def closeAsync(self) -> None:
         if self._closed:
             return
 
@@ -260,7 +261,7 @@ class CallsConnection:
             return
 
         self._audio = audio
-        ice_servers = await self._voip.get_ice_servers()
+        ice_servers = await self._voip.getIceServersAsync()
 
         if generation != self._bridge_generation:
             return
@@ -432,7 +433,7 @@ class CallsConnection:
 
     async def _resume_audio(self) -> None:
         try:
-            await self.start_audio()
+            await self.startAudioAsync()
         except Exception as exc:
             self._emit("error", {"message": str(exc)})
 

@@ -1,12 +1,13 @@
 """Application-owned audio for one media bridge."""
 
 from __future__ import annotations
-from collections.abc import Awaitable, Callable
-from dataclasses import dataclass
-from typing import TYPE_CHECKING
+
 import asyncio
 import inspect
 import logging
+from collections.abc import Awaitable, Callable
+from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from aiortc import MediaStreamTrack
@@ -30,7 +31,7 @@ class FrameAudioSink:
         self._tasks: set[asyncio.Task] = set()
         self._closed = False
 
-    async def attach(self, track: MediaStreamTrack) -> None:
+    async def attachAsync(self, track: MediaStreamTrack) -> None:
         if self._closed:
             raise RuntimeError("Audio sink is closed")
 
@@ -60,7 +61,7 @@ class FrameAudioSink:
         except Exception:
             logging.getLogger(__name__).exception("Remote audio frame consumer failed")
 
-    async def close(self) -> None:
+    async def closeAsync(self) -> None:
         if self._closed:
             return
 

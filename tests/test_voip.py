@@ -1,13 +1,15 @@
 """Call scenarios adapted from the standalone WA VoIP client."""
 
+import asyncio
+import json
+
+import httpx
+import pytest
+
 from whatsapp_api_client_python.API import GreenAPI, GreenAPIError
 from whatsapp_api_client_python.response import Response
 from whatsapp_api_client_python.tools.voip import CallAudio, CallsConnection
 from whatsapp_api_client_python.tools.voip.signaling import ReconnectingSocket
-import asyncio
-import httpx
-import json
-import pytest
 
 
 async def until(predicate, turns=60):
@@ -106,7 +108,7 @@ class FakeVoip:
     def __init__(self):
         self.calls = []
 
-    async def get_ice_servers(self):
+    async def getIceServersAsync(self):
         self.calls.append("ice")
         return [{"urls": "stun:example.test"}]
 
@@ -127,7 +129,7 @@ def harness():
 
 async def start(calls, socket):
     sent = len(socket.sent)
-    task = asyncio.create_task(calls.start_audio())
+    task = asyncio.create_task(calls.startAudioAsync())
     await until(lambda: len(socket.sent) > sent)
     return task
 
@@ -163,20 +165,20 @@ async def test_rest_dial_and_accept_precede_offer(harness, monkeypatch):
         await original_send(frame)
 
     socket.send = send
-    await api.voip.dial("79991234567")
+    await api.voip.dialAsync("79991234567")
     task = await start(calls, socket)
     assert timeline[:3] == [("REST", "callsDial"), ("REST", "callsGetIceServers"), ("WS", "offer")]
     await socket.emit("message", {"type": "answer", "answer": {"type": "answer", "sdp": "v=0"}})
     await task
-    await calls.stop_audio()
+    await calls.stopAudioAsync()
     socket.sent.clear()
     timeline.clear()
-    await api.voip.accept()
+    await api.voip.acceptAsync()
     task = await start(calls, socket)
     assert timeline[:3] == [("REST", "callsAccept"), ("REST", "callsGetIceServers"), ("WS", "offer")]
     await socket.emit("message", {"type": "answer", "answer": {"type": "answer", "sdp": "v=0"}})
     await task
-    await calls.close()
+    await calls.closeAsync()
 
 
 @pytest.mark.asyncio
@@ -189,7 +191,7 @@ async def test_early_candidate_is_applied_after_answer(harness):
     await socket.emit("message", {"type": "answer", "answer": {"type": "answer", "sdp": "v=0"}})
     await task
     assert bridges[0].calls[-2:] == [("remote", {"type": "answer", "sdp": "v=0"}), ("candidate", candidate)]
-    await calls.close()
+    await calls.closeAsync()
 
 
 @pytest.mark.asyncio
@@ -199,11 +201,11 @@ async def test_stop_and_close_do_not_hang_up(harness):
     task = await start(calls, socket)
     await socket.emit("message", {"type": "answer", "answer": {"type": "answer", "sdp": "v=0"}})
     await task
-    await calls.stop_audio()
+    await calls.stopAudioAsync()
     assert calls.state.state == "on-call"
     assert socket.sent[-1] == {"type": "stop"}
     assert bridges[0].closed and audio.sessions[0].closed == [True]
-    await calls.close()
+    await calls.closeAsync()
     assert socket.closed
     assert socket.sent.count({"type": "stop"}) == 1
 
@@ -224,7 +226,7 @@ async def test_reconnect_creates_fresh_audio_and_ignores_old_track(harness):
     await asyncio.sleep(0)
     assert audio.sessions[1].remote == []
     await socket.emit("message", {"type": "answer", "answer": {"type": "answer", "sdp": "v=0"}})
-    await calls.close()
+    await calls.closeAsync()
 
 
 @pytest.mark.asyncio
@@ -249,7 +251,7 @@ async def test_pending_error_closes_bridge_but_error_after_answer_keeps_it(harne
     assert not bridges[1].closed and audio.sessions[1].closed == []
     await socket.emit("message", {"type": "state", "state": {"state": "idle"}})
     assert bridges[1].closed and audio.sessions[1].closed == [True]
-    await calls.close()
+    await calls.closeAsync()
 
 
 @pytest.mark.asyncio
@@ -270,7 +272,7 @@ async def test_idle_reports_end_even_when_stop_send_fails(harness):
     await socket.emit("message", {"type": "state", "state": {"state": "idle", "reason": "hangup"}})
     assert ended == [{"reason": "call-ended", "cause": "hangup"}]
     assert bridges[0].closed and audio.sessions[0].closed == [True]
-    await calls.close()
+    await calls.closeAsync()
 
 
 @pytest.mark.asyncio
@@ -289,7 +291,7 @@ async def test_permanent_refusal_does_not_resume(harness):
     assert errors == [{"message": "calls disabled"}]
     assert ended == [{"reason": "connection-lost"}]
     assert len(bridges) == 1
-    await calls.close()
+    await calls.closeAsync()
 
 
 @pytest.mark.asyncio
@@ -301,7 +303,7 @@ async def test_pending_negotiation_fails_on_disconnect(harness):
     with pytest.raises(RuntimeError, match="Socket disconnected"):
         await task
     assert bridges[0].closed and audio.sessions[0].closed == [True]
-    await calls.close()
+    await calls.closeAsync()
 
 
 @pytest.mark.asyncio
@@ -320,7 +322,7 @@ async def test_bad_candidate_after_answer_closes_bridge(harness):
     await socket.emit("message", {"type": "ice-candidate", "candidate": {"candidate": "broken"}})
     assert errors == [{"message": "invalid candidate"}]
     assert bridges[0].closed and audio.sessions[0].closed == [True]
-    await calls.close()
+    await calls.closeAsync()
 
 
 @pytest.mark.asyncio
@@ -341,7 +343,7 @@ async def test_close_cancels_pending_remote_attachment(harness):
     audio.sessions[0].on_remote_track = attach
     bridges[0].track_callback(FakeTrack())
     await entered.wait()
-    await calls.close()
+    await calls.closeAsync()
     with pytest.raises(RuntimeError, match="closed"):
         await task
     assert cancelled.is_set()
@@ -350,7 +352,7 @@ async def test_close_cancels_pending_remote_attachment(harness):
 
 @pytest.mark.asyncio
 async def test_close_while_audio_factory_pending(harness):
-    calls, socket, _, _, _ = harness
+    calls, _, _, _, _ = harness
     waiting = asyncio.Event()
     release = asyncio.Event()
     audio = FakeAudioFactory()
@@ -361,9 +363,9 @@ async def test_close_while_audio_factory_pending(harness):
         return await audio()
 
     calls._audio_factory = delayed
-    task = asyncio.create_task(calls.start_audio())
+    task = asyncio.create_task(calls.startAudioAsync())
     await waiting.wait()
-    await calls.close()
+    await calls.closeAsync()
     release.set()
     with pytest.raises(RuntimeError, match="closed"):
         await task
@@ -373,12 +375,12 @@ async def test_close_while_audio_factory_pending(harness):
 @pytest.mark.asyncio
 async def test_websocket_url_and_rest_error():
     api = GreenAPI("123", "secret", host="https://example.test/base/")
-    assert api.voip.websocket_url() == "wss://example.test/base/waInstance123/callsRtc/secret"
+    assert api.voip.websocketUrl() == "wss://example.test/base/waInstance123/callsRtc/secret"
 
     api.voip._transport = StaticTransport(403, "denied")
 
     with pytest.raises(RuntimeError, match="callsDial failed"):
-        await api.voip.dial("79991234567")
+        await api.voip.dialAsync("79991234567")
 
 
 class StaticTransport:
@@ -399,7 +401,7 @@ async def test_voip_rest_accepts_200_and_204_independently_of_sdk_policy(raise_e
     transport = StaticTransport(200, '{"state":"idle"}')
     api.voip._transport = transport
 
-    assert (await api.voip.get_state()).state == "idle"
+    assert (await api.voip.getStateAsync()).state == "idle"
 
     assert transport.requests[0] == (
         "GET", "https://example.test/waInstance123/callsState/secret", {},
@@ -407,14 +409,14 @@ async def test_voip_rest_accepts_200_and_204_independently_of_sdk_policy(raise_e
 
     transport.status, transport.body = 204, ""
 
-    await api.voip.dial("79991234567")
+    await api.voip.dialAsync("79991234567")
 
     assert transport.requests[-1] == (
         "POST", "https://example.test/waInstance123/callsDial/secret",
         {"headers": {"Content-Type": "application/json"}, "json": {"chatId": "79991234567@c.us"}},
     )
 
-    for command in (api.voip.accept, api.voip.reject, api.voip.hang_up):
+    for command in (api.voip.acceptAsync, api.voip.rejectAsync, api.voip.hangUpAsync):
         await command()
         assert transport.requests[-1][0] == "POST"
         assert transport.requests[-1][2] == {}
@@ -428,12 +430,12 @@ async def test_voip_rest_rejects_http_error_and_invalid_json(raise_errors):
     api.voip._transport = transport
 
     with pytest.raises(RuntimeError, match="callsAccept failed: 403 denied"):
-        await api.voip.accept()
+        await api.voip.acceptAsync()
 
     transport.status, transport.body = 200, "not json"
 
     with pytest.raises(json.JSONDecodeError):
-        await api.voip.get_ice_servers()
+        await api.voip.getIceServersAsync()
 
 
 def test_common_response_keeps_original_200_only_contract():
@@ -475,8 +477,8 @@ async def test_voip_uses_httpx_transport_for_204_without_post_body(monkeypatch):
         lambda: real_client(transport=httpx.MockTransport(handle)),
     )
 
-    await api.voip.accept()
-    await api.voip.dial("79991234567")
+    await api.voip.acceptAsync()
+    await api.voip.dialAsync("79991234567")
 
     assert requests[0].url.path == "/waInstance123/callsAccept/secret"
     assert requests[0].content == b""
@@ -497,7 +499,7 @@ async def test_no_automatic_answer_timeout(harness):
         await asyncio.wait_for(asyncio.shield(task), timeout=0.02)
 
     assert not task.done() and calls.has_audio_bridge
-    await calls.close()
+    await calls.closeAsync()
 
     with pytest.raises(RuntimeError, match="closed"):
         await task
@@ -569,7 +571,7 @@ async def test_ordered_frames_wait_for_slow_stop(harness):
     await socket.open()
     raw.incoming.put_nowait(json.dumps({"type": "state", "state": {"state": "on-call"}}))
     await until(lambda: calls.state is not None)
-    task = asyncio.create_task(calls.start_audio())
+    task = asyncio.create_task(calls.startAudioAsync())
     await until(lambda: bool(raw.sent))
     raw.incoming.put_nowait(json.dumps({"type": "answer", "answer": {"type": "answer", "sdp": "v=0"}}))
     await task
@@ -590,4 +592,4 @@ async def test_ordered_frames_wait_for_slow_stop(harness):
     release.set()
     await until(lambda: len(events) == 5)
     assert events[-3:] == [("end", "call-ended"), ("state", "inc-call"), ("incoming", "200@lid")]
-    await calls.close()
+    await calls.closeAsync()

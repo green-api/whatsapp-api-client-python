@@ -1,4 +1,4 @@
-"""Outgoing voice call using a WAV file and decoded audio frames, no audio devices."""
+"""Answer an incoming voice call using a WAV file, without audio devices."""
 
 import asyncio
 import os
@@ -11,7 +11,7 @@ from whatsapp_api_client_python.tools.voip import CallAudio, FrameAudioSink
 
 
 async def make_audio() -> CallAudio:
-    player = MediaPlayer(sys.argv[2])
+    player = MediaPlayer(sys.argv[1])
 
     if player.audio is None:
         raise ValueError("The file has no audio stream")
@@ -32,19 +32,24 @@ async def make_audio() -> CallAudio:
 async def main():
     api = GreenAPI(os.environ["GREEN_API_ID"], os.environ["GREEN_API_TOKEN"])
     calls = api.voip.connect(audio_factory=make_audio)
+    incoming = asyncio.Queue()
     ended = asyncio.Event()
-    calls.on("incoming_call", lambda info: print("Incoming call:", info.wid))
 
-    def on_end(detail):
-        print("Call ended:", detail)
-        ended.set()
-
-    calls.on("end_call", on_end)
+    calls.on("incoming_call", incoming.put_nowait)
+    calls.on("end_call", lambda detail: ended.set())
     calls.on("error", lambda detail: print("Call error:", detail))
 
     try:
         await calls.openAsync(timeout=30)
-        await api.voip.dialAsync(sys.argv[1])
+
+        info = await incoming.get()
+
+        print("Incoming call:", info.wid)
+
+        if calls.state is None or calls.state.state != "inc-call":
+            return
+
+        await api.voip.acceptAsync()
         await calls.startAudioAsync()
         await ended.wait()
     finally:
@@ -52,7 +57,7 @@ async def main():
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        raise SystemExit("Usage: headless_call.py <phone> <audio.wav>")
+    if len(sys.argv) != 2:
+        raise SystemExit("Usage: incoming_call.py <audio.wav>")
 
     asyncio.run(main())
