@@ -8,6 +8,8 @@ from dataclasses import dataclass
 from typing import Literal, Mapping
 from urllib.parse import urlsplit, urlunsplit
 
+import aiohttp
+
 from .audio import AudioFactory, CallAudio
 from .signaling import ReconnectingSocket
 
@@ -27,7 +29,7 @@ _MISSING = object()
 class CallInfo:
     id: str
     wid: str
-    name: str
+    name: str | None
 
 
 @dataclass(frozen=True)
@@ -41,7 +43,7 @@ def call_state_from_json(value: Mapping) -> CallState:
     info = value.get("info")
 
     if isinstance(info, dict):
-        info = CallInfo(id=info["id"], wid=info["wid"], name=info["name"])
+        info = CallInfo(id=info["id"], wid=info["wid"], name=info.get("name"))
 
     else:
         info = None
@@ -72,26 +74,36 @@ class Voip:
         return urlunsplit((scheme, host.netloc, path, "", ""))
 
     async def _request(self, method: str, endpoint: str, payload=_MISSING):
-        kwargs = {}
+        kwargs = {"headers": {"User-Agent": "GREEN-API_SDK_PY/1.0"}}
 
         if payload is not _MISSING:
-            kwargs = {"headers": {"Content-Type": "application/json"}, "json": payload}
+            kwargs["headers"]["Content-Type"] = "application/json"
+            kwargs["json"] = payload
 
         if self._transport is None:
-            import httpx
+            timeout = aiohttp.ClientTimeout(total=None, connect=5, sock_read=5)
 
-            async with httpx.AsyncClient() as transport:
-                response = await transport.request(method, self._url(endpoint), **kwargs)
+            async with aiohttp.ClientSession(
+                timeout=timeout, raise_for_status=False, trust_env=True,
+                skip_auto_headers={"Content-Type"},
+            ) as transport:
+                async with transport.request(
+                    method, self._url(endpoint), allow_redirects=False, **kwargs
+                ) as response:
+                    status_code = response.status
+                    body = await response.text()
         else:
             response = await self._transport.request(method, self._url(endpoint), **kwargs)
+            status_code = response.status_code
+            body = response.text
 
-        if not 200 <= response.status_code < 300:
-            raise RuntimeError(f"{endpoint} failed: {response.status_code} {response.text}")
+        if not 200 <= status_code < 300:
+            raise RuntimeError(f"{endpoint} failed: {status_code} {body}")
 
-        if response.status_code == 204 or not response.text:
+        if status_code == 204 or not body:
             return None
 
-        return json.loads(response.text)
+        return json.loads(body)
 
     async def getStateAsync(self) -> CallState:
         return call_state_from_json(await self._request("GET", "callsState"))

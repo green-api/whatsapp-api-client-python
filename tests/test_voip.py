@@ -2,8 +2,10 @@
 
 import asyncio
 import json
+from types import SimpleNamespace
 
-import httpx
+from aiohttp import web
+from aiohttp.test_utils import TestServer
 import pytest
 
 from whatsapp_api_client_python.API import GreenAPI, GreenAPIError
@@ -147,9 +149,9 @@ async def test_rest_dial_and_accept_precede_offer(harness, monkeypatch):
             timeline.append(("REST", endpoint))
 
             if endpoint == "callsGetIceServers":
-                return httpx.Response(200, json=[])
+                return SimpleNamespace(status_code=200, text="[]")
 
-            return httpx.Response(204)
+            return SimpleNamespace(status_code=204, text="")
 
     async def unexpected_request(*args, **kwargs):
         raise AssertionError("VoIP must not use the common requestAsync policy")
@@ -391,7 +393,31 @@ class StaticTransport:
 
     async def request(self, method, url, **kwargs):
         self.requests.append((method, url, kwargs))
-        return httpx.Response(self.status, text=self.body)
+        return SimpleNamespace(status_code=self.status, text=self.body)
+
+
+@pytest.mark.parametrize(
+    ("name_field", "expected"),
+    [({"name": "Alice"}, "Alice"), ({"name": ""}, ""), ({"name": None}, None), ({}, None)],
+)
+@pytest.mark.asyncio
+async def test_call_name_preserves_empty_and_missing_values(harness, name_field, expected):
+    payload = {"state": "inc-call", "info": {"id": "call-1", "wid": "200@lid", **name_field}}
+    api = GreenAPI("123", "secret")
+    api.voip._transport = StaticTransport(200, json.dumps(payload))
+
+    assert (await api.voip.getStateAsync()).info.name == expected
+
+    calls, socket, _, _, _ = harness
+    incoming = []
+    calls.on("incoming_call", incoming.append)
+    await socket.emit("message", {"type": "state", "state": payload})
+
+    assert calls.state.info.name == expected
+    assert len(incoming) == 1
+    assert incoming[0].wid == "200@lid"
+    assert incoming[0].name == expected
+    await calls.closeAsync()
 
 
 @pytest.mark.parametrize("raise_errors", [False, True])
@@ -404,7 +430,8 @@ async def test_voip_rest_accepts_200_and_204_independently_of_sdk_policy(raise_e
     assert (await api.voip.getStateAsync()).state == "idle"
 
     assert transport.requests[0] == (
-        "GET", "https://example.test/waInstance123/callsState/secret", {},
+        "GET", "https://example.test/waInstance123/callsState/secret",
+        {"headers": {"User-Agent": "GREEN-API_SDK_PY/1.0"}},
     )
 
     transport.status, transport.body = 204, ""
@@ -413,13 +440,14 @@ async def test_voip_rest_accepts_200_and_204_independently_of_sdk_policy(raise_e
 
     assert transport.requests[-1] == (
         "POST", "https://example.test/waInstance123/callsDial/secret",
-        {"headers": {"Content-Type": "application/json"}, "json": {"chatId": "79991234567@c.us"}},
+        {"headers": {"User-Agent": "GREEN-API_SDK_PY/1.0", "Content-Type": "application/json"},
+         "json": {"chatId": "79991234567@c.us"}},
     )
 
     for command in (api.voip.acceptAsync, api.voip.rejectAsync, api.voip.hangUpAsync):
         await command()
         assert transport.requests[-1][0] == "POST"
-        assert transport.requests[-1][2] == {}
+        assert transport.requests[-1][2] == {"headers": {"User-Agent": "GREEN-API_SDK_PY/1.0"}}
 
 
 @pytest.mark.parametrize("raise_errors", [False, True])
@@ -462,32 +490,37 @@ def test_common_http_handler_still_rejects_204(caplog):
 
 
 @pytest.mark.asyncio
-async def test_voip_uses_httpx_transport_for_204_without_post_body(monkeypatch):
-    api = GreenAPI("123", "secret", raise_errors=True, host="https://example.test")
+async def test_voip_uses_aiohttp_for_204_without_post_body():
     requests = []
 
-    def handle(request):
-        requests.append(request)
-        return httpx.Response(204)
+    async def handle(request):
+        requests.append((request.path, request.headers, await request.read()))
 
-    real_client = httpx.AsyncClient
+        if request.path.endswith("/callsReject/secret"):
+            return web.Response(status=302, headers={"Location": "/redirected"})
 
-    monkeypatch.setattr(
-        httpx, "AsyncClient",
-        lambda: real_client(transport=httpx.MockTransport(handle)),
-    )
+        return web.Response(status=204)
 
-    await api.voip.acceptAsync()
-    await api.voip.dialAsync("79991234567")
+    app = web.Application()
+    app.router.add_post("/{tail:.*}", handle)
 
-    assert requests[0].url.path == "/waInstance123/callsAccept/secret"
-    assert requests[0].content == b""
+    async with TestServer(app) as server:
+        api = GreenAPI("123", "secret", raise_errors=True, host=str(server.make_url("/")))
 
-    assert "content-type" not in requests[0].headers
+        await api.voip.acceptAsync()
+        await api.voip.dialAsync("79991234567")
 
-    assert requests[1].url.path == "/waInstance123/callsDial/secret"
-    assert requests[1].headers["content-type"] == "application/json"
-    assert json.loads(requests[1].content) == {"chatId": "79991234567@c.us"}
+        with pytest.raises(RuntimeError, match="callsReject failed: 302"):
+            await api.voip.rejectAsync()
+
+    assert requests[0][0] == "/waInstance123/callsAccept/secret"
+    assert requests[0][2] == b""
+    assert requests[0][1]["User-Agent"] == "GREEN-API_SDK_PY/1.0"
+    assert "Content-Type" not in requests[0][1]
+    assert requests[1][0] == "/waInstance123/callsDial/secret"
+    assert requests[1][1]["Content-Type"] == "application/json"
+    assert json.loads(requests[1][2]) == {"chatId": "79991234567@c.us"}
+    assert len(requests) == 3
 
 
 @pytest.mark.asyncio
