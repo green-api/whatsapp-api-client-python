@@ -40,6 +40,12 @@ authorize the account, go to your [cabinet](https://console.green-api.com/) and 
 python -m pip install whatsapp-api-client-python
 ```
 
+VoIP calls require the optional dependencies:
+
+```shell
+python -m pip install "whatsapp-api-client-python[voip]"
+```
+
 ## Import
 
 ```
@@ -302,6 +308,8 @@ asyncio.run(main())
 | Example of account methods asynchronously | [accountMethodsAsync.py](./examples/async/accountMethodsAsync.py) |
 | Example of getting last incoming and outgoing calls | [lastCalls.py](./examples/sync/lastCalls.py) |
 | Example of getting last calls asynchronously | [lastCallsAsync.py](./examples/async/lastCallsAsync.py) |
+| Outgoing headless VoIP call | [headless_call.py](./examples/async/voip/headless_call.py) |
+| Incoming headless VoIP call | [incoming_call.py](./examples/async/voip/incoming_call.py) |
 | Example of sending a message with link preview options | [sendMessageWithPreview.py](./examples/sync/sending/sendMessageWithPreview.py) |
 | Example of sending a message with link preview options asynchronously | [sendMessageWithPreviewAsync.py](./examples/async/sending/sendMessageWithPreviewAsync.py) |
 | Example of queues methods (counts, clear webhooks queue) | [queuesMethods.py](./examples/sync/queuesMethods.py) |

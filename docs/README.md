@@ -39,6 +39,12 @@ whatsapp-api-client-python - библиотека для интеграции с
 python -m pip install whatsapp-api-client-python
 ```
 
+Для VoIP нужны дополнительные зависимости:
+
+```shell
+python -m pip install "whatsapp-api-client-python[voip]"
+```
+
 ## Импорт
 
 ```
@@ -303,6 +309,8 @@ asyncio.run(main())
 | Пример асинхронных методов аккаунта                          | [accountMethodsAsync.py](../examples/async/accountMethodsAsync.py)          |
 | Пример получения журнала звонков                             | [lastCalls.py](../examples/sync/lastCalls.py)                               |
 | Пример асинхронного получения журнала звонков                | [lastCallsAsync.py](../examples/async/lastCallsAsync.py)                    |
+| Исходящий VoIP-звонок без аудиоустройств | [headless_call.py](../examples/async/voip/headless_call.py) |
+| Входящий VoIP-звонок без аудиоустройств | [incoming_call.py](../examples/async/voip/incoming_call.py) |
 | Пример отправки сообщения с настройками превью ссылки        | [sendMessageWithPreview.py](../examples/sync/sending/sendMessageWithPreview.py) |
 | Пример асинхронной отправки сообщения с превью ссылки        | [sendMessageWithPreviewAsync.py](../examples/async/sending/sendMessageWithPreviewAsync.py) |
 | Пример методов очереди (счётчики, очистка вебхуков)          | [queuesMethods.py](../examples/sync/queuesMethods.py)                       |

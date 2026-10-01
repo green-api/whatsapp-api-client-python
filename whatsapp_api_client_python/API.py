@@ -7,6 +7,7 @@ from requests import Response, Session
 from requests.adapters import HTTPAdapter, Retry
 
 from .response import Response as GreenAPIResponse
+from .tools.voip import Voip
 from .tools import (
     account,
     contacts,
@@ -68,6 +69,7 @@ class GreenApi:
         self.serviceMethods = serviceMethods.ServiceMethods(self)
         self.webhooks = webhooks.Webhooks(self)
         self.statuses = statuses.Statuses(self)
+        self.voip = Voip(self)
 
         self.logger = logging.getLogger("whatsapp-api-client-python")
         self.__prepare_logger()
