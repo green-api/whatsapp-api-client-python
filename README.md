@@ -1,10 +1,12 @@
 ﻿# whatsapp-api-client-python
 
-![](https://img.shields.io/badge/license-CC%20BY--ND%204.0-green)
+[![MIT License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 ![](https://img.shields.io/pypi/status/whatsapp-api-client-python)
 ![](https://img.shields.io/pypi/pyversions/whatsapp-api-client-python)
 ![](https://img.shields.io/github/actions/workflow/status/green-api/whatsapp-api-client-python/python-package.yml)
 ![](https://img.shields.io/pypi/dm/whatsapp-api-client-python)
+
+AI agents working with this repository should read [AGENTS.md](AGENTS.md) before changing code.
 
 ## Support links
 
@@ -410,5 +412,5 @@ asyncio.run(main())
 
 ## License
 
-Licensed under [Creative Commons Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)](https://creativecommons.org/licenses/by-nd/4.0/) terms.
-Please see file [LICENSE](https://github.com/green-api/whatsapp-api-client-python/blob/master/LICENSE).
+Licensed under [MIT License](LICENSE) terms.
+Please see file [LICENSE](LICENSE).
